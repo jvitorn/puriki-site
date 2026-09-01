@@ -1,0 +1,9 @@
+node_modules/
+build/
+.react-router/
+*.tsbuildinfo
+coverage/
+.env
+.env.*
+!.env.example
+*.log
