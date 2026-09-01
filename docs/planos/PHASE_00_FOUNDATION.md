@@ -10,65 +10,67 @@ At completion, another developer should be able to clone, install, test, and bui
 
 ### Package management
 
-- [ ] Use `pnpm`.
-- [ ] Commit `pnpm-lock.yaml`.
-- [ ] Define a supported Node.js range in `package.json`.
-- [ ] Prefer an LTS-compatible Node version for GitHub Actions.
-- [ ] Do not include npm/yarn lockfiles.
+- [x] Use `pnpm`.
+- [-] Commit `pnpm-lock.yaml`.
+
+  Lockfile is generated and validated, but this implementation does not create Git commits.
+- [x] Define a supported Node.js range in `package.json`.
+- [x] Prefer an LTS-compatible Node version for GitHub Actions.
+- [x] Do not include npm/yarn lockfiles.
 
 ### React/Vite/TypeScript
 
-- [ ] Initialize React + TypeScript.
-- [ ] Configure Vite.
-- [ ] Enable strict TypeScript settings appropriate for a small production project.
-- [ ] Configure path aliases only if they improve imports; do not build a complex alias taxonomy.
-- [ ] Keep source code in English.
+- [x] Initialize React + TypeScript.
+- [x] Configure Vite.
+- [x] Enable strict TypeScript settings appropriate for a small production project.
+- [x] Configure path aliases only if they improve imports; do not build a complex alias taxonomy.
+- [x] Keep source code in English.
 
 ### React Router static architecture
 
-- [ ] Configure React Router Framework Mode.
-- [ ] Configure `ssr: false`.
-- [ ] Prepare static prerender configuration.
-- [ ] Confirm a test route generates usable static output.
-- [ ] Confirm a direct nested route can be represented as an actual static file path.
-- [ ] Do not use HashRouter.
+- [x] Configure React Router Framework Mode.
+- [x] Configure `ssr: false`.
+- [x] Prepare static prerender configuration.
+- [x] Confirm a test route generates usable static output.
+- [x] Confirm a direct nested route can be represented as an actual static file path.
+- [x] Do not use HashRouter.
 
 ### Styling
 
-- [ ] Add Tailwind CSS.
-- [ ] Add base style entry.
-- [ ] Add shadcn/ui configuration.
-- [ ] Do not install a large component set yet.
-- [ ] Add Lucide React.
-- [ ] Add Anime.js.
+- [x] Add Tailwind CSS.
+- [x] Add base style entry.
+- [x] Add shadcn/ui configuration.
+- [x] Do not install a large component set yet.
+- [x] Add Lucide React.
+- [x] Add Anime.js.
 
 ### Testing
 
-- [ ] Add Vitest.
-- [ ] Add React Testing Library.
-- [ ] Add `@testing-library/jest-dom` or equivalent DOM matchers.
-- [ ] Add test setup file.
-- [ ] Add one basic smoke test proving the test environment works.
+- [x] Add Vitest.
+- [x] Add React Testing Library.
+- [x] Add `@testing-library/jest-dom` or equivalent DOM matchers.
+- [x] Add test setup file.
+- [x] Add one basic smoke test proving the test environment works.
 
 ### Code quality
 
-- [ ] Configure ESLint suitable for React/TypeScript.
-- [ ] Add formatting conventions. Prettier is acceptable if chosen; avoid conflicting formatters.
-- [ ] Add `.editorconfig`.
-- [ ] Ensure line endings and final newlines are consistent.
-- [ ] Ensure generated build output is ignored.
+- [x] Configure ESLint suitable for React/TypeScript.
+- [x] Add formatting conventions. Prettier is acceptable if chosen; avoid conflicting formatters.
+- [x] Add `.editorconfig`.
+- [x] Ensure line endings and final newlines are consistent.
+- [x] Ensure generated build output is ignored.
 
 ### Scripts
 
 Expected script intent:
 
-- [ ] `dev`
-- [ ] `build`
-- [ ] `test`
-- [ ] `test:watch`
-- [ ] `lint`
-- [ ] `typecheck`
-- [ ] optional `format` / `format:check`
+- [x] `dev`
+- [x] `build`
+- [x] `test`
+- [x] `test:watch`
+- [x] `lint`
+- [x] `typecheck`
+- [x] optional `format` / `format:check`
 
 All commands must work from a clean checkout.
 
@@ -76,8 +78,8 @@ All commands must work from a clean checkout.
 
 Create a public build configuration model for:
 
-- [ ] `SITE_URL`
-- [ ] `BASE_PATH`
+- [x] `SITE_URL`
+- [x] `BASE_PATH`
 
 Initial development/default assumptions:
 
@@ -87,23 +89,23 @@ Initial development/default assumptions:
 
 Rules:
 
-- [ ] No secrets in Vite client environment variables.
-- [ ] Do not create fake `.env` secret placeholders.
-- [ ] Document which configuration is safe/public.
+- [x] No secrets in Vite client environment variables.
+- [x] Do not create fake `.env` secret placeholders.
+- [x] Document which configuration is safe/public.
 
 ### Repository documentation
 
 Update/create root `README.md` with:
 
-- [ ] project purpose;
-- [ ] prerequisites;
-- [ ] install;
-- [ ] dev;
-- [ ] test;
-- [ ] build;
-- [ ] plan docs path;
-- [ ] no APK is hosted in this repo;
-- [ ] link to app repo.
+- [x] project purpose;
+- [x] prerequisites;
+- [x] install;
+- [x] dev;
+- [x] test;
+- [x] build;
+- [x] plan docs path;
+- [x] no APK is hosted in this repo;
+- [x] link to app repo.
 
 Do not duplicate the full planning documents in the README.
 
@@ -149,11 +151,11 @@ pnpm build
 
 Confirm:
 
-- [ ] all commands pass;
-- [ ] output is static-deploy compatible;
-- [ ] no secret appears in the built client bundle;
-- [ ] dev server loads without console errors;
-- [ ] test environment works.
+- [x] all commands pass;
+- [x] output is static-deploy compatible;
+- [x] no secret appears in the built client bundle;
+- [x] dev server loads without console errors;
+- [x] test environment works.
 
 ## Acceptance criteria
 

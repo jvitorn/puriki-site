@@ -4,22 +4,22 @@
 
 ## Phase 00 — Foundation
 
-- [ ] React + TypeScript + Vite project created.
-- [ ] pnpm configured and lockfile committed.
-- [ ] React Router Framework Mode configured.
-- [ ] `ssr: false` configured.
-- [ ] Static prerender proven.
-- [ ] Tailwind configured.
-- [ ] shadcn/ui initialized without unnecessary components.
-- [ ] Lucide React installed.
-- [ ] Anime.js installed.
-- [ ] Vitest + React Testing Library working.
-- [ ] ESLint configured.
-- [ ] Typecheck configured.
-- [ ] `dev`, `build`, `lint`, `typecheck`, `test` scripts working.
-- [ ] `SITE_URL` and `BASE_PATH` configurable.
-- [ ] No secret exposed to Vite.
-- [ ] Root README updated.
+- [x] React + TypeScript + Vite project created.
+- [-] pnpm configured and lockfile committed.
+- [x] React Router Framework Mode configured.
+- [x] `ssr: false` configured.
+- [x] Static prerender proven.
+- [x] Tailwind configured.
+- [x] shadcn/ui initialized without unnecessary components.
+- [x] Lucide React installed.
+- [x] Anime.js installed.
+- [x] Vitest + React Testing Library working.
+- [x] ESLint configured.
+- [x] Typecheck configured.
+- [x] `dev`, `build`, `lint`, `typecheck`, `test` scripts working.
+- [x] `SITE_URL` and `BASE_PATH` configurable.
+- [x] No secret exposed to Vite.
+- [x] Root README updated.
 
 ## Phase 01 — Design System
 

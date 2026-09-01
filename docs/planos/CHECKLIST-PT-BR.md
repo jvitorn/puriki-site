@@ -4,22 +4,22 @@
 
 ## Fase 00 — Fundação
 
-- [ ] Projeto React + TypeScript + Vite criado.
-- [ ] pnpm configurado e lockfile commitado.
-- [ ] React Router Framework Mode configurado.
-- [ ] `ssr: false` configurado.
-- [ ] Pré-renderização estática comprovada.
-- [ ] Tailwind configurado.
-- [ ] shadcn/ui inicializado sem instalar componentes desnecessários.
-- [ ] Lucide React instalado.
-- [ ] Anime.js instalado.
-- [ ] Vitest + React Testing Library funcionando.
-- [ ] ESLint configurado.
-- [ ] Typecheck configurado.
-- [ ] Scripts `dev`, `build`, `lint`, `typecheck`, `test` funcionando.
-- [ ] `SITE_URL` e `BASE_PATH` configuráveis.
-- [ ] Nenhum segredo exposto ao Vite.
-- [ ] README raiz atualizado.
+- [x] Projeto React + TypeScript + Vite criado.
+- [-] pnpm configurado e lockfile commitado.
+- [x] React Router Framework Mode configurado.
+- [x] `ssr: false` configurado.
+- [x] Pré-renderização estática comprovada.
+- [x] Tailwind configurado.
+- [x] shadcn/ui inicializado sem instalar componentes desnecessários.
+- [x] Lucide React instalado.
+- [x] Anime.js instalado.
+- [x] Vitest + React Testing Library funcionando.
+- [x] ESLint configurado.
+- [x] Typecheck configurado.
+- [x] Scripts `dev`, `build`, `lint`, `typecheck`, `test` funcionando.
+- [x] `SITE_URL` e `BASE_PATH` configuráveis.
+- [x] Nenhum segredo exposto ao Vite.
+- [x] README raiz atualizado.
 
 ## Fase 01 — Design System
 

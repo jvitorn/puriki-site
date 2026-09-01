@@ -1,0 +1,6 @@
+build/
+node_modules/
+.react-router/
+.vscode/
+docs/planos/
+pnpm-lock.yaml
