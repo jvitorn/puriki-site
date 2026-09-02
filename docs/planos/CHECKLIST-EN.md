@@ -85,14 +85,11 @@ that remains Phase 03 scope. Full detail in
 - [x] Restrained connector animation.
 - [x] Reduced-motion fallback.
 - [x] Four core benefits.
-- [-] List showcase.
-  - Structure, copy and layout are final; the image is an abstract
-    placeholder (no real screenshot available in this workspace).
-- [-] Discovery showcase.
-  - Same note as above.
-- [-] Details/translation showcase.
+- [x] List showcase.
+- [x] Discovery showcase.
+- [x] Details/translation showcase.
   - Translation copy (Google ML Kit, Android, PT-BR/ES) implemented and
-    verified; image remains an abstract placeholder.
+    verified.
 - [x] Translation claims verified against real app.
 - [x] Privacy section.
 - [x] Open Source section.
@@ -103,14 +100,15 @@ that remains Phase 03 scope. Full detail in
 - [x] "first public version in preparation" state.
 - [x] FAQ.
 - [x] Footer.
-- [!] Final screenshots selected.
-  - Blocked: no real app screenshots were found in this workspace/chat.
-    Sections are prepared to receive the real assets (typed alt text,
-    layout ready) with no structural rework.
-- [!] Screenshots optimized.
-  - Blocked for the same reason (no source to generate WebP/AVIF from).
+- [x] Final screenshots selected.
+  - Maintainer decision (recorded in Phase 04): the stylized mockups
+    (Hero and showcases) are the definitive visual solution for the
+    landing. Real app screenshots are no longer a requirement.
+- [x] Screenshots optimized.
+  - N/A — no image files to optimize; the mockups render via
+    markup/CSS (design-system tokens), not binary assets.
 - [x] Alt text reviewed.
-  - Localized alt text present for every current placeholder.
+  - Localized alt text present for every mockup.
 - [x] Mobile layout reviewed.
 - [x] Desktop layout reviewed.
 
@@ -120,33 +118,39 @@ Full detail in `PHASE_03_LANDING_SECTIONS.md`.
 
 ## Phase 04 — Releases and APK
 
-- [ ] Build-time GitHub Release script created.
-- [ ] Latest stable release used.
-- [ ] Draft ignored.
-- [ ] Prerelease ignored for primary CTA.
-- [ ] `puriki-{version}-android.apk` asset located.
-- [ ] Version captured.
-- [ ] Date captured.
-- [ ] Size captured.
-- [ ] Download URL captured.
-- [ ] Release URL captured.
-- [ ] SHA-256 captured when available.
-- [ ] Generated metadata file created.
-- [ ] No release produces `available: false`.
-- [ ] Technical API failure is not masked as “no release”.
-- [ ] No token reaches client bundle.
-- [ ] Download points directly to GitHub Release.
-- [ ] File size formatted.
-- [ ] Date localized.
-- [ ] SHA disclosure.
-- [ ] Accessible copy-SHA button.
-- [ ] APK install instructions.
-- [ ] Release parser tests.
-- [ ] Stable vs prerelease test.
-- [ ] No-release test.
-- [ ] Missing/ambiguous asset test.
-- [ ] `workflow_dispatch` available.
+- [x] Build-time GitHub Release script created.
+- [x] Latest stable release used.
+- [x] Draft ignored.
+- [x] Prerelease ignored for primary CTA.
+- [x] `puriki-{version}-android.apk` asset located.
+- [x] Version captured.
+- [x] Date captured.
+- [x] Size captured.
+- [x] Download URL captured.
+- [x] Release URL captured.
+- [x] SHA-256 captured when available.
+- [x] Generated metadata file created.
+- [x] No release produces `available: false`.
+- [x] Technical API failure is not masked as "no release".
+- [x] No token reaches client bundle.
+- [x] Download points directly to GitHub Release.
+- [x] File size formatted.
+- [x] Date localized.
+- [x] SHA disclosure.
+- [x] Accessible copy-SHA button.
+- [x] APK install instructions.
+- [x] Release parser tests.
+- [x] Stable vs prerelease test.
+- [x] No-release test.
+- [x] Missing/ambiguous asset test.
+- [x] `workflow_dispatch` available.
 - [ ] Cross-repository automatic dispatch added when app workflow is ready.
+  - Deliberate external pending item: `puriki-site` already declares
+    `repository_dispatch: types: [puriki-release-published]` in the
+    workflow and always redoes its own `release:fetch` (never trusts an
+    external payload). What's missing is `purikuki` gaining its own
+    stable-release workflow to send that dispatch — out of this
+    repository's scope.
 
 ## Phase 05 — Accessibility, SEO and Legal
 

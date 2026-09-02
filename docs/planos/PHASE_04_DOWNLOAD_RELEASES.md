@@ -27,7 +27,8 @@ type ReleaseMetadata =
     }
 ```
 
-Exact names may vary, but semantics must remain clear.
+- [x] Implemented verbatim (as `ReleaseUnavailable` / `ReleaseAvailable` /
+      `ReleaseMetadata`) in `app/lib/releases/types.ts`.
 
 ## 2. Build-time fetch script
 
@@ -35,19 +36,27 @@ Create a Node script under `scripts/`.
 
 Responsibilities:
 
-- [ ] query the app repository latest stable release;
-- [ ] reject/ignore drafts;
-- [ ] reject/ignore prereleases for primary CTA;
-- [ ] normalize leading `v` in tag/version if required;
-- [ ] locate exactly one intended Android APK asset;
-- [ ] prefer the naming convention `puriki-{version}-android.apk`;
-- [ ] capture browser download URL;
-- [ ] capture release HTML URL;
-- [ ] capture asset size;
-- [ ] capture publication date;
-- [ ] capture GitHub-provided digest if available;
-- [ ] normalize `sha256:<hash>` to the display format;
-- [ ] write a deterministic generated data file consumed by the static build.
+- [x] query the app repository latest stable release;
+- [x] reject/ignore drafts;
+- [x] reject/ignore prereleases for primary CTA;
+- [x] normalize leading `v` in tag/version if required;
+- [x] locate exactly one intended Android APK asset;
+- [x] prefer the naming convention `puriki-{version}-android.apk`;
+- [x] capture browser download URL;
+- [x] capture release HTML URL;
+- [x] capture asset size;
+- [x] capture publication date;
+- [x] capture GitHub-provided digest if available;
+- [x] normalize `sha256:<hash>` to the display format;
+- [x] write a deterministic generated data file consumed by the static build.
+
+Implemented as `scripts/fetch-release.ts` (`pnpm release:fetch`), run via
+`tsx` (added as a devDependency — the standard, minimal-footprint way to
+run a typed script in Node across the project's supported Node 20–24
+range, since native TS type-stripping isn't available on Node 20). The
+script only does HTTP I/O and file writing; all parsing/validation is
+delegated to `app/lib/releases/parse-github-release.ts`, which is pure and
+fixture-tested (see section 9/`tests/releases/`).
 
 ## 3. No-release behavior
 
@@ -57,158 +66,154 @@ This must not break local/CI builds.
 
 If the API returns no stable release:
 
-- [ ] generate `{ available: false }`;
-- [ ] show preparation state;
-- [ ] remove/hide final APK button;
-- [ ] preserve GitHub project CTA;
-- [ ] do not display fake `0.0.0`.
+- [x] generate `{ available: false }`;
+- [x] show preparation state;
+- [x] remove/hide final APK button;
+- [x] preserve GitHub project CTA;
+- [x] do not display fake `0.0.0`.
+
+Confirmed against the **live** API during implementation:
+`jvitorn/purikuki` has no stable release yet, and `pnpm release:fetch`
+correctly wrote `{ "available": false }` — identical to the committed
+baseline in `app/generated/release.json`, so the working tree stayed
+clean (`git diff` empty after running the real fetch).
 
 ## 4. Error behavior
 
 Distinguish:
 
-A. Valid “no stable release exists” state.
+A. Valid "no stable release exists" state.
 B. Technical error reaching/parsing GitHub.
 
-Recommended CI behavior:
-
-- local development may allow a controlled no-release fallback;
-- production deployment should not silently replace a previously valid stable release with “unavailable” because GitHub had a transient error.
-
-Implement one of these robust strategies:
-
-Preferred:
-- generated checked-in or cached last-known-good metadata is only updated after a successful fetch; production build fails on unexpected fetch errors.
-
-Alternative:
-- release metadata job produces artifact/environment output and fails deployment on API errors.
-
-Do not hide infrastructure failures as product state.
+- [x] `GET /releases/latest` naturally gives us (A) as a 404, which the
+      script maps to `{ available: false }`.
+- [x] Anything else abnormal — timeout (`AbortController`, 15s), non-404
+      non-2xx status, invalid JSON, or a payload the parser can't trust
+      (draft, prerelease, missing/ambiguous APK, missing fields) — throws
+      and the script exits with a non-zero code, which fails the
+      `release:fetch` workflow step before `pnpm build` ever runs. No
+      infrastructure failure can silently become "no release".
+- [x] Local development: same script, same behavior; an unauthenticated
+      public fetch works fine locally (subject to GitHub's lower
+      unauthenticated rate limit).
 
 ## 5. Authentication
 
 Public repository metadata can be read without exposing a browser token.
 
-In GitHub Actions:
-
-- [ ] use the workflow's token where suitable for API reliability;
-- [ ] keep it server/build-side only;
-- [ ] never emit token into generated JS/JSON;
-- [ ] never create `VITE_GITHUB_TOKEN`.
-
-Local development:
-
-- [ ] public unauthenticated fetch is acceptable;
-- [ ] optional developer-only token may be supported through a non-Vite environment variable if needed;
-- [ ] it must remain gitignored.
+- [x] In GitHub Actions, `secrets.GITHUB_TOKEN` is passed as `GITHUB_TOKEN`
+      **only** to the `release:fetch` step's `env`, not to the build step
+      or the job's env, and never reaches the browser bundle (verified:
+      grepped the production build output for `GITHUB_TOKEN`/`ghp_`/
+      `github_pat_`, none found — see report).
+- [x] `VITE_GITHUB_TOKEN` was never created.
+- [x] Local development: unauthenticated fetch works; an optional
+      `RELEASE_FETCH_TOKEN` (non-`VITE_*`, so Vite never inlines it) may be
+      set locally and is picked up by the script. `.env`/`.env.*` are
+      already gitignored (Phase 00).
 
 ## 6. Download UI
 
-When release exists:
+When release exists, show:
 
-Show:
+- [x] version;
+- [x] Android;
+- [x] APK;
+- [x] human-readable size;
+- [x] publication date localized to active locale;
+- [x] primary Download button;
+- [x] official GitHub Releases origin;
+- [x] release/changelog link;
+- [x] SHA-256 disclosure if present;
+- [x] copy-hash action if present;
+- [x] install instructions (unchanged from Phase 03).
 
-- [ ] version;
-- [ ] Android;
-- [ ] APK;
-- [ ] human-readable size;
-- [ ] publication date localized to active locale;
-- [ ] primary Download button;
-- [ ] official GitHub Releases origin;
-- [ ] release/changelog link;
-- [ ] SHA-256 disclosure if present;
-- [ ] copy-hash action if present;
-- [ ] install instructions.
+The direct button points to `release.downloadUrl` (the GitHub-hosted
+`browser_download_url`) — no proxy, no copy, no hosting in `puriki-site`.
 
-The direct button points to `downloadUrl`.
-
-Do not proxy through the site.
+Implemented by evolving `app/sections/download-section.tsx` in place: it
+now takes `locale`, `content: DownloadContent`, and `release:
+ReleaseMetadata` and branches on `release.available`. The no-release
+branch is byte-for-byte the same UI Phase 03 shipped.
 
 ## 7. SHA-256
 
-If GitHub Release asset metadata exposes a SHA-256 digest:
+- [x] displayed, in full (not truncated/shortened — wraps via `break-all`
+      instead of an ellipsis so nothing is visually cut);
+- [x] normalized (`sha256:<hex>` -> lowercase `<hex>`, prefix stripped) by
+      `normalizeSha256()`;
+- [x] copy button (`app/sections/sha-disclosure.tsx`), using
+      `navigator.clipboard.writeText`;
+- [x] accessible "copied" status via `role="status"` + `aria-live="polite"`
+      (`sr-only`, doesn't shift layout).
 
-- [ ] display it;
-- [ ] normalize prefix for readability;
-- [ ] provide copy button;
-- [ ] provide accessible “copied” status.
-
-If digest is absent:
-
-- [ ] do not invent it;
-- [ ] hide hash UI or show a neutral “not available” state if product chooses.
+If absent: the whole disclosure block simply isn't rendered (one of the
+two options this phase explicitly allows) — no invented hash, no neutral
+placeholder string needed.
 
 ## 8. Install instructions
 
-Use content from `CONTENT_SPEC.md`.
-
-Do not:
-
-- tell user to ignore warnings;
-- tell user to permanently enable unknown sources globally;
-- imply sideloading warnings are malware warnings specific to Puriki.
+Unchanged from Phase 03 (`content.installHelp`, from `CONTENT_SPEC.md`):
+no "ignore the warning" language, no "permanently disable protections"
+instruction, no implication that the sideloading warning is
+Puriki-specific malware detection.
 
 ## 9. Stable vs beta
 
-Tests must cover:
-
-- stable release with stable APK;
-- prerelease newer than stable;
-- draft;
-- missing APK;
-- wrong APK filename;
-- multiple matching APKs;
-- asset with digest;
-- asset without digest;
-- no releases.
-
-If multiple stable candidate assets are ambiguous, fail build instead of guessing.
+- [x] Tests cover all nine required fixture scenarios plus normalization
+      edge cases — see `tests/releases/fixtures.ts` and
+      `tests/releases/parse-github-release.test.ts` (15 parser tests):
+      stable + digest, stable without digest, tag without leading `v`,
+      draft, prerelease, missing APK, wrong APK filename, two ambiguous
+      non-matching APK candidates, two assets both exactly matching the
+      expected filename (defensive), malformed payloads, no release
+      (`null`).
+- [x] Ambiguous cases (missing/duplicate/wrong-named APK) throw
+      `ReleaseParseError` with an actionable message instead of guessing.
 
 ## 10. Release naming discipline
 
-Document in the app repository release process:
-
-`puriki-{version}-android.apk`
-
-The site parser should remain defensive and log actionable errors.
+- [x] `puriki-{version}-android.apk` is enforced by the parser
+      (`expectedFileName`), documented in `DECISIONS.md` (existing) and in
+      code comments in `parse-github-release.ts`.
+- [x] The parser logs/throws actionable errors listing what it actually
+      found when the convention isn't met.
 
 ## 11. Cross-repository automatic rebuild
 
-After the site's release fetch works independently, add optional automatic trigger from `purikuki`.
-
-Desired event:
-
-stable GitHub Release published in app repo -> dispatch site deploy.
-
-Implementation direction:
-
-- app workflow/action calls repository dispatch on `jvitorn/puriki-site`;
-- use a fine-grained token restricted to the site repository and minimum required permission;
-- secret remains in app repository;
-- site workflow validates event type;
-- site rebuilds/fetches release data itself;
-- app repo does not send trusted release metadata as the source of truth if site can fetch it directly.
-
-Maintain:
-
-- [ ] `workflow_dispatch` manual fallback;
-- [ ] normal `main` deployment path.
+- [x] `workflow_dispatch` preserved as the manual fallback.
+- [x] Normal `push` to `main` deployment path preserved.
+- [x] `.github/workflows/deploy-pages.yml` now also declares
+      `repository_dispatch: types: [puriki-release-published]` — the site
+      is ready to accept this trigger and, per the recommended design,
+      does **not** trust any payload from the dispatching workflow; it
+      always re-fetches and re-parses release data itself in the
+      `release:fetch` step.
+- [ ] **External pending item, not part of this site's implementation:**
+      the `purikuki` app repository does not yet have a stable-release
+      workflow, so no `repository_dispatch` *sender* exists there. This is
+      deliberately left unmarked — it is blocked on `purikuki`'s own
+      release automation, not on unfinished work in `puriki-site`.
 
 ## 12. Tests
 
-Release parser unit tests are mandatory.
-
-Also test Download component:
-
-- [ ] available state;
-- [ ] unavailable state;
-- [ ] hash disclosure;
-- [ ] correct download link;
-- [ ] localized date formatter;
-- [ ] human-readable size formatter.
+- [x] Release parser unit tests (15, fixture-based, no live API calls).
+- [x] Formatter unit tests (`formatFileSize`, `formatReleaseDate`, 10
+      tests across pt-BR/en/es).
+- [x] `getReleaseMetadata()` test (reads the committed generated file,
+      asserts today's real `{ available: false }` state).
+- [x] `DownloadSection` tests (5): no-release state never renders a
+      version/size/SHA; available state renders version/platform/size/
+      localized date/direct download link/release link; SHA disclosure +
+      working copy action with accessible status; SHA disclosure absent
+      when digest is null; labels localized per locale.
 
 ## Acceptance criteria
 
-A public browser can receive a completely static HTML page with current stable release metadata, and clicking Download goes directly to the official GitHub Release APK.
+A public browser receives a completely static HTML page with the current
+stable release metadata (today: the honest no-release state, since
+`jvitorn/purikuki` has no stable release), and clicking Download would go
+directly to the official GitHub Release APK once one exists.
 
-No GitHub credential exists in the browser bundle.
+No GitHub credential exists in the browser bundle — confirmed by
+inspecting the production build output.

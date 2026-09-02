@@ -191,6 +191,15 @@ export const en = {
       safetyNote:
         "Android may show a warning because the app was downloaded outside Google Play. Always make sure the download came from this site or Puriki's official GitHub repository.",
     },
+    releaseLabels: {
+      versionLabel: "Version",
+      platformLabel: "Android · APK",
+      publishedLabel: "Published",
+      releaseLinkLabel: "View release notes on GitHub",
+      shaLabel: "SHA-256",
+      copyLabel: "Copy",
+      copiedLabel: "Copied",
+    },
   },
   faq: {
     eyebrow: "FAQ",

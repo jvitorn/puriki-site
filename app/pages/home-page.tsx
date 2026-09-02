@@ -1,5 +1,6 @@
 import { getContent } from "../content";
 import type { Locale } from "../lib/i18n/locales";
+import { getReleaseMetadata } from "../lib/releases";
 import { BenefitsSection } from "../sections/benefits-section";
 import { DownloadSection } from "../sections/download-section";
 import { FaqSection } from "../sections/faq-section";
@@ -16,6 +17,7 @@ interface LocalePageProps {
 
 export function HomePage({ locale }: LocalePageProps) {
   const content = getContent(locale);
+  const release = getReleaseMetadata();
 
   return (
     <>
@@ -26,7 +28,7 @@ export function HomePage({ locale }: LocalePageProps) {
       <PrivacySection content={content.privacySummary} locale={locale} />
       <OpenSourceSection content={content.openSource} />
       <RoadmapSection content={content.roadmap} />
-      <DownloadSection content={content.download} />
+      <DownloadSection content={content.download} locale={locale} release={release} />
       <FaqSection content={content.faq} />
     </>
   );

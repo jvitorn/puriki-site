@@ -120,6 +120,16 @@ export interface DownloadInstallHelpContent {
   safetyNote: string;
 }
 
+export interface DownloadReleaseLabelsContent {
+  versionLabel: string;
+  platformLabel: string;
+  publishedLabel: string;
+  releaseLinkLabel: string;
+  shaLabel: string;
+  copyLabel: string;
+  copiedLabel: string;
+}
+
 export interface DownloadContent {
   eyebrow: string;
   title: string;
@@ -128,6 +138,7 @@ export interface DownloadContent {
   originLine: string;
   noRelease: DownloadNoReleaseContent;
   installHelp: DownloadInstallHelpContent;
+  releaseLabels: DownloadReleaseLabelsContent;
 }
 
 export interface FaqItem {

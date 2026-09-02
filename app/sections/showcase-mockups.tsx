@@ -2,12 +2,12 @@ import { Languages } from "lucide-react";
 import type { ReactElement } from "react";
 import type { ShowcaseItem } from "../content/types";
 
-// Abstract, stylized previews built from design tokens — not real product
-// screenshots. Purely visual (bars/blocks, no literal words) so nothing here
-// leaks Portuguese copy onto the EN/ES pages. Real screenshots are a pending
-// asset for this section (see Phase 03 report); swap these for
-// `<SmartphoneMockup imageSrc .../>` once they exist, the surrounding layout
-// does not need to change.
+// Stylized product representations built from design tokens — the
+// intentional visual solution for these showcases, not placeholders for a
+// future screenshot. Purely visual (bars/blocks, no literal words) so
+// nothing here leaks Portuguese copy onto the EN/ES pages. A future polish
+// pass may refine these by referencing purikuki's real screens (Search,
+// Anime Details), but that's UI polish, not release/content infrastructure.
 
 function ListShowcasePreview() {
   return (

@@ -13,10 +13,13 @@ interface HeroSectionProps {
   content: HeroContent;
 }
 
-// Abstract, stylized "My List" preview built from design tokens — not a
-// real product screenshot. Purely visual (bars/blocks, no literal words) so
-// it never leaks Portuguese copy onto the EN/ES pages. Kept simple until
-// Phase 03 receives real screenshots (see report: pending asset).
+// Stylized "My List" product representation, built from design tokens.
+// This is the intentional visual solution for the landing (not a
+// placeholder for a future screenshot) — purely visual (bars/blocks, no
+// literal words) so it never leaks Portuguese copy onto the EN/ES pages.
+// A future polish pass may refine the shapes by referencing purikuki's
+// real components (My List, AnimeListItem), but that's UI polish, not a
+// blocking asset.
 function HeroMockupPreview() {
   return (
     <div className="flex size-full flex-col bg-background px-4 pb-5 pt-10">

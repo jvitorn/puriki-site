@@ -6,6 +6,14 @@ Build the complete landing narrative using the content model and design system.
 
 No fake release data is allowed.
 
+> **Product decision (approved by maintainer, recorded during Phase 04):**
+> the stylized, purely-visual mockups used in the Hero and the three
+> showcases (`app/sections/hero-section.tsx`,
+> `app/sections/showcase-mockups.tsx`) are the intentional visual solution
+> for this landing — not temporary placeholders waiting on real app
+> screenshots. Real screenshots are no longer a requirement or a blocker
+> for this phase. See section 12.
+
 ## 1. Header
 
 - [x] localized nav labels;
@@ -36,9 +44,11 @@ Implement:
 
 Implemented in `app/sections/hero-section.tsx`. Only the radial brand glow
 was added (no background grid) — judged not to add enough to justify it.
-The mockup is an abstract, purely-visual "My List" preview (bars/blocks
-built from design tokens, no literal words) inside the Phase 01
-`SmartphoneMockup`; see section 12 for why it isn't a real screenshot yet.
+The mockup is a stylized "My List" representation (bars/blocks built from
+design tokens, no literal words) inside the Phase 01 `SmartphoneMockup`.
+**Decision (post-Phase 03, approved by maintainer):** this stylized
+representation is the intentional visual solution for the landing, not a
+placeholder — see section 12.
 
 Responsive:
 
@@ -98,17 +108,17 @@ Three sections, all implemented in `app/sections/showcases-section.tsx` +
 
 ### A. List
 - [x] approved title/copy;
-- [-] relevant screenshot — abstract placeholder only, see section 12;
+- [x] relevant stylized product representation (see section 12);
 - [x] progress/status context (visual, non-textual).
 
 ### B. Discovery
 - [x] approved title/copy;
-- [-] home/search screenshot — abstract placeholder only;
+- [x] home/search stylized representation;
 - [x] optional secondary overlap — not added, kept simple/legible.
 
 ### C. Details/translation
 - [x] approved title/copy;
-- [-] details screenshot — abstract placeholder only;
+- [x] details stylized representation;
 - [x] translation claim — now included and verified: on-device synopsis
       translation via Google ML Kit, scoped explicitly to Android and to
       PT-BR/ES readers (content model updated, see report).
@@ -205,25 +215,22 @@ content were switched to the shared `external-links.ts` constants.
 
 ## 12. Screenshots/assets
 
-- [!] **Blocked — no real app screenshots available in this workspace.**
-  The workspace and the `purikuki` app repository contain brand assets
-  (icons, splash screens, provider logos) but no actual in-app screenshots
-  (list/search/details screens). Per this phase's explicit instruction not
-  to invent fake app screens, the Hero and the three showcases use
-  abstract, purely-visual placeholders (bars/blocks built from design
-  tokens, no fabricated UI text) instead.
-  - [x] section prepared to receive real screenshots — `HeroSection` and
-        `ShowcasePanel` already take localized `alt` text
+- [x] **Decision (post-Phase 03, approved by maintainer): final.** The
+  stylized, purely-visual product representations (bars/blocks built from
+  design tokens, no fabricated UI text) used in the Hero and the three
+  showcases are the intentional visual solution for this landing.
+  Real app screenshots are **not required**; this item is no longer a
+  blocker or a pending asset.
+  - [x] `HeroSection` and `ShowcasePanel` take localized `alt` text
         (`hero.mockupAlt`, `showcases.items[].imageAlt`) from the content
-        model; swapping the abstract preview for
-        `<SmartphoneMockup imageSrc=... imageAlt=... />` / an `<img>` is a
-        drop-in change with no layout rework needed.
-  - [ ] select final screenshots — pending real assets.
-  - [ ] optimized WebP/AVIF outputs — pending real assets.
-  - [x] width/height declaration, lazy-loading, and Hero-priority rules
-        are ready to apply once real images exist (documented in the
-        component comments).
-  - [x] alt text — localized and present for every placeholder already.
+        model, matching the accessibility bar a real screenshot would need.
+  - [x] alt text — localized and present for every stylized representation.
+  - Not planned for this phase: a future polish pass may refine the shapes
+    by referencing `purikuki`'s real components (`My List`,
+    `AnimeListItem`, `Search`, `Anime Details`) to bring the web
+    representation closer to the app's actual structure — that is UI
+    polish, tracked separately from release infrastructure, and does not
+    block any phase.
 
 ## Motion
 
@@ -256,8 +263,8 @@ no overflow on any locale/page combination.
 Check:
 
 - [x] no overflow;
-- [x] no unreadably tiny screenshots (placeholders are purely abstract, no
-      text-legibility risk at this phase);
+- [x] no unreadably tiny screenshots (the stylized representations are
+      purely abstract, no text-legibility risk);
 - [x] CTAs remain obvious;
 - [x] no orphan words created by hardcoded `<br>` — none used anywhere in
       the landing;

@@ -85,14 +85,11 @@ landing — isso continua sendo escopo da Fase 03. Detalhes completos em
 - [x] Animação de conexão discreta.
 - [x] Fallback sem movimento.
 - [x] Quatro benefícios principais.
-- [-] Showcase de lista.
-  - Estrutura, copy e layout prontos; imagem é um placeholder abstrato (sem
-    screenshot real disponível neste workspace).
-- [-] Showcase de descoberta.
-  - Mesma observação acima.
-- [-] Showcase de detalhes/tradução.
-  - Copy da tradução (Google ML Kit, Android, PT-BR/ES) já implementada e
-    verificada; imagem segue como placeholder abstrato.
+- [x] Showcase de lista.
+- [x] Showcase de descoberta.
+- [x] Showcase de detalhes/tradução.
+  - Copy da tradução (Google ML Kit, Android, PT-BR/ES) implementada e
+    verificada.
 - [x] Afirmações de tradução verificadas contra o app real.
 - [x] Seção de privacidade.
 - [x] Seção Open Source.
@@ -103,50 +100,57 @@ landing — isso continua sendo escopo da Fase 03. Detalhes completos em
 - [x] Estado “primeira versão em preparação”.
 - [x] FAQ.
 - [x] Footer.
-- [!] Screenshots finais selecionados.
-  - Bloqueado: nenhum screenshot real do app foi encontrado neste
-    workspace/chat. Seções preparadas para receber os assets reais
-    (alt text tipado, layout pronto) sem retrabalho estrutural.
-- [!] Screenshots otimizados.
-  - Bloqueado pelo mesmo motivo acima (sem fonte para gerar WebP/AVIF).
+- [x] Screenshots finais selecionados.
+  - Decisão do maintainer (registrada na Fase 04): os mockups estilizados
+    (Hero e showcases) são a solução visual definitiva da landing.
+    Screenshots reais do app não são mais um requisito.
+- [x] Screenshots otimizados.
+  - N/A — não há arquivos de imagem a otimizar; os mockups são
+    renderizados via markup/CSS (tokens do design system), não assets
+    binários.
 - [x] Alt texts revisados.
-  - Alt text localizado presente para todos os placeholders atuais.
+  - Alt text localizado presente para todos os mockups.
 - [x] Layout mobile revisado.
 - [x] Layout desktop revisado.
 
 Observação: correção de nomenclatura `puriklLabel` -> `purikiLabel` e do
 link do roadmap (`purikuki#roadmap` -> `PURIKI_PRODUCT_ENGINEERING_ROADMAP.md`)
-feitas nesta fase. Detalhes completos em `PHASE_03_LANDING_SECTIONS.md`.
+feitas na Fase 03. Detalhes completos em `PHASE_03_LANDING_SECTIONS.md`.
 
 ## Fase 04 — Releases e APK
 
-- [ ] Script build-time de GitHub Release criado.
-- [ ] Última release estável usada.
-- [ ] Draft ignorado.
-- [ ] Prerelease ignorada para CTA principal.
-- [ ] Asset `puriki-{version}-android.apk` localizado.
-- [ ] Versão capturada.
-- [ ] Data capturada.
-- [ ] Tamanho capturado.
-- [ ] URL de download capturada.
-- [ ] URL da release capturada.
-- [ ] SHA-256 capturado quando disponível.
-- [ ] Arquivo de metadados gerado.
-- [ ] Sem release gera `available: false`.
-- [ ] Falha técnica de API não é mascarada como “sem release”.
-- [ ] Nenhum token vai para o bundle.
-- [ ] Download aponta diretamente para GitHub Release.
-- [ ] Tamanho formatado.
-- [ ] Data localizada.
-- [ ] SHA expansível.
-- [ ] Botão copiar SHA acessível.
-- [ ] Instruções de APK adicionadas.
-- [ ] Testes do parser de release.
-- [ ] Teste stable vs prerelease.
-- [ ] Teste sem release.
-- [ ] Teste asset ausente/ambíguo.
-- [ ] `workflow_dispatch` disponível.
+- [x] Script build-time de GitHub Release criado.
+- [x] Última release estável usada.
+- [x] Draft ignorado.
+- [x] Prerelease ignorada para CTA principal.
+- [x] Asset `puriki-{version}-android.apk` localizado.
+- [x] Versão capturada.
+- [x] Data capturada.
+- [x] Tamanho capturado.
+- [x] URL de download capturada.
+- [x] URL da release capturada.
+- [x] SHA-256 capturado quando disponível.
+- [x] Arquivo de metadados gerado.
+- [x] Sem release gera `available: false`.
+- [x] Falha técnica de API não é mascarada como “sem release”.
+- [x] Nenhum token vai para o bundle.
+- [x] Download aponta diretamente para GitHub Release.
+- [x] Tamanho formatado.
+- [x] Data localizada.
+- [x] SHA expansível.
+- [x] Botão copiar SHA acessível.
+- [x] Instruções de APK adicionadas.
+- [x] Testes do parser de release.
+- [x] Teste stable vs prerelease.
+- [x] Teste sem release.
+- [x] Teste asset ausente/ambíguo.
+- [x] `workflow_dispatch` disponível.
 - [ ] Dispatch automático entre repositórios implementado quando o workflow do app estiver pronto.
+  - Pendência externa deliberada: `puriki-site` já declara
+    `repository_dispatch: types: [puriki-release-published]` no workflow e
+    sempre refaz seu próprio `release:fetch` (não confia em payload
+    externo). Falta apenas o `purikuki` ganhar seu workflow de release
+    estável para enviar o dispatch — está fora do escopo deste repositório.
 
 ## Fase 05 — Acessibilidade, SEO e Legal
 

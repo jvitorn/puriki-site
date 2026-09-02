@@ -5,6 +5,15 @@ on:
     branches:
       - main
   workflow_dispatch:
+  # Reserved for a future purikuki workflow to trigger a rebuild after a
+  # stable release is published. No sender exists yet in purikuki (see
+  # docs/planos/PHASE_04_DOWNLOAD_RELEASES.md) — this only declares the
+  # event type the site is prepared to accept; it changes no current
+  # behavior. The site always re-fetches release data itself below rather
+  # than trusting a payload from the dispatching workflow.
+  repository_dispatch:
+    types:
+      - puriki-release-published
 
 concurrency:
   group: pages
@@ -30,6 +39,11 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
+
+      - name: Fetch latest stable release metadata
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: pnpm release:fetch
 
       - name: Build static site
         env:
