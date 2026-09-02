@@ -1,26 +1,34 @@
 import type { ReactNode } from "react";
 import type { Route } from "./+types/root";
+import { getContent } from "./content";
 import { SiteShell } from "./components/layout/site-shell";
+import { withBasePath } from "./lib/config";
+import { localeConfig } from "./lib/i18n/locales";
+import { useRouteHandle } from "./lib/i18n/use-route-handle";
 import stylesheet from "./styles/app.css?url";
 import { Links, Meta, Outlet, Scripts, ScrollRestoration } from "react-router";
 
 export const links: Route.LinksFunction = () => [
   { rel: "stylesheet", href: stylesheet },
+  { rel: "icon", type: "image/png", href: withBasePath("favicon.png") },
+  { rel: "apple-touch-icon", href: withBasePath("apple-touch-icon.png") },
 ];
 
 export function Layout({ children }: { children: ReactNode }) {
+  const { locale } = useRouteHandle();
+  const skipLinkLabel = getContent(locale).common.skipLink;
+
   return (
-    <html lang="pt-BR">
+    <html lang={localeConfig[locale].htmlLang}>
       <head>
-        <Meta />
-        <Links />
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>Puriki</title>
+        <Meta />
+        <Links />
       </head>
       <body>
         <a className="skip-link" href="#main-content">
-          Pular para o conteúdo
+          {skipLinkLabel}
         </a>
         {children}
         <ScrollRestoration />
@@ -31,13 +39,18 @@ export function Layout({ children }: { children: ReactNode }) {
 }
 
 export default function App() {
+  const { locale, page } = useRouteHandle();
+
   return (
-    <SiteShell>
+    <SiteShell locale={locale} page={page}>
       <Outlet />
     </SiteShell>
   );
 }
 
+// Linguistically neutral on purpose: this can render before route
+// matching resolves a locale, so it must not assume Portuguese for an
+// EN/ES visitor's screen reader.
 export function HydrateFallback() {
-  return <p className="sr-only">Carregando Puriki...</p>;
+  return <p className="sr-only">Puriki</p>;
 }

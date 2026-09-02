@@ -19,9 +19,24 @@ export default tseslint.config(
     },
   },
   {
-    files: ["app/root.tsx"],
+    files: ["app/root.tsx", "app/routes/**/*.{ts,tsx}"],
     rules: {
+      // Route modules conventionally export `handle`/`meta`/`loader`
+      // alongside the default component; that's the React Router
+      // framework-mode contract, not a Fast Refresh problem.
       "react-refresh/only-export-components": "off",
+    },
+  },
+  {
+    // Plain-JS Node dev scripts: TS files under scripts/ already get
+    // Node globals through the TypeScript parser's ambient @types/node
+    // resolution; .mjs files use the base JS parser, which doesn't.
+    files: ["scripts/**/*.mjs"],
+    languageOptions: {
+      globals: {
+        console: "readonly",
+        process: "readonly",
+      },
     },
   },
 );

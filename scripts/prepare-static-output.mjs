@@ -1,4 +1,4 @@
-import { readdir, rename, rm, stat } from "node:fs/promises";
+import { copyFile, readdir, rename, rm, stat } from "node:fs/promises";
 import path from "node:path";
 import process from "node:process";
 import { fileURLToPath } from "node:url";
@@ -16,7 +16,27 @@ if (baseSegments.some((segment) => segment === "." || segment === "..")) {
   throw new Error(`Unsafe BASE_PATH: ${rawBasePath}`);
 }
 
+// GitHub Pages serves a physical 404.html file at the site root for any
+// unmatched path. React Router prerenders the /404 route as a regular
+// folder (404/index.html); copy it to the root so GitHub Pages finds it.
+async function writeGitHubPages404() {
+  const prerendered404 = path.join(clientDirectory, "404", "index.html");
+  const destination = path.join(clientDirectory, "404.html");
+
+  try {
+    await stat(prerendered404);
+  } catch (error) {
+    throw new Error(
+      `Expected the prerendered 404 page at ${prerendered404}.`,
+      { cause: error },
+    );
+  }
+
+  await copyFile(prerendered404, destination);
+}
+
 if (baseSegments.length === 0) {
+  await writeGitHubPages404();
   process.exit(0);
 }
 
@@ -52,3 +72,4 @@ for (const entry of await readdir(nestedOutputDirectory)) {
 }
 
 await rm(nestedOutputDirectory, { recursive: true });
+await writeGitHubPages404();
