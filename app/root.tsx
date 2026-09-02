@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import type { Route } from "./+types/root";
+import { SiteShell } from "./components/layout/site-shell";
 import stylesheet from "./styles/app.css?url";
 import { Links, Meta, Outlet, Scripts, ScrollRestoration } from "react-router";
 
@@ -18,6 +19,9 @@ export function Layout({ children }: { children: ReactNode }) {
         <title>Puriki</title>
       </head>
       <body>
+        <a className="skip-link" href="#main-content">
+          Pular para o conteúdo
+        </a>
         {children}
         <ScrollRestoration />
         <Scripts />
@@ -27,9 +31,13 @@ export function Layout({ children }: { children: ReactNode }) {
 }
 
 export default function App() {
-  return <Outlet />;
+  return (
+    <SiteShell>
+      <Outlet />
+    </SiteShell>
+  );
 }
 
 export function HydrateFallback() {
-  return <p>Loading Puriki...</p>;
+  return <p className="sr-only">Carregando Puriki...</p>;
 }
