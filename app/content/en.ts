@@ -1,3 +1,8 @@
+import {
+  PURIKUKI_ISSUES_URL,
+  PURIKUKI_RELEASES_URL,
+  PURIKUKI_REPO_URL,
+} from "../lib/external-links";
 import type { SiteContent } from "./types";
 
 export const en = {
@@ -46,6 +51,7 @@ export const en = {
     primaryCta: "Download for Android",
     secondaryCta: "View on GitHub",
     trustLine: "AniList · MyAnimeList · Open Source · No ads",
+    mockupAlt: "Preview of Puriki's list screen, showing episode progress",
   },
   providers: {
     eyebrow: "How it works",
@@ -54,7 +60,7 @@ export const en = {
     highlight: "You choose the provider. Puriki handles the experience.",
     anilistLabel: "AniList",
     malLabel: "MyAnimeList",
-    puriklLabel: "Puriki",
+    purikiLabel: "Puriki",
   },
   benefits: {
     eyebrow: "Features",
@@ -86,16 +92,19 @@ export const en = {
         id: "list",
         title: "Track without the hassle",
         body: "Update episodes, status, and scores using the list you already maintain on your provider.",
+        imageAlt: "Puriki's list screen, showing per-title progress",
       },
       {
         id: "discovery",
         title: "From catalog to details",
         body: "Search titles, discover new anime, and check the information you need before deciding what's next on your list.",
+        imageAlt: "Puriki's search and catalog screen",
       },
       {
         id: "details",
         title: "Details when you need them",
-        body: "See synopsis and details for each title right on the info screen, without leaving your list's flow.",
+        body: "See synopsis and details for each title right on the info screen. On Android, synopses are automatically translated on-device using Google ML Kit for Portuguese and Spanish readers.",
+        imageAlt: "An anime's details screen in Puriki, with translated synopsis",
       },
     ],
   },
@@ -171,6 +180,17 @@ export const en = {
       message: "Puriki's first public version is still in preparation.",
       cta: "Follow along on GitHub",
     },
+    installHelp: {
+      title: "How to install",
+      steps: [
+        "Download the official Puriki file.",
+        "Open the APK on your Android device.",
+        "If prompted, allow installs from the browser or file manager you used.",
+        "Confirm the installation.",
+      ],
+      safetyNote:
+        "Android may show a warning because the app was downloaded outside Google Play. Always make sure the download came from this site or Puriki's official GitHub repository.",
+    },
   },
   faq: {
     eyebrow: "FAQ",
@@ -238,20 +258,20 @@ export const en = {
         links: [
           {
             label: "GitHub",
-            target: { kind: "external", href: "https://github.com/jvitorn/purikuki" },
+            target: { kind: "external", href: PURIKUKI_REPO_URL },
           },
           {
             label: "Releases",
             target: {
               kind: "external",
-              href: "https://github.com/jvitorn/purikuki/releases",
+              href: PURIKUKI_RELEASES_URL,
             },
           },
           {
             label: "Issues",
             target: {
               kind: "external",
-              href: "https://github.com/jvitorn/purikuki/issues",
+              href: PURIKUKI_ISSUES_URL,
             },
           },
         ],

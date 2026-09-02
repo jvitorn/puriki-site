@@ -76,33 +76,47 @@ that remains Phase 03 scope. Full detail in
 
 ## Phase 03 — Landing
 
-- [ ] Final Header.
-- [ ] Hero.
-- [ ] “Sua lista de anime, do seu jeito.” source H1 implemented.
-- [ ] “Download for Android” localized CTA.
-- [ ] GitHub CTA.
-- [ ] AniList -> Puriki <- MyAnimeList section.
-- [ ] Restrained connector animation.
-- [ ] Reduced-motion fallback.
-- [ ] Four core benefits.
-- [ ] List showcase.
-- [ ] Discovery showcase.
-- [ ] Details/translation showcase.
-- [ ] Translation claims verified against real app.
-- [ ] Privacy section.
-- [ ] Open Source section.
-- [ ] 1.0/2.0/3.0 Roadmap.
-- [ ] 2.0 clearly future.
-- [ ] 3.0 clearly planned.
-- [ ] Download shell.
-- [ ] “first public version in preparation” state.
-- [ ] FAQ.
-- [ ] Footer.
-- [ ] Final screenshots selected.
-- [ ] Screenshots optimized.
-- [ ] Alt text reviewed.
-- [ ] Mobile layout reviewed.
-- [ ] Desktop layout reviewed.
+- [x] Final Header.
+- [x] Hero.
+- [x] “Sua lista de anime, do seu jeito.” source H1 implemented.
+- [x] “Download for Android” localized CTA.
+- [x] GitHub CTA.
+- [x] AniList -> Puriki <- MyAnimeList section.
+- [x] Restrained connector animation.
+- [x] Reduced-motion fallback.
+- [x] Four core benefits.
+- [-] List showcase.
+  - Structure, copy and layout are final; the image is an abstract
+    placeholder (no real screenshot available in this workspace).
+- [-] Discovery showcase.
+  - Same note as above.
+- [-] Details/translation showcase.
+  - Translation copy (Google ML Kit, Android, PT-BR/ES) implemented and
+    verified; image remains an abstract placeholder.
+- [x] Translation claims verified against real app.
+- [x] Privacy section.
+- [x] Open Source section.
+- [x] 1.0/2.0/3.0 Roadmap.
+- [x] 2.0 clearly future.
+- [x] 3.0 clearly planned.
+- [x] Download shell.
+- [x] "first public version in preparation" state.
+- [x] FAQ.
+- [x] Footer.
+- [!] Final screenshots selected.
+  - Blocked: no real app screenshots were found in this workspace/chat.
+    Sections are prepared to receive the real assets (typed alt text,
+    layout ready) with no structural rework.
+- [!] Screenshots optimized.
+  - Blocked for the same reason (no source to generate WebP/AVIF from).
+- [x] Alt text reviewed.
+  - Localized alt text present for every current placeholder.
+- [x] Mobile layout reviewed.
+- [x] Desktop layout reviewed.
+
+Note: this phase also fixed the `puriklLabel` -> `purikiLabel` naming typo
+and the roadmap link (`purikuki#roadmap` -> `PURIKI_PRODUCT_ENGINEERING_ROADMAP.md`).
+Full detail in `PHASE_03_LANDING_SECTIONS.md`.
 
 ## Phase 04 — Releases and APK
 

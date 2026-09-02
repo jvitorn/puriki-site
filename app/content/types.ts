@@ -33,6 +33,7 @@ export interface HeroContent {
   primaryCta: string;
   secondaryCta: string;
   trustLine: string;
+  mockupAlt: string;
 }
 
 export interface ProvidersContent {
@@ -42,7 +43,7 @@ export interface ProvidersContent {
   highlight: string;
   anilistLabel: string;
   malLabel: string;
-  puriklLabel: string;
+  purikiLabel: string;
 }
 
 export interface BenefitItem {
@@ -60,6 +61,7 @@ export interface ShowcaseItem {
   id: "list" | "discovery" | "details";
   title: string;
   body: string;
+  imageAlt: string;
 }
 
 export interface ShowcasesContent {
@@ -112,6 +114,12 @@ export interface DownloadNoReleaseContent {
   cta: string;
 }
 
+export interface DownloadInstallHelpContent {
+  title: string;
+  steps: [string, string, string, string];
+  safetyNote: string;
+}
+
 export interface DownloadContent {
   eyebrow: string;
   title: string;
@@ -119,6 +127,7 @@ export interface DownloadContent {
   primaryCta: string;
   originLine: string;
   noRelease: DownloadNoReleaseContent;
+  installHelp: DownloadInstallHelpContent;
 }
 
 export interface FaqItem {

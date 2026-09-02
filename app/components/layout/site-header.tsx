@@ -1,6 +1,7 @@
 import { CodeXml, Download, Menu } from "lucide-react";
 import { useState } from "react";
 import { getContent } from "../../content";
+import { PURIKUKI_REPO_URL } from "../../lib/external-links";
 import { homeAnchorHref, pageHref } from "../../lib/i18n/links";
 import type { Locale } from "../../lib/i18n/locales";
 import type { PageKey } from "../../lib/i18n/pages";
@@ -15,8 +16,6 @@ import {
 } from "../ui/sheet";
 import { Container } from "./container";
 import { LanguageSwitcher } from "./language-switcher";
-
-const GITHUB_URL = "https://github.com/jvitorn/purikuki";
 
 interface SiteHeaderProps {
   locale: Locale;
@@ -66,7 +65,7 @@ export function SiteHeader({ locale, page }: SiteHeaderProps) {
         <div className="hidden items-center gap-2 lg:flex">
           <LanguageSwitcher label={navigation.languageLabel} locale={locale} page={page} />
           <Button asChild variant="secondary">
-            <a href={GITHUB_URL} rel="noreferrer" target="_blank">
+            <a href={PURIKUKI_REPO_URL} rel="noreferrer" target="_blank">
               <CodeXml aria-hidden="true" className="size-4" />
               {navigation.githubLabel}
             </a>
@@ -121,7 +120,7 @@ export function SiteHeader({ locale, page }: SiteHeaderProps) {
               <div className="mt-auto grid gap-3 pt-8">
                 <Button asChild variant="secondary">
                   <a
-                    href={GITHUB_URL}
+                    href={PURIKUKI_REPO_URL}
                     onClick={() => setIsOpen(false)}
                     rel="noreferrer"
                     target="_blank"

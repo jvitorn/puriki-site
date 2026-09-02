@@ -76,33 +76,47 @@ landing — isso continua sendo escopo da Fase 03. Detalhes completos em
 
 ## Fase 03 — Landing
 
-- [ ] Header final.
-- [ ] Hero.
-- [ ] H1 “Sua lista de anime, do seu jeito.”
-- [ ] CTA “Baixar para Android”.
-- [ ] CTA GitHub.
-- [ ] Seção AniList -> Puriki <- MyAnimeList.
-- [ ] Animação de conexão discreta.
-- [ ] Fallback sem movimento.
-- [ ] Quatro benefícios principais.
-- [ ] Showcase de lista.
-- [ ] Showcase de descoberta.
-- [ ] Showcase de detalhes/tradução.
-- [ ] Afirmações de tradução verificadas contra o app real.
-- [ ] Seção de privacidade.
-- [ ] Seção Open Source.
-- [ ] Roadmap 1.0/2.0/3.0.
-- [ ] 2.0 marcada como futura.
-- [ ] 3.0 marcada como planejada.
-- [ ] Shell de Download.
-- [ ] Estado “primeira versão em preparação”.
-- [ ] FAQ.
-- [ ] Footer.
-- [ ] Screenshots finais selecionados.
-- [ ] Screenshots otimizados.
-- [ ] Alt texts revisados.
-- [ ] Layout mobile revisado.
-- [ ] Layout desktop revisado.
+- [x] Header final.
+- [x] Hero.
+- [x] H1 “Sua lista de anime, do seu jeito.”
+- [x] CTA “Baixar para Android”.
+- [x] CTA GitHub.
+- [x] Seção AniList -> Puriki <- MyAnimeList.
+- [x] Animação de conexão discreta.
+- [x] Fallback sem movimento.
+- [x] Quatro benefícios principais.
+- [-] Showcase de lista.
+  - Estrutura, copy e layout prontos; imagem é um placeholder abstrato (sem
+    screenshot real disponível neste workspace).
+- [-] Showcase de descoberta.
+  - Mesma observação acima.
+- [-] Showcase de detalhes/tradução.
+  - Copy da tradução (Google ML Kit, Android, PT-BR/ES) já implementada e
+    verificada; imagem segue como placeholder abstrato.
+- [x] Afirmações de tradução verificadas contra o app real.
+- [x] Seção de privacidade.
+- [x] Seção Open Source.
+- [x] Roadmap 1.0/2.0/3.0.
+- [x] 2.0 marcada como futura.
+- [x] 3.0 marcada como planejada.
+- [x] Shell de Download.
+- [x] Estado “primeira versão em preparação”.
+- [x] FAQ.
+- [x] Footer.
+- [!] Screenshots finais selecionados.
+  - Bloqueado: nenhum screenshot real do app foi encontrado neste
+    workspace/chat. Seções preparadas para receber os assets reais
+    (alt text tipado, layout pronto) sem retrabalho estrutural.
+- [!] Screenshots otimizados.
+  - Bloqueado pelo mesmo motivo acima (sem fonte para gerar WebP/AVIF).
+- [x] Alt texts revisados.
+  - Alt text localizado presente para todos os placeholders atuais.
+- [x] Layout mobile revisado.
+- [x] Layout desktop revisado.
+
+Observação: correção de nomenclatura `puriklLabel` -> `purikiLabel` e do
+link do roadmap (`purikuki#roadmap` -> `PURIKI_PRODUCT_ENGINEERING_ROADMAP.md`)
+feitas nesta fase. Detalhes completos em `PHASE_03_LANDING_SECTIONS.md`.
 
 ## Fase 04 — Releases e APK
 

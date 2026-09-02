@@ -1,3 +1,8 @@
+import {
+  PURIKUKI_ISSUES_URL,
+  PURIKUKI_RELEASES_URL,
+  PURIKUKI_REPO_URL,
+} from "../lib/external-links";
 import type { SiteContent } from "./types";
 
 export const es = {
@@ -46,6 +51,7 @@ export const es = {
     primaryCta: "Descargar para Android",
     secondaryCta: "Ver en GitHub",
     trustLine: "AniList · MyAnimeList · Open Source · Sin anuncios",
+    mockupAlt: "Vista previa de la pantalla de lista de Puriki, con progreso de episodios",
   },
   providers: {
     eyebrow: "Cómo funciona",
@@ -54,7 +60,7 @@ export const es = {
     highlight: "Tú eliges el proveedor. Puriki se encarga de la experiencia.",
     anilistLabel: "AniList",
     malLabel: "MyAnimeList",
-    puriklLabel: "Puriki",
+    purikiLabel: "Puriki",
   },
   benefits: {
     eyebrow: "Funciones",
@@ -86,16 +92,19 @@ export const es = {
         id: "list",
         title: "Sigue tu lista sin complicaciones",
         body: "Actualiza episodios, estado y puntuaciones usando la lista que ya mantienes en tu proveedor.",
+        imageAlt: "Pantalla de mi lista en Puriki, con progreso por título",
       },
       {
         id: "discovery",
         title: "Del catálogo a los detalles",
         body: "Busca títulos, descubre nuevos animes y consulta la información que necesitas antes de decidir el siguiente de tu lista.",
+        imageAlt: "Pantalla de búsqueda y catálogo de Puriki",
       },
       {
         id: "details",
         title: "Información cuando la necesitas",
-        body: "Consulta la sinopsis y los detalles de cada título en la pantalla de información, sin salir del flujo de tu lista.",
+        body: "Consulta la sinopsis y los detalles de cada título en la pantalla de información. En Android, las sinopsis se traducen automáticamente en el dispositivo con Google ML Kit para lectores en portugués y español.",
+        imageAlt: "Pantalla de detalles de un anime en Puriki, con sinopsis traducida",
       },
     ],
   },
@@ -171,6 +180,17 @@ export const es = {
       message: "La primera versión pública de Puriki todavía está en preparación.",
       cta: "Seguir en GitHub",
     },
+    installHelp: {
+      title: "Cómo instalar",
+      steps: [
+        "Descarga el archivo oficial de Puriki.",
+        "Abre el APK en tu dispositivo Android.",
+        "Si se solicita, permite la instalación desde el navegador o gestor de archivos utilizado.",
+        "Confirma la instalación.",
+      ],
+      safetyNote:
+        "Android puede mostrar una advertencia porque la app se descargó fuera de Google Play. Verifica siempre que la descarga provenga de este sitio o del repositorio oficial de Puriki en GitHub.",
+    },
   },
   faq: {
     eyebrow: "Preguntas frecuentes",
@@ -239,20 +259,20 @@ export const es = {
         links: [
           {
             label: "GitHub",
-            target: { kind: "external", href: "https://github.com/jvitorn/purikuki" },
+            target: { kind: "external", href: PURIKUKI_REPO_URL },
           },
           {
             label: "Releases",
             target: {
               kind: "external",
-              href: "https://github.com/jvitorn/purikuki/releases",
+              href: PURIKUKI_RELEASES_URL,
             },
           },
           {
             label: "Issues",
             target: {
               kind: "external",
-              href: "https://github.com/jvitorn/purikuki/issues",
+              href: PURIKUKI_ISSUES_URL,
             },
           },
         ],
