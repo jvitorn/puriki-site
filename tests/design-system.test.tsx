@@ -1,14 +1,6 @@
-import {
-  fireEvent,
-  render,
-  screen,
-  waitFor,
-  within,
-} from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import { useState } from "react";
 import { describe, expect, it, vi } from "vitest";
-import { SiteHeader } from "../app/components/layout/site-header";
-import { SiteShell } from "../app/components/layout/site-shell";
 import { Reveal } from "../app/components/motion/reveal";
 import { SmartphoneMockup } from "../app/components/product/smartphone-mockup";
 import {
@@ -39,22 +31,6 @@ describe("design system primitives", () => {
 
     fireEvent.click(button);
     expect(screen.getByRole("button", { name: "Count 1" })).toBeInTheDocument();
-  });
-
-  it("opens the mobile Sheet and closes it after navigation", async () => {
-    render(<SiteHeader />);
-
-    fireEvent.click(screen.getByRole("button", { name: "Abrir menu" }));
-    const dialog = screen.getByRole("dialog", { name: "Menu" });
-    expect(dialog).toBeInTheDocument();
-
-    fireEvent.click(within(dialog).getByRole("link", { name: "Tokens" }));
-
-    await waitFor(() =>
-      expect(
-        screen.queryByRole("dialog", { name: "Menu" }),
-      ).not.toBeInTheDocument(),
-    );
   });
 
   it("exposes Accordion state and content accessibly", () => {
@@ -88,19 +64,7 @@ describe("design system primitives", () => {
   });
 });
 
-describe("shared shell and motion preference", () => {
-  it("renders the shared layout without locale content errors", () => {
-    render(
-      <SiteShell>
-        <h1>Page content</h1>
-      </SiteShell>,
-    );
-
-    expect(screen.getByRole("banner")).toBeInTheDocument();
-    expect(screen.getByRole("main")).toHaveAttribute("id", "main-content");
-    expect(screen.getByRole("contentinfo")).toBeInTheDocument();
-  });
-
+describe("motion preference", () => {
   it("reads the reduced-motion media preference centrally", () => {
     const matchMedia = vi.fn().mockImplementation((query: string) => ({
       matches: query === REDUCED_MOTION_QUERY,

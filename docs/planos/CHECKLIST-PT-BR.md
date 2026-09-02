@@ -44,139 +44,180 @@ Observação: Collapsible não foi adicionado porque ainda não existe uso concr
 
 ## Fase 02 — Rotas, i18n e conteúdo
 
-- [ ] Locale `pt-BR`.
-- [ ] Locale `en`.
-- [ ] Locale `es`.
-- [ ] `/`.
-- [ ] `/privacy/`.
-- [ ] `/terms/`.
-- [ ] `/en/`.
-- [ ] `/en/privacy/`.
-- [ ] `/en/terms/`.
-- [ ] `/es/`.
-- [ ] `/es/privacy/`.
-- [ ] `/es/terms/`.
-- [ ] 404 criada.
-- [ ] Conteúdo tipado criado.
-- [ ] PT-BR implementado como conteúdo base.
-- [ ] EN completo.
-- [ ] ES completo.
+- [x] Locale `pt-BR`.
+- [x] Locale `en`.
+- [x] Locale `es`.
+- [x] `/`.
+- [x] `/privacy/`.
+- [x] `/terms/`.
+- [x] `/en/`.
+- [x] `/en/privacy/`.
+- [x] `/en/terms/`.
+- [x] `/es/`.
+- [x] `/es/privacy/`.
+- [x] `/es/terms/`.
+- [x] 404 criada.
+- [x] Conteúdo tipado criado.
+- [x] PT-BR implementado como conteúdo base.
+- [x] EN completo.
+- [x] ES completo.
 - [ ] EN revisado humanamente antes do lançamento.
 - [ ] ES revisado humanamente antes do lançamento.
-- [ ] Seletor de idioma acessível.
-- [ ] Troca de idioma preserva a página equivalente.
-- [ ] Sem redirecionamento automático forçado.
-- [ ] Metadados por página/idioma preparados.
-- [ ] Todas as rotas pré-renderizam.
+- [x] Seletor de idioma acessível.
+- [x] Troca de idioma preserva a página equivalente.
+- [x] Sem redirecionamento automático forçado.
+- [x] Metadados por página/idioma preparados.
+- [x] Todas as rotas pré-renderizam.
+
+Observação: a Home/Privacy/Terms desta fase são um scaffold de conteúdo e
+rotas (estrutura semântica mínima + âncoras), não o design final da
+landing — isso continua sendo escopo da Fase 03. Detalhes completos em
+`PHASE_02_ROUTING_I18N_CONTENT.md`.
 
 ## Fase 03 — Landing
 
-- [ ] Header final.
-- [ ] Hero.
-- [ ] H1 “Sua lista de anime, do seu jeito.”
-- [ ] CTA “Baixar para Android”.
-- [ ] CTA GitHub.
-- [ ] Seção AniList -> Puriki <- MyAnimeList.
-- [ ] Animação de conexão discreta.
-- [ ] Fallback sem movimento.
-- [ ] Quatro benefícios principais.
-- [ ] Showcase de lista.
-- [ ] Showcase de descoberta.
-- [ ] Showcase de detalhes/tradução.
-- [ ] Afirmações de tradução verificadas contra o app real.
-- [ ] Seção de privacidade.
-- [ ] Seção Open Source.
-- [ ] Roadmap 1.0/2.0/3.0.
-- [ ] 2.0 marcada como futura.
-- [ ] 3.0 marcada como planejada.
-- [ ] Shell de Download.
-- [ ] Estado “primeira versão em preparação”.
-- [ ] FAQ.
-- [ ] Footer.
-- [ ] Screenshots finais selecionados.
-- [ ] Screenshots otimizados.
-- [ ] Alt texts revisados.
-- [ ] Layout mobile revisado.
-- [ ] Layout desktop revisado.
+- [x] Header final.
+- [x] Hero.
+- [x] H1 “Sua lista de anime, do seu jeito.”
+- [x] CTA “Baixar para Android”.
+- [x] CTA GitHub.
+- [x] Seção AniList -> Puriki <- MyAnimeList.
+- [x] Animação de conexão discreta.
+- [x] Fallback sem movimento.
+- [x] Quatro benefícios principais.
+- [x] Showcase de lista.
+- [x] Showcase de descoberta.
+- [x] Showcase de detalhes/tradução.
+  - Copy da tradução (Google ML Kit, Android, PT-BR/ES) implementada e
+    verificada.
+- [x] Afirmações de tradução verificadas contra o app real.
+- [x] Seção de privacidade.
+- [x] Seção Open Source.
+- [x] Roadmap 1.0/2.0/3.0.
+- [x] 2.0 marcada como futura.
+- [x] 3.0 marcada como planejada.
+- [x] Shell de Download.
+- [x] Estado “primeira versão em preparação”.
+- [x] FAQ.
+- [x] Footer.
+- [x] Screenshots finais selecionados.
+  - Decisão do maintainer (registrada na Fase 04): os mockups estilizados
+    (Hero e showcases) são a solução visual definitiva da landing.
+    Screenshots reais do app não são mais um requisito.
+- [x] Screenshots otimizados.
+  - N/A — não há arquivos de imagem a otimizar; os mockups são
+    renderizados via markup/CSS (tokens do design system), não assets
+    binários.
+- [x] Alt texts revisados.
+  - Alt text localizado presente para todos os mockups.
+- [x] Layout mobile revisado.
+- [x] Layout desktop revisado.
+
+Observação: correção de nomenclatura `puriklLabel` -> `purikiLabel` e do
+link do roadmap (`purikuki#roadmap` -> `PURIKI_PRODUCT_ENGINEERING_ROADMAP.md`)
+feitas na Fase 03. Detalhes completos em `PHASE_03_LANDING_SECTIONS.md`.
 
 ## Fase 04 — Releases e APK
 
-- [ ] Script build-time de GitHub Release criado.
-- [ ] Última release estável usada.
-- [ ] Draft ignorado.
-- [ ] Prerelease ignorada para CTA principal.
-- [ ] Asset `puriki-{version}-android.apk` localizado.
-- [ ] Versão capturada.
-- [ ] Data capturada.
-- [ ] Tamanho capturado.
-- [ ] URL de download capturada.
-- [ ] URL da release capturada.
-- [ ] SHA-256 capturado quando disponível.
-- [ ] Arquivo de metadados gerado.
-- [ ] Sem release gera `available: false`.
-- [ ] Falha técnica de API não é mascarada como “sem release”.
-- [ ] Nenhum token vai para o bundle.
-- [ ] Download aponta diretamente para GitHub Release.
-- [ ] Tamanho formatado.
-- [ ] Data localizada.
-- [ ] SHA expansível.
-- [ ] Botão copiar SHA acessível.
-- [ ] Instruções de APK adicionadas.
-- [ ] Testes do parser de release.
-- [ ] Teste stable vs prerelease.
-- [ ] Teste sem release.
-- [ ] Teste asset ausente/ambíguo.
-- [ ] `workflow_dispatch` disponível.
+- [x] Script build-time de GitHub Release criado.
+- [x] Última release estável usada.
+- [x] Draft ignorado.
+- [x] Prerelease ignorada para CTA principal.
+- [x] Asset `puriki-{version}-android.apk` localizado.
+- [x] Versão capturada.
+- [x] Data capturada.
+- [x] Tamanho capturado.
+- [x] URL de download capturada.
+- [x] URL da release capturada.
+- [x] SHA-256 capturado quando disponível.
+- [x] Arquivo de metadados gerado.
+- [x] Sem release gera `available: false`.
+- [x] Falha técnica de API não é mascarada como “sem release”.
+- [x] Nenhum token vai para o bundle.
+- [x] Download aponta diretamente para GitHub Release.
+- [x] Tamanho formatado.
+- [x] Data localizada.
+- [x] SHA expansível.
+- [x] Botão copiar SHA acessível.
+- [x] Instruções de APK adicionadas.
+- [x] Testes do parser de release.
+- [x] Teste stable vs prerelease.
+- [x] Teste sem release.
+- [x] Teste asset ausente/ambíguo.
+- [x] `workflow_dispatch` disponível.
 - [ ] Dispatch automático entre repositórios implementado quando o workflow do app estiver pronto.
+  - Pendência externa deliberada: `puriki-site` já declara
+    `repository_dispatch: types: [puriki-release-published]` no workflow e
+    sempre refaz seu próprio `release:fetch` (não confia em payload
+    externo). Falta apenas o `purikuki` ganhar seu workflow de release
+    estável para enviar o dispatch — está fora do escopo deste repositório.
 
 ## Fase 05 — Acessibilidade, SEO e Legal
 
 ### Acessibilidade
-- [ ] WCAG 2.2 AA usada como referência.
-- [ ] HTML semântico.
-- [ ] Apenas um H1 por página.
-- [ ] Hierarquia de headings correta.
-- [ ] Navegação completa por teclado.
-- [ ] Foco visível.
-- [ ] Sheet acessível.
-- [ ] FAQ acessível.
-- [ ] Sem conteúdo dependente de hover.
-- [ ] Estados não dependem só de cor.
-- [ ] Touch targets adequados.
-- [ ] `prefers-reduced-motion`.
-- [ ] Zoom 200% testado.
-- [ ] Contraste validado.
-- [ ] Screen reader spot-check.
+- [x] WCAG 2.2 AA usada como referência.
+- [x] HTML semântico.
+- [x] Apenas um H1 por página.
+- [x] Hierarquia de headings correta.
+- [x] Navegação completa por teclado.
+- [x] Foco visível.
+- [x] Sheet acessível.
+- [x] FAQ acessível.
+- [x] Sem conteúdo dependente de hover.
+- [x] Estados não dependem só de cor.
+- [x] Touch targets adequados.
+- [x] `prefers-reduced-motion`.
+- [-] Zoom 200% testado.
+  - Aproximado via reflow em 320px (sem overflow em `/`, `/privacy/`,
+    `/terms/`, `/en/`, `/es/privacy/`). Zoom literal do navegador a
+    200% fica para a Fase 07.
+- [x] Contraste validado.
+  - Calculado numericamente (fórmula WCAG) contra os tokens reais.
+    Texto/foco: 5.3–18.5:1. `border`/`border-strong`/`brand`-como-fill
+    ficam abaixo de 3:1 mas são decorativos, nunca o único indicador de
+    limite de um elemento interativo público (variante `outline` do
+    Button só existe no sandbox `/foundation/`) — token preservado.
+- [!] Screen reader spot-check.
+  - Bloqueado: nenhum leitor de tela disponível neste ambiente.
+    Pendência registrada para QA manual do maintainer.
 
 ### SEO
-- [ ] Title localizado.
-- [ ] Description localizada.
-- [ ] Canonical correto.
-- [ ] hreflang pt-BR/en/es.
-- [ ] x-default.
-- [ ] Open Graph.
-- [ ] Twitter/X card.
-- [ ] Imagem social.
-- [ ] JSON-LD de aplicativo.
-- [ ] sitemap.xml.
-- [ ] robots.txt.
-- [ ] favicon.
-- [ ] apple-touch-icon.
-- [ ] Sem `noindex` acidental.
+- [x] Title localizado.
+- [x] Description localizada.
+- [x] Canonical correto.
+- [x] hreflang pt-BR/en/es.
+- [x] x-default.
+- [x] Open Graph.
+- [x] Twitter/X card.
+- [x] Imagem social.
+- [x] JSON-LD de aplicativo.
+- [x] sitemap.xml.
+- [x] robots.txt.
+- [x] favicon.
+- [x] apple-touch-icon.
+- [x] Sem `noindex` acidental.
+  - Foundation e 404 têm `noindex` deliberado (não são conteúdo
+    público); as nove rotas públicas não têm `noindex`.
 
 ### Legal
-- [ ] Privacy PT-BR.
-- [ ] Privacy EN.
-- [ ] Privacy ES.
-- [ ] Terms PT-BR.
-- [ ] Terms EN.
-- [ ] Terms ES.
-- [ ] GitHub Pages mencionado adequadamente na Privacy.
-- [ ] Ausência de analytics descrita corretamente.
-- [ ] Relação com AniList/MAL descrita corretamente.
-- [ ] Disclaimer de projeto não oficial.
-- [ ] Uso de logos de providers revisado.
+- [x] Privacy PT-BR.
+- [x] Privacy EN.
+- [x] Privacy ES.
+- [x] Terms PT-BR.
+- [x] Terms EN.
+- [x] Terms ES.
+- [x] GitHub Pages mencionado adequadamente na Privacy.
+- [x] Ausência de analytics descrita corretamente.
+- [x] Relação com AniList/MAL descrita corretamente.
+- [x] Disclaimer de projeto não oficial.
+- [!] Uso de logos de providers revisado.
+  - Bloqueado: sem material oficial de branding revisado nesta fase.
+    Continua usando apenas nomes em texto (sem logos), conforme já
+    decidido nas Fases 02/03.
 - [ ] Texto legal revisado antes do lançamento.
+  - Conteúdo é preciso e público, mas não passou por revisão
+    jurídica/humana formal — não marcar como concluído até essa revisão
+    acontecer.
 
 ## Fase 06 — Testes, CI e Deploy
 
