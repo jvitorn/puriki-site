@@ -10,7 +10,17 @@ function normalizeBasePath(value: string): string {
 
 export const siteConfig = {
   siteUrl: import.meta.env.VITE_SITE_URL || DEFAULT_SITE_URL,
-  basePath: normalizeBasePath(
-    import.meta.env.VITE_BASE_PATH || DEFAULT_BASE_PATH,
-  ),
+  basePath: normalizeBasePath(import.meta.env.BASE_URL || DEFAULT_BASE_PATH),
 } as const;
+
+export function withBasePath(path = ""): string {
+  if (!path) {
+    return siteConfig.basePath;
+  }
+
+  if (path.startsWith("#")) {
+    return `${siteConfig.basePath}${path}`;
+  }
+
+  return `${siteConfig.basePath}${path.replace(/^\/+/, "")}`;
+}

@@ -23,22 +23,24 @@
 
 ## Phase 01 — Design System
 
-- [ ] Semantic tokens created.
-- [ ] Initial dark-only theme.
-- [ ] Brand red consumed through tokens, not hardcoded.
-- [ ] Geist configured.
-- [ ] Global visible focus.
-- [ ] Skip link prepared.
-- [ ] Reduced motion configured.
-- [ ] Container and Section primitives created.
-- [ ] Button configured.
-- [ ] Sheet configured.
-- [ ] Accordion configured.
-- [ ] Collapsible added only if necessary.
-- [ ] Responsive Header created.
-- [ ] Structural Footer created.
-- [ ] Generic smartphone mockup created.
-- [ ] Small Anime.js helper with reduced-motion support.
+- [x] Semantic tokens created.
+- [x] Initial dark-only theme.
+- [x] Brand red consumed through tokens, not hardcoded.
+- [x] Geist configured.
+- [x] Global visible focus.
+- [x] Skip link prepared.
+- [x] Reduced motion configured.
+- [x] Container and Section primitives created.
+- [x] Button configured.
+- [x] Sheet configured.
+- [x] Accordion configured.
+- [x] Collapsible added only if necessary.
+- [x] Responsive Header created.
+- [x] Structural Footer created.
+- [x] Generic smartphone mockup created.
+- [x] Small Anime.js helper with reduced-motion support.
+
+Note: Collapsible was not added because there is no concrete use for it yet.
 
 ## Phase 02 — Routes, i18n and Content
 
@@ -187,19 +189,23 @@
 - [ ] Canonical/hreflang tests.
 - [ ] PR CI.
 - [ ] `main` CI.
-- [ ] `pnpm install --frozen-lockfile`.
+- [x] `pnpm install --frozen-lockfile`.
 - [ ] Lint in CI.
 - [ ] Typecheck in CI.
 - [ ] Tests in CI.
-- [ ] Build in CI.
+- [x] Build in CI.
 - [ ] Static route validation.
-- [ ] GitHub Pages workflow.
+- [x] GitHub Pages workflow.
 - [ ] Pages source set to GitHub Actions.
-- [ ] Manual deploy available.
-- [ ] Deploy concurrency controlled.
-- [ ] `/puriki-site/` base validated.
-- [ ] Project-site assets work.
-- [ ] No secret in published artifact.
+- [x] Manual deploy available.
+- [x] Deploy concurrency controlled.
+- [x] `/puriki-site/` base validated.
+- [x] Project-site assets work.
+- [x] No secret in published artifact.
+
+> Minimal GitHub Pages deployment infrastructure was intentionally implemented during Phase 01 to allow visual validation of each subsequent phase. Full CI/deployment hardening remains part of Phase 06.
+
+The Pages source still needs to be selected manually as GitHub Actions in the repository settings. Full CI gates and the remaining Phase 06 automations are still pending.
 
 ## Phase 07 — Launch
 

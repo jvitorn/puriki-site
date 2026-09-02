@@ -1,8 +1,12 @@
+import { Section } from "../components/layout/section";
+
 export default function FoundationRoute() {
   return (
-    <main>
+    <Section>
       <h1>Foundation route</h1>
-      <p>Static nested route smoke output.</p>
-    </main>
+      <p className="mt-4 text-foreground-muted">
+        Static nested route smoke output.
+      </p>
+    </Section>
   );
 }

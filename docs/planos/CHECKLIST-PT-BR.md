@@ -23,22 +23,24 @@
 
 ## Fase 01 — Design System
 
-- [ ] Tokens semânticos criados.
-- [ ] Tema inicial dark-only.
-- [ ] Vermelho da marca usado por token, não hardcoded.
-- [ ] Fonte Geist configurada.
-- [ ] Foco visível global.
-- [ ] Skip link preparado.
-- [ ] Redução de movimento configurada.
-- [ ] Container e Section criados.
-- [ ] Button configurado.
-- [ ] Sheet configurado.
-- [ ] Accordion configurado.
-- [ ] Collapsible adicionado somente se necessário.
-- [ ] Header responsivo criado.
-- [ ] Footer estrutural criado.
-- [ ] Mockup genérico de smartphone criado.
-- [ ] Utilitário pequeno para Anime.js com reduced motion.
+- [x] Tokens semânticos criados.
+- [x] Tema inicial dark-only.
+- [x] Vermelho da marca usado por token, não hardcoded.
+- [x] Fonte Geist configurada.
+- [x] Foco visível global.
+- [x] Skip link preparado.
+- [x] Redução de movimento configurada.
+- [x] Container e Section criados.
+- [x] Button configurado.
+- [x] Sheet configurado.
+- [x] Accordion configurado.
+- [x] Collapsible adicionado somente se necessário.
+- [x] Header responsivo criado.
+- [x] Footer estrutural criado.
+- [x] Mockup genérico de smartphone criado.
+- [x] Utilitário pequeno para Anime.js com reduced motion.
+
+Observação: Collapsible não foi adicionado porque ainda não existe uso concreto para ele.
 
 ## Fase 02 — Rotas, i18n e conteúdo
 
@@ -187,19 +189,23 @@
 - [ ] Testes de canonical/hreflang.
 - [ ] CI em PR.
 - [ ] CI em `main`.
-- [ ] `pnpm install --frozen-lockfile`.
+- [x] `pnpm install --frozen-lockfile`.
 - [ ] Lint no CI.
 - [ ] Typecheck no CI.
 - [ ] Testes no CI.
-- [ ] Build no CI.
+- [x] Build no CI.
 - [ ] Validação das rotas estáticas.
-- [ ] Workflow do GitHub Pages.
+- [x] Workflow do GitHub Pages.
 - [ ] Pages configurado para GitHub Actions.
-- [ ] Deploy manual disponível.
-- [ ] Concorrência de deploy controlada.
-- [ ] Base `/puriki-site/` validada.
-- [ ] Assets funcionam no project site.
-- [ ] Nenhum segredo no artefato publicado.
+- [x] Deploy manual disponível.
+- [x] Concorrência de deploy controlada.
+- [x] Base `/puriki-site/` validada.
+- [x] Assets funcionam no project site.
+- [x] Nenhum segredo no artefato publicado.
+
+> Minimal GitHub Pages deployment infrastructure was intentionally implemented during Phase 01 to allow visual validation of each subsequent phase. Full CI/deployment hardening remains part of Phase 06.
+
+O source do Pages ainda precisa ser selecionado manualmente como GitHub Actions nas configurações do repositório. Os gates completos de CI e as demais automações da Fase 06 continuam pendentes.
 
 ## Fase 07 — Lançamento
 
