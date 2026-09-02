@@ -48,6 +48,11 @@ export const stableReleaseTagWithoutV = {
   ],
 };
 
+export const releaseWithInvalidPublishedAt = {
+  ...stableReleaseWithDigest,
+  published_at: "not-a-real-date",
+};
+
 export const draftRelease = {
   ...stableReleaseWithDigest,
   draft: true,

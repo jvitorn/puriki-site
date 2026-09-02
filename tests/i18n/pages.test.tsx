@@ -27,7 +27,7 @@ describe("HomePage", () => {
 });
 
 describe("PrivacyPage", () => {
-  it("renders the localized title and preparation notice", () => {
+  it("renders the localized title, every section, and the last-updated date", () => {
     for (const locale of LOCALES) {
       const { unmount } = render(<PrivacyPage locale={locale} />);
       const content = getContent(locale);
@@ -35,8 +35,15 @@ describe("PrivacyPage", () => {
       expect(
         screen.getByRole("heading", { level: 1, name: content.privacyPage.title }),
       ).toBeInTheDocument();
+
+      for (const section of content.privacyPage.sections) {
+        expect(
+          screen.getByRole("heading", { level: 2, name: section.heading }),
+        ).toBeInTheDocument();
+      }
+
       expect(
-        screen.getByText(content.privacyPage.preparationNotice),
+        screen.getByText(new RegExp(content.privacyPage.lastUpdatedLabel)),
       ).toBeInTheDocument();
 
       unmount();
@@ -45,7 +52,7 @@ describe("PrivacyPage", () => {
 });
 
 describe("TermsPage", () => {
-  it("renders the localized title and preparation notice", () => {
+  it("renders the localized title, every section, and the last-updated date", () => {
     for (const locale of LOCALES) {
       const { unmount } = render(<TermsPage locale={locale} />);
       const content = getContent(locale);
@@ -53,8 +60,15 @@ describe("TermsPage", () => {
       expect(
         screen.getByRole("heading", { level: 1, name: content.termsPage.title }),
       ).toBeInTheDocument();
+
+      for (const section of content.termsPage.sections) {
+        expect(
+          screen.getByRole("heading", { level: 2, name: section.heading }),
+        ).toBeInTheDocument();
+      }
+
       expect(
-        screen.getByText(content.termsPage.preparationNotice),
+        screen.getByText(new RegExp(content.termsPage.lastUpdatedLabel)),
       ).toBeInTheDocument();
 
       unmount();

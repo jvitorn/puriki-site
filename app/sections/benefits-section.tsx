@@ -2,6 +2,7 @@ import { ListChecks, Search, Smartphone, ToggleLeft } from "lucide-react";
 import type { ComponentType } from "react";
 import type { BenefitsContent } from "../content/types";
 import { Section, SectionHeader } from "../components/layout/section";
+import { Reveal } from "../components/motion/reveal";
 
 interface BenefitsSectionProps {
   content: BenefitsContent;
@@ -16,6 +17,8 @@ const BENEFIT_ICONS: [
   ComponentType<{ className?: string; "aria-hidden"?: boolean }>,
   ComponentType<{ className?: string; "aria-hidden"?: boolean }>,
 ] = [ListChecks, Search, ToggleLeft, Smartphone];
+
+const REVEAL_STEP_MS = 60;
 
 export function BenefitsSection({ content }: BenefitsSectionProps) {
   return (
@@ -34,13 +37,15 @@ export function BenefitsSection({ content }: BenefitsSectionProps) {
               className="rounded-card border border-border bg-surface p-5"
               key={item.title}
             >
-              <span className="grid size-10 place-items-center rounded-[0.7rem] border border-border-strong bg-surface-raised">
-                <Icon aria-hidden className="size-5 text-danger" />
-              </span>
-              <p className="mt-4 text-base font-semibold">{item.title}</p>
-              <p className="mt-2 text-sm leading-6 text-foreground-muted">
-                {item.body}
-              </p>
+              <Reveal delay={index * REVEAL_STEP_MS}>
+                <span className="grid size-10 place-items-center rounded-[0.7rem] border border-border-strong bg-surface-raised">
+                  <Icon aria-hidden className="size-5 text-danger" />
+                </span>
+                <p className="mt-4 text-base font-semibold">{item.title}</p>
+                <p className="mt-2 text-sm leading-6 text-foreground-muted">
+                  {item.body}
+                </p>
+              </Reveal>
             </li>
           );
         })}

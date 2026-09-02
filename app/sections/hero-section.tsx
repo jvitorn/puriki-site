@@ -38,7 +38,7 @@ function HeroMockupPreview() {
         </div>
         <div className="h-1.5 w-10 rounded-full bg-foreground-subtle/40" />
       </div>
-      <div className="mt-3 grid gap-2.5">
+      <Reveal className="mt-3 grid gap-2.5" staggerChildren={70}>
         {["67%", "42%", "25%"].map((progress, index) => (
           <div
             className="grid grid-cols-[3.25rem_1fr] gap-3 rounded-card border border-border bg-surface p-2.5"
@@ -62,7 +62,7 @@ function HeroMockupPreview() {
             </div>
           </div>
         ))}
-      </div>
+      </Reveal>
       <div className="mt-auto grid grid-cols-4 gap-3 border-t border-border pt-4">
         {[true, false, false, false].map((active, index) => (
           <span

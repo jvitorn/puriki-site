@@ -165,6 +165,7 @@ export const ptBR = {
           "Replica alterações futuras realizadas pelo Puriki entre os provedores conectados.",
       },
     ],
+    foundationAvailableStatus: "Disponível",
     disclaimer:
       "O roadmap representa a direção atual do projeto e pode evoluir durante o desenvolvimento.",
     cta: "Ver roadmap completo no GitHub",
@@ -199,6 +200,7 @@ export const ptBR = {
       shaLabel: "SHA-256",
       copyLabel: "Copiar",
       copiedLabel: "Copiado",
+      copyFailedLabel: "Não foi possível copiar o SHA-256.",
     },
   },
   faq: {
@@ -295,83 +297,85 @@ export const ptBR = {
   },
   privacyPage: {
     title: "Privacidade",
-    preparationNotice:
-      "Conteúdo estrutural em preparação. A versão jurídica definitiva será publicada na Fase 05.",
     intro:
-      "Esta página resume como o Puriki lida com autenticação, cache local e comunicação com provedores. Ela ainda não é o texto legal final.",
+      "Esta política explica como o site do Puriki e o aplicativo Android lidam com dados. São dois contextos diferentes, descritos separadamente abaixo.",
     sections: [
       {
+        heading: "Site e aplicativo",
+        body: "Esta política cobre dois contextos diferentes: o site que você está lendo agora, que é estático e hospedado no GitHub Pages, e o aplicativo Puriki para Android. Cada um tem um comportamento de dados próprio.",
+      },
+      {
         heading: "Sem conta Puriki",
-        body: "O Puriki não cria uma conta própria. O acesso é feito através da sua conta AniList ou MyAnimeList.",
+        body: "O Puriki não cria uma conta própria. O acesso ao aplicativo é feito através da sua conta existente no AniList ou no MyAnimeList.",
       },
       {
         heading: "Autenticação com provedores",
-        body: "A autenticação é feita diretamente com o provedor escolhido, seguindo o fluxo oficial de autorização de cada serviço.",
+        body: "Ao conectar um provedor, você é direcionado ao fluxo oficial de autorização do AniList ou do MyAnimeList. O Puriki recebe apenas as credenciais necessárias para acessar sua lista, conforme as permissões concedidas nesse fluxo.",
       },
       {
-        heading: "Armazenamento local de tokens",
-        body: "Tokens de acesso são armazenados localmente no dispositivo, usando mecanismos seguros disponíveis na plataforma.",
+        heading: "Armazenamento de credenciais",
+        body: "Tokens de acesso são armazenados localmente no dispositivo usando o armazenamento seguro do sistema operacional (Expo SecureStore), separado por provedor.",
       },
       {
-        heading: "Cache e preferências locais",
-        body: "Preferências e dados de cache necessários para o funcionamento do aplicativo permanecem no dispositivo sempre que tecnicamente aplicável.",
+        heading: "Preferências e cache locais",
+        body: "Outras informações, como idioma preferido, estado do onboarding, provedor principal selecionado e cache de tradução, podem ficar armazenadas localmente no dispositivo para que o aplicativo funcione corretamente.",
       },
       {
         heading: "Comunicação com APIs dos provedores",
-        body: "O Puriki se comunica diretamente com as APIs do AniList e do MyAnimeList para ler e atualizar sua lista.",
+        body: "O Puriki se comunica diretamente com as APIs do AniList e do MyAnimeList para ler e atualizar sua lista. Essa comunicação é necessária ao funcionamento do aplicativo; os dados da sua lista não ficam restritos apenas ao dispositivo.",
       },
       {
         heading: "Tradução local de sinopses",
-        body: "Quando aplicável, a tradução de sinopses é processada no dispositivo, sujeita à confirmação da implementação final.",
+        body: "Quando disponível para o seu idioma, a tradução de sinopses é processada no dispositivo Android usando componentes de tradução do Google ML Kit, sem enviar o texto a um servidor do Puriki.",
       },
       {
-        heading: "Exclusão e redefinição de dados locais",
-        body: "É possível desconectar sua conta e limpar os dados locais armazenados pelo aplicativo a qualquer momento.",
+        heading: "Desconexão de um provedor",
+        body: "Desconectar um provedor remove as credenciais locais associadas a ele. Outras preferências e dados de cache podem permanecer no dispositivo até serem substituídos pelo próprio aplicativo ou removidos pelo sistema.",
       },
       {
-        heading: "Nenhuma análise própria no lançamento",
-        body: "O Puriki não utiliza ferramentas de analytics próprias no lançamento inicial.",
+        heading: "Sem análise própria no lançamento",
+        body: "O aplicativo Puriki não utiliza ferramentas de analytics, rastreamento ou relatório de falhas de terceiros no lançamento inicial.",
       },
       {
         heading: "Hospedagem deste site",
-        body: "Este site é hospedado no GitHub Pages, que pode registrar dados de acesso conforme a infraestrutura da própria GitHub.",
+        body: "Este site é hospedado pelo GitHub Pages. O Puriki não utiliza analytics próprios nesta landing, mas o site está sujeito às práticas técnicas e de privacidade da infraestrutura do GitHub.",
       },
       {
         heading: "Serviços de terceiros",
-        body: "O funcionamento do Puriki depende de serviços de terceiros, como AniList e MyAnimeList, que possuem suas próprias políticas de privacidade.",
+        body: "O funcionamento do Puriki depende de serviços de terceiros — AniList, MyAnimeList e, no Android, componentes de tradução do Google ML Kit — cada um com sua própria política de privacidade.",
       },
       {
         heading: "Atualizações desta política",
-        body: "Esta página poderá ser atualizada conforme o projeto evolui. A versão final e completa é responsabilidade da Fase 05.",
+        body: "Esta página pode ser atualizada conforme o projeto evolui. A data da última revisão está indicada no fim desta página.",
       },
       {
         heading: "Contato",
-        body: "Dúvidas sobre privacidade podem ser abertas como issue no repositório oficial do Puriki no GitHub.",
+        body: "Dúvidas sobre privacidade podem ser abertas como issue no repositório oficial do Puriki no GitHub. Issues são públicas — nunca inclua tokens de acesso, senhas ou outras informações sensíveis nelas.",
       },
     ],
+    lastUpdated: "2026-09-02",
+    lastUpdatedLabel: "Última atualização",
   },
   termsPage: {
     title: "Termos de Uso",
-    preparationNotice:
-      "Conteúdo estrutural em preparação. A versão jurídica definitiva será publicada na Fase 05.",
     intro:
-      "Esta página resume as condições de uso do Puriki. Ela ainda não é o texto legal final.",
+      "Estes termos definem as condições de uso do Puriki, um projeto independente e de código aberto.",
     sections: [
       {
         heading: "Projeto independente e não oficial",
         body: "O Puriki não possui afiliação com AniList ou MyAnimeList e não representa esses serviços.",
       },
       {
-        heading: "Dependência de provedores de terceiros",
-        body: "O funcionamento do Puriki depende da disponibilidade das APIs do AniList e do MyAnimeList.",
+        heading: "Provedores são serviços de terceiros",
+        body: "O funcionamento do Puriki depende das APIs do AniList e do MyAnimeList. Essas APIs pertencem a terceiros e podem mudar sem aviso prévio ao Puriki.",
       },
       {
-        heading: "Sem garantia de disponibilidade dos provedores",
-        body: "O Puriki não garante o funcionamento contínuo de serviços de terceiros que estejam fora do seu controle.",
+        heading: "Disponibilidade dos provedores",
+        body: "O Puriki não garante o funcionamento contínuo de serviços de terceiros. Uma indisponibilidade ou mudança em um provedor pode afetar temporária ou permanentemente funcionalidades do aplicativo.",
       },
       {
-        heading: "Uso responsável",
-        body: "O aplicativo deve ser utilizado de forma responsável e em conformidade com os termos dos provedores conectados.",
+        heading: "Sua conta e responsabilidade de uso",
+        body: "Você é responsável por manter suas credenciais seguras e por usar o Puriki em conformidade com os termos de uso do AniList e do MyAnimeList.",
       },
       {
         heading: "Natureza de código aberto",
@@ -379,16 +383,18 @@ export const ptBR = {
       },
       {
         heading: "Disponibilidade do software",
-        body: "O aplicativo é fornecido no estado em que se encontra, sem garantias formais de disponibilidade contínua.",
+        body: "O aplicativo é fornecido no estado em que se encontra (\"as is\"), sem garantias formais de disponibilidade contínua ou de ausência de erros.",
       },
       {
         heading: "Mudanças futuras",
-        body: "Recursos, telas e funcionalidades podem mudar conforme o projeto evolui, incluindo os itens listados no roadmap.",
+        body: "Recursos, telas e funcionalidades podem mudar conforme o projeto evolui. O roadmap representa uma direção, não um compromisso: itens planejados podem ser alterados, adiados ou removidos.",
       },
       {
         heading: "Limitações de um projeto não comercial",
-        body: "Por se tratar de um projeto de código aberto e não comercial, o suporte e as garantias oferecidas são limitados.",
+        body: "Por se tratar de um projeto de código aberto, gratuito e não comercial, o suporte, a manutenção e as garantias oferecidas são proporcionalmente limitados.",
       },
     ],
+    lastUpdated: "2026-09-02",
+    lastUpdatedLabel: "Última atualização",
   },
 } satisfies SiteContent;

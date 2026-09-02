@@ -27,4 +27,16 @@ export default tseslint.config(
       "react-refresh/only-export-components": "off",
     },
   },
+  {
+    // Plain-JS Node dev scripts: TS files under scripts/ already get
+    // Node globals through the TypeScript parser's ambient @types/node
+    // resolution; .mjs files use the base JS parser, which doesn't.
+    files: ["scripts/**/*.mjs"],
+    languageOptions: {
+      globals: {
+        console: "readonly",
+        process: "readonly",
+      },
+    },
+  },
 );

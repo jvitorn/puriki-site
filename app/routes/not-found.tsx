@@ -2,6 +2,7 @@ import { ArrowRight } from "lucide-react";
 import { Section } from "../components/layout/section";
 import { Button } from "../components/ui/button";
 import { pageHref } from "../lib/i18n/links";
+import { buildNoIndexMeta } from "../lib/i18n/metadata";
 import { DEFAULT_LOCALE } from "../lib/i18n/locales";
 import type { RouteHandle } from "../lib/i18n/route-handle";
 
@@ -10,14 +11,13 @@ import type { RouteHandle } from "../lib/i18n/route-handle";
 // shell and language switcher render sensibly instead of throwing.
 export const handle: RouteHandle = { locale: DEFAULT_LOCALE, page: "home" };
 
+// Not part of the public route surface: not in the sitemap, noindex so it
+// never gets indexed under a query-string variant or similar.
 export function meta() {
-  return [
-    { title: "Página não encontrada — Puriki" },
-    {
-      name: "description",
-      content: "A página que você procura não existe ou foi movida.",
-    },
-  ];
+  return buildNoIndexMeta(
+    "Página não encontrada — Puriki",
+    "A página que você procura não existe ou foi movida.",
+  );
 }
 
 export default function NotFoundRoute() {

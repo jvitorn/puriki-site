@@ -1,5 +1,6 @@
 import { CodeXml, Download, Menu } from "lucide-react";
 import { useState } from "react";
+import { PurikiLogo } from "../brand/puriki-logo";
 import { getContent } from "../../content";
 import { PURIKUKI_REPO_URL } from "../../lib/external-links";
 import { homeAnchorHref, pageHref } from "../../lib/i18n/links";
@@ -26,16 +27,10 @@ function Wordmark({ locale, brandName }: { locale: Locale; brandName: string }) 
   return (
     <a
       aria-label={`${brandName} — página inicial`}
-      className="inline-flex min-h-11 items-center gap-3 rounded-button no-underline"
+      className="inline-flex min-h-11 items-center rounded-button no-underline"
       href={pageHref(locale, "home")}
     >
-      <span
-        aria-hidden="true"
-        className="grid size-8 place-items-center rounded-[0.55rem] bg-brand text-sm font-black text-brand-foreground shadow-[0_6px_20px_var(--brand-shadow)]"
-      >
-        ピ
-      </span>
-      <span className="text-lg font-bold tracking-[-0.025em]">{brandName}</span>
+      <PurikiLogo className="h-7 w-auto sm:h-8" variant="horizontal" />
     </a>
   );
 }

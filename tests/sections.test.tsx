@@ -3,7 +3,6 @@ import { describe, expect, it } from "vitest";
 import { getContent } from "../app/content";
 import { HomePage } from "../app/pages/home-page";
 import { PrivacySection } from "../app/sections/privacy-section";
-import { RoadmapSection } from "../app/sections/roadmap-section";
 import { pageHref } from "../app/lib/i18n/links";
 import { LOCALES } from "../app/lib/i18n/locales";
 
@@ -82,14 +81,5 @@ describe("PrivacySection", () => {
   });
 });
 
-describe("RoadmapSection", () => {
-  it("links to the real product/engineering roadmap document, not a repo anchor", () => {
-    render(<RoadmapSection content={getContent("pt-BR").roadmap} />);
-
-    const cta = screen.getByRole("link", { name: getContent("pt-BR").roadmap.cta });
-    expect(cta).toHaveAttribute(
-      "href",
-      "https://github.com/jvitorn/purikuki/blob/master/PURIKI_PRODUCT_ENGINEERING_ROADMAP.md",
-    );
-  });
-});
+// RoadmapSection now requires `release`; its own tests (including the
+// roadmap CTA link) live in tests/sections/roadmap-section.test.tsx.

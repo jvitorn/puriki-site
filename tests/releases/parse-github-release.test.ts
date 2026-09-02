@@ -10,6 +10,7 @@ import {
   prereleaseRelease,
   releaseMissingApk,
   releaseWithDuplicateExactMatches,
+  releaseWithInvalidPublishedAt,
   releaseWithTwoApkCandidates,
   releaseWithWrongApkName,
   stableReleaseTagWithoutV,
@@ -51,6 +52,12 @@ describe("parseGitHubRelease", () => {
       version: "1.2.3",
       fileName: "puriki-1.2.3-android.apk",
     });
+  });
+
+  it("throws when published_at is not a valid date", () => {
+    expect(() => parseGitHubRelease(releaseWithInvalidPublishedAt)).toThrow(
+      /valid published_at/,
+    );
   });
 
   it("rejects a draft release", () => {

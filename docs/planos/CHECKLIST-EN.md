@@ -155,51 +155,67 @@ Full detail in `PHASE_03_LANDING_SECTIONS.md`.
 ## Phase 05 — Accessibility, SEO and Legal
 
 ### Accessibility
-- [ ] WCAG 2.2 AA used as reference.
-- [ ] Semantic HTML.
-- [ ] One H1 per page.
-- [ ] Correct heading hierarchy.
-- [ ] Complete keyboard navigation.
-- [ ] Visible focus.
-- [ ] Accessible Sheet.
-- [ ] Accessible FAQ.
-- [ ] No hover-dependent content.
-- [ ] States do not rely on color alone.
-- [ ] Adequate touch targets.
-- [ ] `prefers-reduced-motion`.
-- [ ] 200% zoom tested.
-- [ ] Contrast validated.
-- [ ] Screen-reader spot-check.
+- [x] WCAG 2.2 AA used as reference.
+- [x] Semantic HTML.
+- [x] One H1 per page.
+- [x] Correct heading hierarchy.
+- [x] Complete keyboard navigation.
+- [x] Visible focus.
+- [x] Accessible Sheet.
+- [x] Accessible FAQ.
+- [x] No hover-dependent content.
+- [x] States do not rely on color alone.
+- [x] Adequate touch targets.
+- [x] `prefers-reduced-motion`.
+- [-] 200% zoom tested.
+  - Approximated via 320px-width reflow (no overflow on `/`, `/privacy/`,
+    `/terms/`, `/en/`, `/es/privacy/`). Literal browser zoom at 200%
+    remains a Phase 07 task.
+- [x] Contrast validated.
+  - Computed numerically (WCAG formula) against the real tokens.
+    Text/focus: 5.3–18.5:1. `border`/`border-strong`/`brand`-as-fill
+    fall under 3:1 but are decorative, never the sole boundary indicator
+    for a public interactive element (the Button `outline` variant only
+    exists in the `/foundation/` sandbox) — token preserved as-is.
+- [!] Screen-reader spot-check.
+  - Blocked: no screen reader available in this environment. Recorded as
+    a pending item for maintainer manual QA.
 
 ### SEO
-- [ ] Localized title.
-- [ ] Localized description.
-- [ ] Correct canonical.
-- [ ] pt-BR/en/es hreflang.
-- [ ] x-default.
-- [ ] Open Graph.
-- [ ] Twitter/X card.
-- [ ] Social image.
-- [ ] Application JSON-LD.
-- [ ] sitemap.xml.
-- [ ] robots.txt.
-- [ ] favicon.
-- [ ] apple-touch-icon.
-- [ ] No accidental `noindex`.
+- [x] Localized title.
+- [x] Localized description.
+- [x] Correct canonical.
+- [x] pt-BR/en/es hreflang.
+- [x] x-default.
+- [x] Open Graph.
+- [x] Twitter/X card.
+- [x] Social image.
+- [x] Application JSON-LD.
+- [x] sitemap.xml.
+- [x] robots.txt.
+- [x] favicon.
+- [x] apple-touch-icon.
+- [x] No accidental `noindex`.
+  - Foundation and 404 carry deliberate `noindex`; the nine public
+    routes do not.
 
 ### Legal
-- [ ] Privacy PT-BR.
-- [ ] Privacy EN.
-- [ ] Privacy ES.
-- [ ] Terms PT-BR.
-- [ ] Terms EN.
-- [ ] Terms ES.
-- [ ] GitHub Pages properly described in Privacy.
-- [ ] No-analytics statement is accurate.
-- [ ] AniList/MAL relationship described accurately.
-- [ ] Unofficial-project disclaimer.
-- [ ] Provider logo usage reviewed.
+- [x] Privacy PT-BR.
+- [x] Privacy EN.
+- [x] Privacy ES.
+- [x] Terms PT-BR.
+- [x] Terms EN.
+- [x] Terms ES.
+- [x] GitHub Pages properly described in Privacy.
+- [x] No-analytics statement is accurate.
+- [x] AniList/MAL relationship described accurately.
+- [x] Unofficial-project disclaimer.
+- [!] Provider logo usage reviewed.
+  - Blocked: no official branding guidance was reviewed this phase.
+    Still text-only labels (no logos), as already decided in Phases 02/03.
 - [ ] Legal copy reviewed before launch.
+  - Content is accurate and public, but has not had formal legal/human
+    review — do not mark complete until that review happens.
 
 ## Phase 06 — Tests, CI and Deploy
 

@@ -84,6 +84,32 @@ describe("DownloadSection — available", () => {
     vi.unstubAllGlobals();
   });
 
+  it("announces failure accessibly when the clipboard write rejects, without a fake success state", async () => {
+    const writeText = vi.fn().mockRejectedValue(new Error("denied"));
+    vi.stubGlobal("navigator", {
+      ...globalThis.navigator,
+      clipboard: { writeText },
+    });
+
+    const content = getContent("en");
+    render(<DownloadSection content={content.download} locale="en" release={AVAILABLE} />);
+
+    fireEvent.click(
+      screen.getByRole("button", { name: content.download.releaseLabels.copyLabel }),
+    );
+
+    await waitFor(() =>
+      expect(screen.getByRole("status")).toHaveTextContent(
+        content.download.releaseLabels.copyFailedLabel,
+      ),
+    );
+    expect(screen.getByRole("status")).not.toHaveTextContent(
+      content.download.releaseLabels.copiedLabel,
+    );
+
+    vi.unstubAllGlobals();
+  });
+
   it("does not render a SHA disclosure when the digest is unavailable", () => {
     const content = getContent("es");
     render(

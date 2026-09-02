@@ -10,17 +10,14 @@ import {
   AccordionTrigger,
 } from "../components/ui/accordion";
 import { Button } from "../components/ui/button";
+import { buildNoIndexMeta } from "../lib/i18n/metadata";
 
+// Temporary sandbox: not in the sitemap, not a canonical public page.
 export function meta() {
-  return [
-    { title: "Foundation sandbox — Puriki" },
-    {
-      name: "description",
-      content:
-        "Temporary Phase 01 design-system reference. Not part of the public site.",
-    },
-    { name: "robots", content: "noindex" },
-  ];
+  return buildNoIndexMeta(
+    "Foundation sandbox — Puriki",
+    "Temporary Phase 01 design-system reference. Not part of the public site.",
+  );
 }
 
 const tokenSamples = [

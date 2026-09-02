@@ -1,10 +1,10 @@
 import type { ReactElement } from "react";
-import type { MetaFunction } from "react-router";
+import type { LinksFunction, MetaFunction } from "react-router";
 import { HomePage } from "../../pages/home-page";
 import { PrivacyPage } from "../../pages/privacy-page";
 import { TermsPage } from "../../pages/terms-page";
 import type { Locale } from "./locales";
-import { buildPageMeta } from "./metadata";
+import { buildPageLinks, buildPageMeta } from "./metadata";
 import type { PageKey } from "./pages";
 import type { RouteHandle } from "./route-handle";
 
@@ -26,10 +26,11 @@ export function createLocalePageRoute(locale: Locale, page: PageKey) {
   const PageComponent = pageComponents[page];
   const handle: RouteHandle = { locale, page };
   const meta: MetaFunction = () => buildPageMeta(locale, page);
+  const links: LinksFunction = () => buildPageLinks(locale, page);
 
   function RouteComponent() {
     return <PageComponent locale={locale} />;
   }
 
-  return { Component: RouteComponent, handle, meta };
+  return { Component: RouteComponent, handle, meta, links };
 }

@@ -1,5 +1,23 @@
 # Phase 04 — GitHub Release Metadata and Android Download Experience
 
+> **Hardening addendum (done during Phase 05):**
+> - [x] Removed `GITHUB_TOKEN` from the `release:fetch` workflow step —
+>       `jvitorn/purikuki` is public and one unauthenticated request per
+>       deploy is well under GitHub's rate limit; `RELEASE_FETCH_TOKEN`
+>       remains supported for local/future use but is not required.
+> - [x] `parse-github-release.ts`'s doc comment now explicitly ties the
+>       404 -> `{available:false}` mapping to the specific known public
+>       repository this site targets, and states that a technical error
+>       (timeout/403/429/5xx/invalid JSON) is never folded into that state.
+> - [x] `published_at` is now validated with `Date.parse` before a release
+>       is accepted — an unparsable date throws `ReleaseParseError` instead
+>       of ever reaching `formatReleaseDate`. Test added.
+> - [x] `ShaDisclosure` now has a real copy-failure state (distinct icon +
+>       accessible message), and the reset timer is cleared on unmount and
+>       before each new copy attempt. Tests added for both outcomes.
+>
+> See `docs/planos/PHASE_05_ACCESSIBILITY_SEO_LEGAL.md` for the full report.
+
 ## Goal
 
 Connect the static site to the latest stable official `jvitorn/purikuki` GitHub Release at build time.

@@ -46,14 +46,33 @@ excludes drafts and prereleases and 404s when there is no stable release
 (mapped to `{ "available": false }` — a valid state, not an error). Any
 other failure (timeout, unexpected status, invalid JSON, a release whose
 APK asset is missing/ambiguous) makes the script exit non-zero instead of
-silently writing "no release". An optional local-only `GITHUB_TOKEN` or
-`RELEASE_FETCH_TOKEN` environment variable raises the unauthenticated rate
-limit; never use a `VITE_*`-prefixed name for it, since Vite inlines those
-into the client bundle. In CI, `secrets.GITHUB_TOKEN` is passed only to
-the `release:fetch` step, not to the build step.
+silently writing "no release". `jvitorn/purikuki` is public, so the CI
+workflow calls this unauthenticated — one request per deploy is well
+under GitHub's unauthenticated rate limit. An optional local-only
+`RELEASE_FETCH_TOKEN` environment variable can raise that limit for
+local development; never use a `VITE_*`-prefixed name for it, since Vite
+inlines those into the client bundle.
 
 See `docs/planos/PHASE_04_DOWNLOAD_RELEASES.md` for the full contract,
 parser rules, and test coverage.
+
+## SEO files and brand assets
+
+`pnpm build` also runs `scripts/generate-seo-files.ts` (after the React
+Router build, before `prepare-static-output.mjs`), which writes
+`sitemap.xml` (the nine public pages, absolute URLs) and `robots.txt`
+directly into `build/client/` using the same `SITE_URL`/locale/page
+source of truth as routing — nothing is hardcoded. `/foundation/` and
+`/404` are intentionally excluded from the sitemap; both carry `noindex`.
+
+The favicon, Apple touch icon, and Open Graph share image
+(`public/favicon.png`, `public/apple-touch-icon.png`,
+`public/seo/og-image.png`) are static files generated once from the
+official brand assets in `assets/` via
+`node scripts/generate-brand-raster-assets.mjs`. That script is a manual
+dev tool (requires `rsvg-convert` and ImageMagick's `magick` on the
+`PATH`) — rerun it only if the source brand assets change; it is not
+part of `pnpm build`.
 
 ## Public configuration
 

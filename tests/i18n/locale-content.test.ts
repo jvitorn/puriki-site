@@ -93,4 +93,42 @@ describe("locale content", () => {
       expect(new Set(titles).size).toBe(LOCALES.length);
     }
   });
+
+  // DECISIONS.md: never claim data never leaves the device, never claim
+  // "100% private"/"totally secure", never claim nothing is collected.
+  // Checked against the actual body text so a future edit can't
+  // reintroduce an absolute claim unnoticed.
+  const FORBIDDEN_ABSOLUTE_CLAIM_PATTERNS: RegExp[] = [
+    /nunca sai(m)? do (seu )?dispositivo/i,
+    /never leaves? (your |the )?device/i,
+    /nunca (sale|salen) del dispositivo/i,
+    /100%\s*(privad|priv|secur)/i,
+    /totally secure/i,
+    /totalmente segur/i,
+    /não coletamos? (nenhum )?dado/i,
+    /we (don't|do not) collect any data/i,
+    /no recopilamos ningún dato/i,
+  ];
+
+  it("privacyPage never makes an absolute privacy/security claim", () => {
+    for (const locale of LOCALES) {
+      const text = [
+        content[locale].privacyPage.intro,
+        ...content[locale].privacyPage.sections.map((section) => section.body),
+      ].join("\n");
+
+      for (const pattern of FORBIDDEN_ABSOLUTE_CLAIM_PATTERNS) {
+        expect(text, `${locale} privacyPage matched forbidden pattern ${pattern}`).not.toMatch(
+          pattern,
+        );
+      }
+    }
+  });
+
+  it("privacyPage and termsPage carry a fixed ISO lastUpdated date and label", () => {
+    for (const locale of LOCALES) {
+      expect(content[locale].privacyPage.lastUpdated).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+      expect(content[locale].termsPage.lastUpdated).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+    }
+  });
 });

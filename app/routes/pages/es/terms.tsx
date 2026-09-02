@@ -1,6 +1,6 @@
 import { createLocalePageRoute } from "../../../lib/i18n/route-factory";
 
-const { Component, handle, meta } = createLocalePageRoute("es", "terms");
+const { Component, handle, meta, links } = createLocalePageRoute("es", "terms");
 
-export { handle, meta };
+export { handle, meta, links };
 export default Component;

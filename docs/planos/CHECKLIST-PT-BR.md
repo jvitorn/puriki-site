@@ -155,51 +155,69 @@ feitas na Fase 03. Detalhes completos em `PHASE_03_LANDING_SECTIONS.md`.
 ## Fase 05 — Acessibilidade, SEO e Legal
 
 ### Acessibilidade
-- [ ] WCAG 2.2 AA usada como referência.
-- [ ] HTML semântico.
-- [ ] Apenas um H1 por página.
-- [ ] Hierarquia de headings correta.
-- [ ] Navegação completa por teclado.
-- [ ] Foco visível.
-- [ ] Sheet acessível.
-- [ ] FAQ acessível.
-- [ ] Sem conteúdo dependente de hover.
-- [ ] Estados não dependem só de cor.
-- [ ] Touch targets adequados.
-- [ ] `prefers-reduced-motion`.
-- [ ] Zoom 200% testado.
-- [ ] Contraste validado.
-- [ ] Screen reader spot-check.
+- [x] WCAG 2.2 AA usada como referência.
+- [x] HTML semântico.
+- [x] Apenas um H1 por página.
+- [x] Hierarquia de headings correta.
+- [x] Navegação completa por teclado.
+- [x] Foco visível.
+- [x] Sheet acessível.
+- [x] FAQ acessível.
+- [x] Sem conteúdo dependente de hover.
+- [x] Estados não dependem só de cor.
+- [x] Touch targets adequados.
+- [x] `prefers-reduced-motion`.
+- [-] Zoom 200% testado.
+  - Aproximado via reflow em 320px (sem overflow em `/`, `/privacy/`,
+    `/terms/`, `/en/`, `/es/privacy/`). Zoom literal do navegador a
+    200% fica para a Fase 07.
+- [x] Contraste validado.
+  - Calculado numericamente (fórmula WCAG) contra os tokens reais.
+    Texto/foco: 5.3–18.5:1. `border`/`border-strong`/`brand`-como-fill
+    ficam abaixo de 3:1 mas são decorativos, nunca o único indicador de
+    limite de um elemento interativo público (variante `outline` do
+    Button só existe no sandbox `/foundation/`) — token preservado.
+- [!] Screen reader spot-check.
+  - Bloqueado: nenhum leitor de tela disponível neste ambiente.
+    Pendência registrada para QA manual do maintainer.
 
 ### SEO
-- [ ] Title localizado.
-- [ ] Description localizada.
-- [ ] Canonical correto.
-- [ ] hreflang pt-BR/en/es.
-- [ ] x-default.
-- [ ] Open Graph.
-- [ ] Twitter/X card.
-- [ ] Imagem social.
-- [ ] JSON-LD de aplicativo.
-- [ ] sitemap.xml.
-- [ ] robots.txt.
-- [ ] favicon.
-- [ ] apple-touch-icon.
-- [ ] Sem `noindex` acidental.
+- [x] Title localizado.
+- [x] Description localizada.
+- [x] Canonical correto.
+- [x] hreflang pt-BR/en/es.
+- [x] x-default.
+- [x] Open Graph.
+- [x] Twitter/X card.
+- [x] Imagem social.
+- [x] JSON-LD de aplicativo.
+- [x] sitemap.xml.
+- [x] robots.txt.
+- [x] favicon.
+- [x] apple-touch-icon.
+- [x] Sem `noindex` acidental.
+  - Foundation e 404 têm `noindex` deliberado (não são conteúdo
+    público); as nove rotas públicas não têm `noindex`.
 
 ### Legal
-- [ ] Privacy PT-BR.
-- [ ] Privacy EN.
-- [ ] Privacy ES.
-- [ ] Terms PT-BR.
-- [ ] Terms EN.
-- [ ] Terms ES.
-- [ ] GitHub Pages mencionado adequadamente na Privacy.
-- [ ] Ausência de analytics descrita corretamente.
-- [ ] Relação com AniList/MAL descrita corretamente.
-- [ ] Disclaimer de projeto não oficial.
-- [ ] Uso de logos de providers revisado.
+- [x] Privacy PT-BR.
+- [x] Privacy EN.
+- [x] Privacy ES.
+- [x] Terms PT-BR.
+- [x] Terms EN.
+- [x] Terms ES.
+- [x] GitHub Pages mencionado adequadamente na Privacy.
+- [x] Ausência de analytics descrita corretamente.
+- [x] Relação com AniList/MAL descrita corretamente.
+- [x] Disclaimer de projeto não oficial.
+- [!] Uso de logos de providers revisado.
+  - Bloqueado: sem material oficial de branding revisado nesta fase.
+    Continua usando apenas nomes em texto (sem logos), conforme já
+    decidido nas Fases 02/03.
 - [ ] Texto legal revisado antes do lançamento.
+  - Conteúdo é preciso e público, mas não passou por revisão
+    jurídica/humana formal — não marcar como concluído até essa revisão
+    acontecer.
 
 ## Fase 06 — Testes, CI e Deploy
 

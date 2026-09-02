@@ -1,3 +1,4 @@
+import { PurikiLogo } from "../brand/puriki-logo";
 import { getContent } from "../../content";
 import type { FooterLinkTarget } from "../../content/types";
 import { homeAnchorHref, pageHref } from "../../lib/i18n/links";
@@ -23,7 +24,12 @@ export function SiteFooter({ locale }: SiteFooterProps) {
     <footer className="border-t border-border bg-surface">
       <Container className="grid gap-12 py-14 sm:grid-cols-2 lg:grid-cols-[1.4fr_0.7fr_0.7fr_0.7fr] lg:py-18">
         <div className="max-w-sm">
-          <p className="text-lg font-bold tracking-tight">{common.brandName}</p>
+          <p className="flex items-center gap-2">
+            <PurikiLogo className="size-6" variant="mark" />
+            <span className="text-lg font-bold tracking-tight">
+              {common.brandName}
+            </span>
+          </p>
           <p className="mt-4 text-sm leading-6 text-foreground-muted">
             {footer.tagline}
           </p>

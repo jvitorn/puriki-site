@@ -104,6 +104,13 @@ export interface RoadmapContent {
   title: string;
   intro: string;
   items: [RoadmapItem, RoadmapItem, RoadmapItem];
+  /**
+   * Status label for the 1.0 item once a stable release exists —
+   * overrides `items[0].status` (which reads "in preparation") when
+   * `ReleaseMetadata.available` is true. 2.0/3.0 status always comes from
+   * `items[1].status`/`items[2].status`.
+   */
+  foundationAvailableStatus: string;
   disclaimer: string;
   cta: string;
 }
@@ -128,6 +135,7 @@ export interface DownloadReleaseLabelsContent {
   shaLabel: string;
   copyLabel: string;
   copiedLabel: string;
+  copyFailedLabel: string;
 }
 
 export interface DownloadContent {
@@ -195,9 +203,11 @@ export interface LegalSection {
 
 export interface LegalPageContent {
   title: string;
-  preparationNotice: string;
   intro: string;
   sections: LegalSection[];
+  /** ISO date (YYYY-MM-DD) the copy was last reviewed — not auto-generated. */
+  lastUpdated: string;
+  lastUpdatedLabel: string;
 }
 
 export interface CommonContent {

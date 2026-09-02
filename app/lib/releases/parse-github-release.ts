@@ -55,10 +55,18 @@ function isApkAsset(asset: unknown): asset is RawGitHubAsset & { name: string } 
 
 /**
  * Turns a raw `GET /repos/{owner}/{repo}/releases/latest` response body into
- * the site's `ReleaseMetadata` contract. `raw === null` is the documented
- * "no stable release published" state (the endpoint 404s in that case) and
- * is the only input that produces `{ available: false }` — every other
- * malformed/ambiguous input throws `ReleaseParseError` instead of guessing.
+ * the site's `ReleaseMetadata` contract.
+ *
+ * `raw === null` is the documented "no stable release published" state and
+ * is the *only* input that produces `{ available: false }`. The caller
+ * (`scripts/fetch-release.ts`) maps that state from a 404 response for the
+ * specific, known-public repository this site targets (`jvitorn/purikuki`)
+ * — for that endpoint, a 404 means "this repo has no release that is
+ * neither a draft nor a prerelease," which is exactly our no-release state.
+ * A 404 is never treated as "no release" for any other reason (e.g. it is
+ * never used to paper over auth/permission problems against a private or
+ * misspelled repo). Every other malformed/ambiguous input throws
+ * `ReleaseParseError` instead of guessing.
  */
 export function parseGitHubRelease(raw: unknown): ReleaseMetadata {
   if (raw === null) {
@@ -91,9 +99,12 @@ export function parseGitHubRelease(raw: unknown): ReleaseMetadata {
 
   if (
     typeof release.published_at !== "string" ||
-    release.published_at.length === 0
+    release.published_at.length === 0 ||
+    !Number.isFinite(Date.parse(release.published_at))
   ) {
-    throw new ReleaseParseError("Release is missing published_at.");
+    throw new ReleaseParseError(
+      `Release is missing a valid published_at (got: ${JSON.stringify(release.published_at)}).`,
+    );
   }
 
   if (typeof release.html_url !== "string" || release.html_url.length === 0) {

@@ -41,8 +41,12 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Fetch latest stable release metadata
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        # jvitorn/purikuki is public; this is a single unauthenticated GET
+        # per deploy, well under GitHub's unauthenticated rate limit, so
+        # the repository-scoped GITHUB_TOKEN isn't needed here. An
+        # optional RELEASE_FETCH_TOKEN (non-VITE_*, never exposed to the
+        # browser) remains supported by the script for local development
+        # or a future explicit need — see scripts/fetch-release.ts.
         run: pnpm release:fetch
 
       - name: Build static site

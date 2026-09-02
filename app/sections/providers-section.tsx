@@ -27,7 +27,10 @@ export function ProvidersSection({ content }: ProvidersSectionProps) {
           {content.highlight}
         </p>
       </Reveal>
-      <Reveal className="mt-10 flex flex-col items-center gap-3 sm:flex-row sm:justify-center" delay={90}>
+      <Reveal
+        className="mt-10 flex flex-col items-center gap-3 sm:flex-row sm:justify-center"
+        staggerChildren={110}
+      >
         <span className="rounded-full border border-border-strong bg-surface px-5 py-2.5 text-sm font-semibold text-foreground-muted">
           {content.anilistLabel}
         </span>

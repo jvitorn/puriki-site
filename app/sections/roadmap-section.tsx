@@ -2,16 +2,25 @@ import { Fragment } from "react";
 import type { RoadmapContent } from "../content/types";
 import { Section, SectionHeader } from "../components/layout/section";
 import { Button } from "../components/ui/button";
+import { Reveal } from "../components/motion/reveal";
 import { PURIKUKI_ROADMAP_DOC_URL } from "../lib/external-links";
+import type { ReleaseMetadata } from "../lib/releases/types";
 
 interface RoadmapSectionProps {
   content: RoadmapContent;
+  release: ReleaseMetadata;
 }
+
+const REVEAL_STEP_MS = 90;
 
 // Vertical stack on mobile, horizontal progression on desktop — same three
 // items either way, connected by a short rule rather than percentages or
-// invented dates.
-export function RoadmapSection({ content }: RoadmapSectionProps) {
+// invented dates. The 1.0 item's status is the only thing derived from
+// release state (in preparation vs available); 2.0/3.0 always come from
+// the content model. Each `li` reveals in sequence once; `li` stays a
+// direct child of `ol` (Reveal wraps its inner content, not the `li`
+// itself) so list semantics are never broken by the motion wrapper.
+export function RoadmapSection({ content, release }: RoadmapSectionProps) {
   return (
     <Section aria-labelledby="roadmap-heading" id="roadmap">
       <SectionHeader
@@ -21,32 +30,42 @@ export function RoadmapSection({ content }: RoadmapSectionProps) {
         title={content.title}
       />
       <ol className="mt-10 flex flex-col sm:flex-row sm:items-stretch">
-        {content.items.map((item, index) => (
-          <Fragment key={item.version}>
-            <li className="flex-1 rounded-card border border-border bg-surface p-5">
-              <p className="text-xs font-bold uppercase tracking-[0.13em] text-danger">
-                {item.version} · {item.status}
-              </p>
-              <p className="mt-2 text-lg font-semibold">{item.title}</p>
-              <p className="mt-2 text-sm leading-6 text-foreground-muted">
-                {item.description}
-              </p>
-              {item.supporting ? (
-                <p className="mt-2 text-xs leading-5 text-foreground-subtle">
-                  {item.supporting}
-                </p>
+        {content.items.map((item, index) => {
+          const isFoundation = index === 0;
+          const status =
+            isFoundation && release.available
+              ? content.foundationAvailableStatus
+              : item.status;
+
+          return (
+            <Fragment key={item.version}>
+              <li className="flex-1 rounded-card border border-border bg-surface p-5">
+                <Reveal delay={index * REVEAL_STEP_MS}>
+                  <p className="text-xs font-bold uppercase tracking-[0.13em] text-danger">
+                    {item.version} · {status}
+                  </p>
+                  <p className="mt-2 text-lg font-semibold">{item.title}</p>
+                  <p className="mt-2 text-sm leading-6 text-foreground-muted">
+                    {item.description}
+                  </p>
+                  {item.supporting ? (
+                    <p className="mt-2 text-xs leading-5 text-foreground-subtle">
+                      {item.supporting}
+                    </p>
+                  ) : null}
+                </Reveal>
+              </li>
+              {index < content.items.length - 1 ? (
+                <div
+                  aria-hidden="true"
+                  className="flex items-center justify-center py-2 sm:px-2 sm:py-0"
+                >
+                  <span className="h-6 w-px bg-border-strong sm:h-px sm:w-6" />
+                </div>
               ) : null}
-            </li>
-            {index < content.items.length - 1 ? (
-              <div
-                aria-hidden="true"
-                className="flex items-center justify-center py-2 sm:px-2 sm:py-0"
-              >
-                <span className="h-6 w-px bg-border-strong sm:h-px sm:w-6" />
-              </div>
-            ) : null}
-          </Fragment>
-        ))}
+            </Fragment>
+          );
+        })}
       </ol>
       <p className="mt-8 text-sm text-foreground-subtle">{content.disclaimer}</p>
       <div className="mt-4">
