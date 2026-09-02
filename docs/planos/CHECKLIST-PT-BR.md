@@ -44,30 +44,35 @@ Observação: Collapsible não foi adicionado porque ainda não existe uso concr
 
 ## Fase 02 — Rotas, i18n e conteúdo
 
-- [ ] Locale `pt-BR`.
-- [ ] Locale `en`.
-- [ ] Locale `es`.
-- [ ] `/`.
-- [ ] `/privacy/`.
-- [ ] `/terms/`.
-- [ ] `/en/`.
-- [ ] `/en/privacy/`.
-- [ ] `/en/terms/`.
-- [ ] `/es/`.
-- [ ] `/es/privacy/`.
-- [ ] `/es/terms/`.
-- [ ] 404 criada.
-- [ ] Conteúdo tipado criado.
-- [ ] PT-BR implementado como conteúdo base.
-- [ ] EN completo.
-- [ ] ES completo.
+- [x] Locale `pt-BR`.
+- [x] Locale `en`.
+- [x] Locale `es`.
+- [x] `/`.
+- [x] `/privacy/`.
+- [x] `/terms/`.
+- [x] `/en/`.
+- [x] `/en/privacy/`.
+- [x] `/en/terms/`.
+- [x] `/es/`.
+- [x] `/es/privacy/`.
+- [x] `/es/terms/`.
+- [x] 404 criada.
+- [x] Conteúdo tipado criado.
+- [x] PT-BR implementado como conteúdo base.
+- [x] EN completo.
+- [x] ES completo.
 - [ ] EN revisado humanamente antes do lançamento.
 - [ ] ES revisado humanamente antes do lançamento.
-- [ ] Seletor de idioma acessível.
-- [ ] Troca de idioma preserva a página equivalente.
-- [ ] Sem redirecionamento automático forçado.
-- [ ] Metadados por página/idioma preparados.
-- [ ] Todas as rotas pré-renderizam.
+- [x] Seletor de idioma acessível.
+- [x] Troca de idioma preserva a página equivalente.
+- [x] Sem redirecionamento automático forçado.
+- [x] Metadados por página/idioma preparados.
+- [x] Todas as rotas pré-renderizam.
+
+Observação: a Home/Privacy/Terms desta fase são um scaffold de conteúdo e
+rotas (estrutura semântica mínima + âncoras), não o design final da
+landing — isso continua sendo escopo da Fase 03. Detalhes completos em
+`PHASE_02_ROUTING_I18N_CONTENT.md`.
 
 ## Fase 03 — Landing
 

@@ -19,8 +19,11 @@ export default tseslint.config(
     },
   },
   {
-    files: ["app/root.tsx"],
+    files: ["app/root.tsx", "app/routes/**/*.{ts,tsx}"],
     rules: {
+      // Route modules conventionally export `handle`/`meta`/`loader`
+      // alongside the default component; that's the React Router
+      // framework-mode contract, not a Fast Refresh problem.
       "react-refresh/only-export-components": "off",
     },
   },

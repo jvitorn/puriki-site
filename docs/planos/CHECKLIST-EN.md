@@ -44,30 +44,35 @@ Note: Collapsible was not added because there is no concrete use for it yet.
 
 ## Phase 02 — Routes, i18n and Content
 
-- [ ] `pt-BR` locale.
-- [ ] `en` locale.
-- [ ] `es` locale.
-- [ ] `/`.
-- [ ] `/privacy/`.
-- [ ] `/terms/`.
-- [ ] `/en/`.
-- [ ] `/en/privacy/`.
-- [ ] `/en/terms/`.
-- [ ] `/es/`.
-- [ ] `/es/privacy/`.
-- [ ] `/es/terms/`.
-- [ ] 404 created.
-- [ ] Typed content model created.
-- [ ] PT-BR implemented as source content.
-- [ ] EN complete.
-- [ ] ES complete.
+- [x] `pt-BR` locale.
+- [x] `en` locale.
+- [x] `es` locale.
+- [x] `/`.
+- [x] `/privacy/`.
+- [x] `/terms/`.
+- [x] `/en/`.
+- [x] `/en/privacy/`.
+- [x] `/en/terms/`.
+- [x] `/es/`.
+- [x] `/es/privacy/`.
+- [x] `/es/terms/`.
+- [x] 404 created.
+- [x] Typed content model created.
+- [x] PT-BR implemented as source content.
+- [x] EN complete.
+- [x] ES complete.
 - [ ] EN human-reviewed before launch.
 - [ ] ES human-reviewed before launch.
-- [ ] Accessible language selector.
-- [ ] Language switching preserves equivalent page.
-- [ ] No forced automatic redirect.
-- [ ] Metadata per page/locale prepared.
-- [ ] All routes prerender.
+- [x] Accessible language selector.
+- [x] Language switching preserves equivalent page.
+- [x] No forced automatic redirect.
+- [x] Metadata per page/locale prepared.
+- [x] All routes prerender.
+
+Note: this phase's Home/Privacy/Terms are a content/routing scaffold
+(minimal semantic structure + anchors), not the final landing design —
+that remains Phase 03 scope. Full detail in
+`PHASE_02_ROUTING_I18N_CONTENT.md`.
 
 ## Phase 03 — Landing
 
