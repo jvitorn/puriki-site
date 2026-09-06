@@ -1,191 +1,76 @@
-# Phase 01 — Design System and Shared Shell
+# Fase 01 — Design System e Shell Compartilhado
 
-## Goal
+## Objetivo
 
-Build the small visual foundation required by the entire landing without turning the project into a general-purpose design system.
+Construir a pequena fundação visual necessária para toda a landing, sem transformar o projeto em um design system genérico. Referência: `DESIGN_SYSTEM.md`.
 
-Reference:
-`DESIGN_SYSTEM.md`
+## 1. Tokens semânticos globais
 
-## 1. Global semantic tokens
+Implementados: background, surface, surface elevada, surface hover, border, border forte, foreground, foreground muted, foreground subtle, brand, brand hover, brand soft, brand foreground, success, warning, danger.
 
-Implement semantic design tokens.
+- [x] Componentes consomem tokens semânticos, nunca hex de marca cru.
+- [x] Tokens funcionam em dark-only.
+- [x] Combinações texto/fundo importantes atingem o contraste exigido.
+- [x] O vermelho da marca permanece um acento, não o preenchimento dominante da página.
 
-- [x] background
-- [x] surface
-- [x] raised surface
-- [x] hover surface
-- [x] border
-- [x] strong border
-- [x] foreground
-- [x] muted foreground
-- [x] subtle foreground
-- [x] brand
-- [x] brand hover
-- [x] brand soft
-- [x] brand foreground
-- [x] success
-- [x] warning
-- [x] danger
+## 2. Tipografia
 
-Requirements:
+- [x] Geist adicionada e auto-hospedada (licença permite).
+- [x] Fallbacks de sistema robustos.
+- [x] Estilos de corpo, heading, label e código definidos.
+- [x] Fallback de glifo japonês da marca funciona.
+- [x] Sem contêineres de texto fixos que quebram a 200% de zoom.
+- [x] Tipografia fluida do Hero definida com bom senso.
 
-- [x] Components consume semantic tokens, not raw brand hex values.
-- [x] Tokens work in dark-only mode.
-- [x] Important text/background combinations meet required contrast.
-- [x] Brand red remains an accent, not the dominant page fill.
+## 3. Reset/estilos base globais
 
-## 2. Typography
+- [x] Fundo escuro correto, defaults de text-rendering, zoom do navegador preservado, cor de seleção, `:focus-visible` global, estilo do skip-link, comportamento global de reduced-motion, offset de scroll para âncoras sob o header sticky.
 
-- [x] Add Geist.
-- [x] Self-host font files if permitted by the selected source/license.
-- [x] Add robust system fallbacks.
-- [x] Configure body, heading, label, and code text styles.
-- [x] Ensure Japanese brand glyph fallback works.
-- [x] Avoid fixed text containers that break at 200% zoom.
-- [x] Define sensible fluid Hero typography.
+## 4. Primitivas de layout
 
-## 3. Global reset/base styles
+Criadas apenas as úteis: `Container`, `Section`, `SectionHeader` opcional. Composições responsivas seguem como classes Tailwind diretas — nenhum helper repetido o suficiente para justificar outra abstração. Evitada uma camada genérica de "Box/Flex/Stack" onde o Tailwind já resolve claramente.
 
-- [x] Set correct dark background.
-- [x] Set text rendering defaults.
-- [x] Preserve browser zoom.
-- [x] Configure selection color.
-- [x] Add global focus-visible style.
-- [x] Add skip-link styling.
-- [x] Add reduced-motion global behavior.
-- [x] Add anchor scroll offset for sticky header targets.
+## 5. Primitivas shadcn/ui
 
-## 4. Layout primitives
+Instalados apenas: Button, Sheet, Accordion. Collapsible não foi adicionado nesta fase porque não havia disclosure concreta que precisasse dele ainda. Catálogo completo do shadcn não foi instalado — todos customizados para os tokens do Puriki em vez de deixar o padrão de template.
 
-Create only useful primitives:
+## 6. Layout compartilhado
 
-- [x] `Container`
-- [x] `Section`
-- [x] optional `SectionHeader`
-- [x] responsive stack/grid helpers if repeated enough
-- [x] consistent max-width strategy
+**Header:** sticky, área de logo/wordmark, navegação desktop, menu mobile via Sheet, ação primária de Download, ação secundária GitHub, ponto de integração do seletor de idioma, foco de teclado visível, menu mobile fecha apropriadamente após navegação.
 
-Responsive compositions remain direct Tailwind classes because no repeated helper justified another abstraction.
+**Footer:** estrutural, pronto para conteúdo localizado, colunas Produto/Projeto/Legal, espaço para disclaimer do projeto, copyright e links do GitHub.
 
-Avoid:
+## 7. Primitivas visuais de produto
 
-- overly generic “Box/Flex/Stack” abstraction layer if Tailwind already solves it clearly.
+Componente genérico leve de dispositivo/mockup: moldura de smartphone genérica, sem marca Samsung/Pixel/iPhone, tratamento explícito de alt de imagem, dimensionamento responsivo, sem impor conteúdo fixo de screenshot.
 
-## 5. shadcn/ui primitives
+## 8. Utilitário de motion
 
-Install/configure only:
+Camada pequena em torno do Anime.js: detecção central de reduced-motion, nenhuma animação obrigatória para visibilidade de conteúdo, cleanup no unmount, evita múltiplos listeners de scroll ad-hoc, prefere `IntersectionObserver` para o timing de entrada, API pública pequena. Nenhum framework de animação customizado foi construído.
 
-- [x] Button
-- [x] Sheet
-- [x] Accordion
-- [x] Collapsible only if chosen for hash/install disclosures
+## 9. Sandbox visual
 
-Collapsible was intentionally not added because this phase has no concrete disclosure that needs it.
+Uma demonstração visual temporária, local a uma rota de desenvolvimento, foi adicionada para revisar tokens/primitivas (a rota `/foundation/` — removida no lançamento, ver Fase 08).
 
-Do not install full shadcn catalog.
+## Testes
 
-Customize them to Puriki tokens instead of leaving template defaults.
+- [x] Foco/interação do Button.
+- [x] Comportamento de teclado do Sheet onde relevante.
+- [x] Comportamento base do Accordion.
+- [x] Comportamento do utilitário de reduced-motion.
+- [x] O shell compartilhado renderiza sem erro de conteúdo de locale.
 
-## 6. Shared layout
+## Revisão manual
 
-### Header
+Desktop (1280px, 1440px) e mobile (~360px, ~390px, ~430px): sem overflow horizontal, foco visível, header permanece utilizável, tipografia não corta, 200% de zoom permanece navegável.
 
-- [x] sticky-capable;
-- [x] logo/wordmark area;
-- [x] desktop navigation;
-- [x] mobile menu via Sheet;
-- [x] primary Download action;
-- [x] GitHub secondary action;
-- [x] locale selector placeholder/integration point;
-- [x] visible keyboard focus;
-- [x] mobile menu closes appropriately after navigation.
+## Critérios de aceite
 
-### Footer
+A fase está completa quando as seções finais podem ser construídas sem inventar padrões avulsos de espaçamento/cor/foco em cada seção.
 
-Create structural footer ready for localized content.
+## Registro de implementação
 
-Columns:
-
-- Product
-- Project
-- Legal
-
-Include space for:
-
-- project disclaimer;
-- copyright;
-- GitHub links.
-
-## 7. Product visual primitives
-
-Create a lightweight generic device/mockup component.
-
-Requirements:
-
-- [x] generic smartphone frame;
-- [x] no Samsung/Pixel/iPhone branding;
-- [x] image alt handling is explicit;
-- [x] supports responsive sizing;
-- [x] does not impose hardcoded screenshot content.
-
-Optionally create a reusable clipped screenshot frame for showcase sections if repeated.
-
-## 8. Motion utility
-
-Create a small motion layer around Anime.js.
-
-Requirements:
-
-- [x] central reduced-motion detection;
-- [x] no animation is required for content visibility;
-- [x] cleanup on unmount;
-- [x] avoid multiple ad-hoc window scroll listeners;
-- [x] prefer IntersectionObserver for entry timing;
-- [x] keep public API small.
-
-Do not build a custom animation framework.
-
-## 9. Visual sandbox
-
-Add a temporary development-only or route-local visual demonstration if useful for reviewing tokens/primitives.
-
-Remove it before launch if it becomes a public orphan route.
-
-## Testing
-
-- [x] Button focus/interaction.
-- [x] Sheet keyboard behavior where testing is valuable.
-- [x] Accordion base behavior.
-- [x] reduced-motion utility behavior.
-- [x] shared layout renders without locale content errors.
-
-## Manual review
-
-Desktop:
-- [x] 1280px class viewport
-- [x] 1440px class viewport
-
-Mobile:
-- [x] ~360px width
-- [x] ~390px width
-- [x] ~430px width
-
-Review:
-
-- [x] no horizontal overflow;
-- [x] visible focus;
-- [x] header remains usable;
-- [x] typography does not clip;
-- [x] 200% zoom remains navigable.
-
-## Acceptance criteria
-
-Phase complete when the final sections can be built without inventing one-off spacing/color/focus patterns in every section.
-
-## Implementation record
-
-Final semantic palette:
+Paleta semântica final:
 
 ```text
 background          #0B0E14
@@ -206,12 +91,10 @@ warning             #F0B65B
 danger              #F07175
 ```
 
-Representative contrast checks ranged from 5.66:1 to 18.46:1. The brand CTA combination is 8.45:1.
+Checagens de contraste representativas variaram de 5,66:1 a 18,46:1; a combinação do CTA de marca é 8,45:1. Geist Variable é auto-hospedada a partir do pacote `@fontsource-variable/geist` (licença OFL-1.1), com fallbacks compatíveis com japonês explícitos na pilha de fontes.
 
-Geist Variable is self-hosted from the OFL-1.1 licensed `@fontsource-variable/geist` package. Japanese-compatible system fallbacks are explicit in the font stack.
+A revisão visual cobriu reflow em 320px (representativo da viewport CSS efetiva a 200% de zoom), 360px, 390px, 430px, 1280px e 1440px. Root, rota aninhada, CSS, JavaScript e assets de fonte carregaram corretamente sob `/puriki-site/` no preview de build de produção.
 
-The visual review covered 320px reflow (representative of the effective CSS viewport at 200% zoom), 360px, 390px, 430px, 1280px, and 1440px. Root, nested route, CSS, JavaScript, and Geist assets returned successfully under `/puriki-site/` in the production build preview.
+Uma infraestrutura mínima de deploy no GitHub Pages foi implementada intencionalmente já nesta fase, para permitir validação visual de cada fase seguinte — o hardening completo de CI/deploy ficou por conta da Fase 06.
 
-> Minimal GitHub Pages deployment infrastructure was intentionally implemented during Phase 01 to allow visual validation of each subsequent phase. Full CI/deployment hardening remains part of Phase 06.
-
-The deployment publishes `build/client`. React Router requires the production `basename` for correct hydration and emits prerendered HTML inside the basename directory, so `scripts/prepare-static-output.mjs` safely normalizes that HTML back to the Pages artifact root after each production build. Asset URLs and router context retain `/puriki-site/`.
+O deploy publica `build/client`. O React Router exige o `basename` de produção para hidratação correta e emite o HTML pré-renderizado dentro do diretório do basename, então `scripts/prepare-static-output.mjs` normaliza esse HTML de volta para a raiz do artifact do Pages depois de cada build de produção. URLs de assets e o contexto do router mantêm `/puriki-site/`.

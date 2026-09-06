@@ -25,9 +25,9 @@ const outputPath = path.resolve(
  * writing `{ available: false }` over a technical error.
  */
 async function fetchLatestRelease(): Promise<unknown> {
-  // Server/build-side only: GITHUB_TOKEN (Actions) or a developer-local,
-  // non-Vite env var. Never a VITE_*-prefixed variable — this must never
-  // reach the browser bundle.
+  // Só server/build-side: GITHUB_TOKEN (Actions) ou uma env var local do
+  // desenvolvedor, fora do Vite. Nunca uma variável com prefixo VITE_* —
+  // isso nunca pode chegar ao bundle do navegador.
   const token = process.env.GITHUB_TOKEN || process.env.RELEASE_FETCH_TOKEN;
 
   const headers: Record<string, string> = {

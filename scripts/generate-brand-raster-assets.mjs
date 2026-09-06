@@ -1,12 +1,12 @@
 #!/usr/bin/env node
-// One-time/manual dev tool — NOT part of `pnpm build`. Regenerates the
-// static favicon, Apple touch icon, and Open Graph share image from the
-// official source assets in `assets/`. Run again only if those source
-// files change.
+// Ferramenta de dev manual/pontual — NÃO faz parte de `pnpm build`.
+// Regenera o favicon estático, o Apple touch icon e a imagem de
+// compartilhamento do Open Graph a partir dos assets de origem oficiais em
+// `assets/`. Rode de novo só se esses arquivos de origem mudarem.
 //
-// Requires two system tools (not Node dependencies, so they don't affect
-// the app's build or bundle): `rsvg-convert` (librsvg2-bin) and
-// `magick`/`convert` (ImageMagick). Usage:
+// Exige duas ferramentas de sistema (não são dependências Node, então não
+// afetam o build/bundle do app): `rsvg-convert` (librsvg2-bin) e
+// `magick`/`convert` (ImageMagick). Uso:
 //
 //   node scripts/generate-brand-raster-assets.mjs
 
@@ -32,9 +32,9 @@ function run(cmd, args) {
 
 const PNG_OUTPUT_ARGS = ["-depth", "8", "-define", "png:compression-level=9"];
 
-// Favicon + Apple touch icon: the pre-composited app icon already carries
-// this site's exact dark background, so it reads correctly in any browser
-// chrome (light or dark tab bar), unlike the bare mark SVGs.
+// Favicon + Apple touch icon: o ícone do app já pré-composto carrega
+// exatamente o fundo escuro deste site, então fica legível em qualquer
+// navegador (aba clara ou escura), diferente dos SVGs de marca puros.
 run("magick", [
   APP_ICON_SOURCE,
   "-resize",
@@ -50,9 +50,10 @@ run("magick", [
   p("public/apple-touch-icon.png"),
 ]);
 
-// Open Graph / Twitter share image (1200x630): a soft dark-red radial
-// gradient behind the official stacked logo. Minimal, brand-first, no
-// locale-specific text so one image serves pt-BR/en/es.
+// Imagem de compartilhamento Open Graph / Twitter (1200x630): um gradiente
+// radial vermelho-escuro suave atrás do logo oficial empilhado. Mínima,
+// focada na marca, sem texto específico de idioma, então uma única imagem
+// serve pt-BR/en/es.
 const gradient = p(".tmp-og-gradient.png");
 const logo = p(".tmp-og-logo.png");
 try {

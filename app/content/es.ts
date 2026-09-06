@@ -1,7 +1,7 @@
 import {
-  PURIKUKI_ISSUES_URL,
-  PURIKUKI_RELEASES_URL,
-  PURIKUKI_REPO_URL,
+  PURIKI_ISSUES_URL,
+  PURIKI_RELEASES_URL,
+  PURIKI_REPO_URL,
 } from "../lib/external-links";
 import type { SiteContent } from "./types";
 
@@ -337,20 +337,20 @@ export const es = {
         links: [
           {
             label: "GitHub",
-            target: { kind: "external", href: PURIKUKI_REPO_URL },
+            target: { kind: "external", href: PURIKI_REPO_URL },
           },
           {
             label: "Releases",
             target: {
               kind: "external",
-              href: PURIKUKI_RELEASES_URL,
+              href: PURIKI_RELEASES_URL,
             },
           },
           {
             label: "Issues",
             target: {
               kind: "external",
-              href: PURIKUKI_ISSUES_URL,
+              href: PURIKI_ISSUES_URL,
             },
           },
         ],

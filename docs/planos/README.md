@@ -1,100 +1,47 @@
-# Puriki Site — Planning Hub
+# Puriki Site — Documentação de Planejamento
 
-This directory is the implementation source of truth for the official Puriki landing page.
+Esta pasta reúne o histórico de decisões e a evolução técnica da landing oficial do Puriki, organizados por fase de implementação.
 
-The purpose of these documents is to let a developer or coding agent implement the site without having to reinterpret product, UX, architecture, content, release, accessibility, SEO, and deployment decisions from scratch.
+## Repositórios
 
-## Repository
+- Repositório do site: `jvitorn/puriki-site`
+- Repositório do app: `jvitorn/puriki`
+- Branch padrão do site: `main`
+- Branch padrão do app: `master`
+- Hospedagem: GitHub Pages
+- URL pública: `https://jvitorn.github.io/puriki-site/`
+- Candidato a domínio próprio futuro: `puriki.app`
 
-- Site repository: `jvitorn/puriki-site`
-- App repository: `jvitorn/puriki`
-- Site repository default branch: `main`
-- App repository default branch: `master`
-- Initial hosting: GitHub Pages
-- Initial public URL: `https://jvitorn.github.io/puriki-site/`
-- Future custom domain candidate: `puriki.app` if acquired and suitable
+## Onde encontrar cada coisa
 
-## Planning directory choice
+- **`DECISIONS.md`** — as decisões de produto e arquitetura que não mudam a cada fase (posicionamento, stack, distribuição, i18n, direção visual, acessibilidade, privacidade). É o primeiro lugar para checar antes de questionar algo já definido.
+- **`DESIGN_SYSTEM.md`** — a direção visual e de interação do site: tokens, tipografia, motion, iconografia.
+- **`CHECKLIST-PT-BR.md`** — o checklist executivo atual do projeto, por fase.
+- **`PHASE_00_FOUNDATION.md` até `PHASE_07_LAUNCH_HARDENING.md`** — o registro de cada fase de implementação, na ordem em que aconteceram.
 
-The plans live in `docs/planos/`, not in the repository root.
+## Como as fases contam a história do projeto
 
-Reasons:
+Cada arquivo `PHASE_XX_*.md` documenta uma etapa da evolução do site, do bootstrap inicial até a validação final de lançamento:
 
-- keeps the project root focused on source/configuration files;
-- makes implementation documentation easy to find;
-- allows future technical documentation to coexist under `docs/`;
-- avoids mixing executable project structure with planning material.
+| Fase | Nome | Resultado principal |
+|---|---|---|
+| 00 | Foundation | Base reprodutível do projeto React/Vite/Router |
+| 01 | Design System | Tokens, tipografia, shell, primitivas responsivas |
+| 02 | Rotas, i18n e Conteúdo | Rotas estáticas por idioma e modelo de conteúdo tipado |
+| 03 | Seções da Landing | Experiência completa da landing |
+| 04 | Download e Releases | Metadados de release em build-time e UX do APK |
+| 04R | Releases Multi-ABI | Revisão do contrato de release para múltiplos APKs por ABI, após a `v1.0.0` real |
+| 05 | Acessibilidade, SEO e Legal | Meta WCAG, metadados, Privacy/Terms, regras de motion |
+| 06 | Qualidade Automatizada, CI e Deploy | Gates de qualidade automatizados e deploy no GitHub Pages |
+| 07 | Validação Final e Lançamento | Validação de produção, precisão de conteúdo, refinamento do Download |
+| 08 | Limpeza e Consolidação | Documentação interna em PT-BR, remoção do sandbox Foundation, consolidação geral |
 
-## Read order
+Algumas fases corrigiram decisões de fases anteriores depois que a realidade do produto mudou — por exemplo, a Fase 04R revisou o contrato de release da Fase 04 depois que o Puriki publicou sua primeira versão estável (`v1.0.0`) com um APK por arquitetura, em vez do único APK universal assumido originalmente. Esses documentos preservam a decisão original e explicam por que ela mudou; não foram reescritos para parecer que a decisão final sempre existiu.
 
-1. `DECISIONS.md`
-2. `CONTENT_SPEC.md`
-3. `DESIGN_SYSTEM.md`
-4. `IMPLEMENTATION_PLAN.md`
-5. Execute phases in numeric order:
-   - `PHASE_00_FOUNDATION.md`
-   - `PHASE_01_DESIGN_SYSTEM.md`
-   - `PHASE_02_ROUTING_I18N_CONTENT.md`
-   - `PHASE_03_LANDING_SECTIONS.md`
-   - `PHASE_04_DOWNLOAD_RELEASES.md`
-   - `PHASE_05_ACCESSIBILITY_SEO_LEGAL.md`
-   - `PHASE_06_TESTING_CI_DEPLOY.md`
-   - `PHASE_07_LAUNCH_HARDENING.md`
-6. Keep the appropriate global checklist updated:
-   - `CHECKLIST-PT-BR.md`
-   - `CHECKLIST-EN.md`
+## Convenção dos checklists
 
-## Execution rules for Codex / coding agents
+- `[x]` concluído e validado
+- `[ ]` pendente
+- itens que deixaram de se aplicar (ex.: um recurso removido depois) ficam marcados como tal, com uma nota explicando o histórico
 
-- Do not skip phases unless the plan explicitly allows it.
-- Do not silently change product decisions in `DECISIONS.md`.
-- If a decision becomes technically impossible or clearly harmful, stop and document:
-  1. the conflicting decision;
-  2. the technical reason;
-  3. the smallest viable alternative;
-  4. the migration/maintenance impact.
-- Avoid overengineering. This is a static open-source product landing page, not a SaaS platform.
-- Do not add a backend, database, CMS, analytics, authentication, telemetry, or server runtime unless a later explicit decision changes the scope.
-- Do not expose tokens, GitHub credentials, Android signing data, EAS credentials, or any secret to Vite client code.
-- Do not host APK files inside `puriki-site`.
-- Treat the `purikuki` GitHub Releases page as the official application binary source.
-- Stable release data must be resolved at build time, not fetched by every browser visit.
-- Keep runtime JavaScript small and purposeful.
-- Prefer semantic HTML and platform behavior over custom abstractions.
-- Add shadcn/ui components only when they solve a concrete interaction/accessibility need.
-- Code identifiers, file names, comments, tests, and commit-ready technical text should be in English. Product copy follows the active locale.
-- After completing a phase:
-  - run its validation commands;
-  - mark completed items in both global checklists;
-  - record any deviation or follow-up;
-  - do not mark an item complete if it was only partially implemented.
-
-## Status convention
-
-Use:
-
-- `[ ]` not started
-- `[-]` in progress / partially complete
-- `[x]` complete and validated
-- `[!]` blocked, with explanation immediately below the item
-
-Do not use percentage estimates for development progress.
-
-## Definition of done for the whole project
-
-The first public version of the landing is complete when:
-
-- all routes are statically pre-rendered;
-- PT-BR, EN, and ES are available with correct localized metadata;
-- the landing represents only currently available Puriki features as current;
-- future features are clearly labeled as roadmap;
-- the stable APK download flow is trustworthy and functional;
-- the no-release state is also functional;
-- Privacy and Terms pages exist;
-- WCAG 2.2 AA is used as the accessibility target;
-- reduced-motion behavior is implemented;
-- SEO metadata, Open Graph, sitemap, robots, canonical, and hreflang are correct;
-- CI runs lint/typecheck/tests/build;
-- GitHub Pages deploy is automated from `main`;
-- no analytics or unnecessary third-party scripts are present;
-- the production site passes the launch checklist in Phase 07.
+Pendências que dependem de algo fora do repositório (um dispositivo Android real, um leitor de tela, revisão jurídica) ficam registradas como pendência real — nunca marcadas como concluídas sem terem sido de fato verificadas.

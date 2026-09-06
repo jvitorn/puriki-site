@@ -16,7 +16,7 @@ import {
   CollapsibleTrigger,
 } from "../components/ui/collapsible";
 import { cn } from "../lib/utils";
-import { PURIKUKI_REPO_URL } from "../lib/external-links";
+import { PURIKI_REPO_URL } from "../lib/external-links";
 import type { Locale } from "../lib/i18n/locales";
 import {
   getReleaseArtifact,
@@ -48,12 +48,13 @@ interface PrimaryCardProps {
   primary?: boolean;
 }
 
-// The recommended (ARM64) and Universal cards share this layout — `primary`
-// only changes the border/elevation/accent-bar emphasis, never the only
-// signal that one is recommended (that's the textual `badge`, per WCAG
-// 1.4.1). Both cards stretch to the same height (see the grid's
-// `items-stretch`) and push their CTA to the bottom via `mt-auto`, so the
-// two read as one guided choice rather than two unrelated blocks.
+// Os cards ARM64 (recomendado) e Universal compartilham este layout —
+// `primary` só muda a ênfase de borda/elevação/barra de destaque, nunca é
+// o único sinal de que um é recomendado (isso é o badge textual, pela
+// WCAG 1.4.1). Os dois cards esticam para a mesma altura (ver
+// `items-stretch` no grid) e empurram o CTA para a base via `mt-auto`,
+// para que os dois se leiam como uma única escolha guiada, não dois
+// blocos soltos.
 function PrimaryCard({
   icon: Icon,
   title,
@@ -202,13 +203,13 @@ function AvailableReleaseView({
   content,
   release,
 }: AvailableReleaseViewProps) {
-  // arm64-v8a and universal are required invariants enforced by
-  // getReleaseMetadata()'s validation (see
-  // app/lib/releases/validate-release-metadata.ts) for every
-  // `available: true` release. getRequiredReleaseArtifact() throws instead
-  // of silently hiding the Download section if that invariant is ever
-  // violated — such a build/test must fail loudly, not ship quietly
-  // incomplete.
+  // arm64-v8a e universal são invariantes obrigatórios, garantidos pela
+  // validação de getReleaseMetadata() (ver
+  // app/lib/releases/validate-release-metadata.ts) para toda release
+  // `available: true`. getRequiredReleaseArtifact() lança um erro em vez
+  // de esconder a seção de Download silenciosamente caso esse invariante
+  // seja violado — um build/teste assim precisa falhar de forma clara,
+  // nunca publicar algo incompleto quietamente.
   const arm64 = getRequiredReleaseArtifact(release, "arm64-v8a");
   const universal = getRequiredReleaseArtifact(release, "universal");
   const arm32 = getReleaseArtifact(release, "armeabi-v7a");
@@ -226,12 +227,13 @@ function AvailableReleaseView({
 
   return (
     <>
-      {/* One shared "guided choice" frame around the release metadata and
-          the two primary cards, so ARM64 + Universal read as a single
-          decision block instead of two unrelated cards floating in the
-          section. Nested radius (rounded-block outside, rounded-card on
-          each card) follows the same convention already used elsewhere
-          in the design system (e.g. the no-release block below). */}
+      {/* Uma moldura compartilhada de "escolha guiada" ao redor dos
+          metadados da release e dos dois cards primários, para que ARM64
+          + Universal se leiam como um único bloco de decisão em vez de
+          dois cards soltos na seção. O raio aninhado (rounded-block por
+          fora, rounded-card em cada card) segue a mesma convenção já
+          usada em outros lugares do design system (ex.: o bloco de
+          sem-release abaixo). */}
       <div className="mt-6 rounded-block border border-border bg-surface/60 p-4 sm:p-6">
         <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
           <div>
@@ -376,14 +378,15 @@ function AvailableReleaseView({
   );
 }
 
-// Release metadata is generated at build time (see app/lib/releases and
-// scripts/fetch-release.ts) and passed in as a prop — this component never
-// calls GitHub itself, and never tries to detect the visitor's CPU
-// architecture (userAgent/UA-CH/heuristics are all deliberately avoided —
-// see PHASE_04R_MULTI_ABI_RELEASES.md). When `release.available` is false,
-// only the honest "in preparation" shell renders; nothing here fakes a
-// version, size, or date. SHA-256/checksum details are intentionally not
-// surfaced here — they remain a GitHub Release concern (`releaseUrl`).
+// Os metadados de release são gerados em build time (ver app/lib/releases
+// e scripts/fetch-release.ts) e chegam como prop — este componente nunca
+// chama o GitHub diretamente, e nunca tenta detectar a arquitetura de CPU
+// do visitante (userAgent/UA-CH/heurísticas são deliberadamente evitados —
+// ver PHASE_04R_MULTI_ABI_RELEASES.md). Quando `release.available` é
+// false, só o shell honesto de "em preparação" é renderizado; nada aqui
+// inventa versão, tamanho ou data. Detalhes de SHA-256/checksum são
+// intencionalmente não exibidos aqui — permanecem uma responsabilidade da
+// GitHub Release (`releaseUrl`).
 export function DownloadSection({
   locale,
   content,
@@ -417,7 +420,7 @@ export function DownloadSection({
             </p>
             <div className="mt-5">
               <Button asChild size="large" variant="secondary">
-                <a href={PURIKUKI_REPO_URL} rel="noreferrer" target="_blank">
+                <a href={PURIKI_REPO_URL} rel="noreferrer" target="_blank">
                   {content.noRelease.cta}
                 </a>
               </Button>

@@ -1,11 +1,13 @@
-# Checklist Global — Puriki Site (PT-BR)
+# Checklist Global — Puriki Site
 
-> Checklist executivo. Os detalhes e critérios de aceite estão nos arquivos de cada fase.
+> Checklist executivo. Detalhes e critérios de aceite estão nos arquivos de cada fase.
+>
+> Estados: `[x]` concluído · `[ ]` pendente · `N/A` deixou de se aplicar.
 
 ## Fase 00 — Fundação
 
 - [x] Projeto React + TypeScript + Vite criado.
-- [-] pnpm configurado e lockfile commitado.
+- [x] pnpm configurado e lockfile commitado.
 - [x] React Router Framework Mode configurado.
 - [x] `ssr: false` configurado.
 - [x] Pré-renderização estática comprovada.
@@ -34,13 +36,11 @@
 - [x] Button configurado.
 - [x] Sheet configurado.
 - [x] Accordion configurado.
-- [x] Collapsible adicionado somente se necessário.
+- [x] Collapsible adicionado somente quando necessário.
 - [x] Header responsivo criado.
 - [x] Footer estrutural criado.
 - [x] Mockup genérico de smartphone criado.
 - [x] Utilitário pequeno para Anime.js com reduced motion.
-
-Observação: Collapsible não foi adicionado porque ainda não existe uso concreto para ele.
 
 ## Fase 02 — Rotas, i18n e conteúdo
 
@@ -61,25 +61,20 @@ Observação: Collapsible não foi adicionado porque ainda não existe uso concr
 - [x] PT-BR implementado como conteúdo base.
 - [x] EN completo.
 - [x] ES completo.
-- [ ] EN revisado humanamente antes do lançamento.
-- [ ] ES revisado humanamente antes do lançamento.
+- [ ] EN revisado por um falante fluente antes do lançamento.
+- [ ] ES revisado por um falante fluente antes do lançamento.
 - [x] Seletor de idioma acessível.
 - [x] Troca de idioma preserva a página equivalente.
 - [x] Sem redirecionamento automático forçado.
 - [x] Metadados por página/idioma preparados.
 - [x] Todas as rotas pré-renderizam.
 
-Observação: a Home/Privacy/Terms desta fase são um scaffold de conteúdo e
-rotas (estrutura semântica mínima + âncoras), não o design final da
-landing — isso continua sendo escopo da Fase 03. Detalhes completos em
-`PHASE_02_ROUTING_I18N_CONTENT.md`.
-
 ## Fase 03 — Landing
 
 - [x] Header final.
 - [x] Hero.
-- [x] H1 “Sua lista de anime, do seu jeito.”
-- [x] CTA “Baixar para Android”.
+- [x] H1 "Sua lista de anime, do seu jeito."
+- [x] CTA "Baixar para Android".
 - [x] CTA GitHub.
 - [x] Seção AniList -> Puriki <- MyAnimeList.
 - [x] Animação de conexão discreta.
@@ -87,104 +82,69 @@ landing — isso continua sendo escopo da Fase 03. Detalhes completos em
 - [x] Quatro benefícios principais.
 - [x] Showcase de lista.
 - [x] Showcase de descoberta.
-- [x] Showcase de detalhes/tradução.
-  - Copy da tradução (Google ML Kit, Android, PT-BR/ES) implementada e
-    verificada.
-- [x] Afirmações de tradução verificadas contra o app real.
+- [x] Showcase de detalhes/tradução (copy verificada contra o app real: Google ML Kit, Android, PT-BR/ES).
 - [x] Seção de privacidade.
 - [x] Seção Open Source.
 - [x] Roadmap 1.0/2.0/3.0.
 - [x] 2.0 marcada como futura.
 - [x] 3.0 marcada como planejada.
 - [x] Shell de Download.
-- [x] Estado “primeira versão em preparação”.
+- [x] Estado "primeira versão em preparação".
 - [x] FAQ.
 - [x] Footer.
 - [x] Screenshots finais selecionados.
-  - Decisão do maintainer (registrada na Fase 04): os mockups estilizados
-    (Hero e showcases) são a solução visual definitiva da landing.
-    Screenshots reais do app não são mais um requisito.
-- [x] Screenshots otimizados.
-  - N/A — não há arquivos de imagem a otimizar; os mockups são
-    renderizados via markup/CSS (tokens do design system), não assets
-    binários.
-- [x] Alt texts revisados.
-  - Alt text localizado presente para todos os mockups.
+  - Decisão do projeto (Fase 04): os mockups estilizados (Hero e showcases) são a solução visual definitiva da landing — screenshots reais do app não são um requisito.
+- [x] Alt texts revisados — presentes e localizados para todos os mockups.
 - [x] Layout mobile revisado.
 - [x] Layout desktop revisado.
 
-Observação: correção de nomenclatura `puriklLabel` -> `purikiLabel` e do
-link do roadmap (`purikuki#roadmap` -> `PURIKI_PRODUCT_ENGINEERING_ROADMAP.md`)
-feitas na Fase 03. Detalhes completos em `PHASE_03_LANDING_SECTIONS.md`.
-
 ## Fase 04 — Releases e APK
 
-> Modelo single-APK original, superseded pela Fase 04R após a publicação
-> pública da `v1.0.0` multi-ABI. Ver `PHASE_04_DOWNLOAD_RELEASES.md` e
-> `PHASE_04R_MULTI_ABI_RELEASES.md`.
+> Modelo single-APK original, substituído pela Fase 04R após a publicação pública da `v1.0.0` multi-ABI. Ver `PHASE_04_DOWNLOAD_RELEASES.md` e `PHASE_04R_MULTI_ABI_RELEASES.md`.
 
 - [x] Script build-time de GitHub Release criado.
 - [x] Última release estável usada.
 - [x] Draft ignorado.
-- [x] Prerelease ignorada para CTA principal.
-- [-] ~~Asset `puriki-{version}-android.apk` localizado.~~
-  - Superseded pela Fase 04R: o contrato agora localiza múltiplos
-    artifacts (`puriki-v{version}-{variant}.apk`) em vez de um único APK.
-- [x] Versão capturada.
-- [x] Data capturada.
-- [x] Tamanho capturado.
-- [x] URL de download capturada.
-- [x] URL da release capturada.
-- [-] ~~SHA-256 capturado quando disponível.~~
-  - Superseded pela Fase 04R: SHA-256 removido do contrato e da UX da
-    landing; checksums permanecem apenas na GitHub Release.
+- [x] Prerelease ignorada para o CTA principal.
+- N/A — asset único `puriki-{version}-android.apk`: substituído pelo contrato multi-artifact da Fase 04R.
+- [x] Versão, data, tamanho, URL de download e URL da release capturados.
+- N/A — SHA-256 capturado quando disponível: removido do contrato e da UX na Fase 04R; checksums permanecem só na GitHub Release.
 - [x] Arquivo de metadados gerado.
 - [x] Sem release gera `available: false`.
-- [x] Falha técnica de API não é mascarada como “sem release”.
+- [x] Falha técnica de API não é mascarada como "sem release".
 - [x] Nenhum token vai para o bundle.
-- [x] Download aponta diretamente para GitHub Release.
-- [x] Tamanho formatado.
-- [x] Data localizada.
-- [-] ~~SHA expansível.~~ / ~~Botão copiar SHA acessível.~~
-  - Superseded pela Fase 04R: `ShaDisclosure` removido; sem UI de SHA na
-    landing.
-- [x] Instruções de APK adicionadas.
+- [x] Download aponta diretamente para a GitHub Release.
+- [x] Tamanho formatado e data localizada.
+- N/A — disclosure de SHA expansível/copiável: `ShaDisclosure` removido na Fase 04R, sem UI de SHA na landing.
+- [x] Instruções de instalação do APK.
 - [x] Testes do parser de release (reescritos na Fase 04R para multi-ABI).
-- [x] Teste stable vs prerelease.
-- [x] Teste sem release.
-- [x] Teste asset ausente/ambíguo (agora required vs optional por variante).
+- [x] Teste stable vs. prerelease, teste sem release, teste de asset ausente/ambíguo.
 - [x] `workflow_dispatch` disponível.
-- [ ] Dispatch automático entre repositórios implementado quando o workflow do app estiver pronto.
-  - Pendência externa deliberada: `puriki-site` já declara
-    `repository_dispatch: types: [puriki-release-published]` no workflow e
-    sempre refaz seu próprio `release:fetch` (não confia em payload
-    externo). Falta apenas o `purikuki` ganhar seu workflow de release
-    estável para enviar o dispatch — está fora do escopo deste repositório.
+- [ ] Dispatch automático entre repositórios, quando `jvitorn/puriki` tiver seu próprio workflow de release.
+  - `puriki-site` já declara `repository_dispatch: types: [puriki-release-published]` e sempre refaz seu próprio `release:fetch`, sem confiar em payload externo. Falta o repositório do app ganhar o workflow que envia esse dispatch — fora do escopo deste repositório.
 
-## Fase 04R — Multi-ABI Releases
+## Fase 04R — Releases Multi-ABI
 
 - [x] Modelo multi-artifact (`ReleaseAvailable.artifacts[]`).
 - [x] ARM64 (`arm64-v8a`) obrigatório.
 - [x] Universal obrigatório.
-- [x] ARM32 (`armeabi-v7a`) opcional.
-- [x] x86_64 opcional.
-- [x] x86 opcional.
+- [x] ARM32 (`armeabi-v7a`), x86_64 e x86 opcionais.
 - [x] Parser multi-ABI (`parseGitHubRelease` reescrito).
 - [x] Download ARM64 principal (CTA + card recomendado).
 - [x] Universal destacado (segundo card, CTA próprio).
 - [x] Outras versões (Collapsible, só renderiza variantes presentes).
 - [x] "Qual versão devo baixar?" (Collapsible não técnico).
-- [x] Sem ABI detection (confirmado — nenhum userAgent/UA-CH/heurística).
+- [x] Sem detecção de ABI (confirmado — nenhum userAgent/UA-CH/heurística).
 - [x] SHA removido da UX (`ShaDisclosure` deletado).
 - [x] GitHub Release mantém detalhes técnicos (link "Ver notas da versão").
 - [x] JSON-LD usa ARM64 (`getReleaseArtifact(release, "arm64-v8a")`).
-- [x] Testes multi-ABI (parser, Download section, JSON-LD, roadmap, axe).
-- [x] Release real v1.0.0 validada (`pnpm release:fetch` ao vivo — 5
-      artifacts encontrados e classificados corretamente).
+- [x] Testes multi-ABI (parser, Download, JSON-LD, roadmap, axe).
+- [x] Release real v1.0.0 validada (`pnpm release:fetch` ao vivo — 5 artifacts encontrados e classificados corretamente).
 
 ## Fase 05 — Acessibilidade, SEO e Legal
 
 ### Acessibilidade
+
 - [x] WCAG 2.2 AA usada como referência.
 - [x] HTML semântico.
 - [x] Apenas um H1 por página.
@@ -197,222 +157,105 @@ feitas na Fase 03. Detalhes completos em `PHASE_03_LANDING_SECTIONS.md`.
 - [x] Estados não dependem só de cor.
 - [x] Touch targets adequados.
 - [x] `prefers-reduced-motion`.
-- [-] Zoom 200% testado.
-  - Aproximado via reflow em 320px (sem overflow em `/`, `/privacy/`,
-    `/terms/`, `/en/`, `/es/privacy/`). Zoom literal do navegador a
-    200% fica para a Fase 07.
-- [x] Contraste validado.
-  - Calculado numericamente (fórmula WCAG) contra os tokens reais.
-    Texto/foco: 5.3–18.5:1. `border`/`border-strong`/`brand`-como-fill
-    ficam abaixo de 3:1 mas são decorativos, nunca o único indicador de
-    limite de um elemento interativo público (variante `outline` do
-    Button só existe no sandbox `/foundation/`) — token preservado.
-- [!] Screen reader spot-check.
-  - Bloqueado: nenhum leitor de tela disponível neste ambiente.
-    Pendência registrada para QA manual do maintainer.
+- [x] Zoom 200% revisado (Fase 07 — redimensionamento de viewport para a largura efetiva equivalente, em navegador real; sem overflow, menu mobile assume corretamente).
+- [x] Contraste validado — calculado numericamente (fórmula WCAG) contra os tokens reais: texto/foco entre 5,3:1 e 18,5:1. `border`/`border-strong`/`brand`-como-fill ficam abaixo de 3:1 mas são decorativos, nunca o único indicador de limite de um elemento interativo público.
+- [ ] Spot-check com leitor de tela real (NVDA/VoiceOver/TalkBack) — nenhum disponível neste ambiente.
 
 ### SEO
-- [x] Title localizado.
-- [x] Description localizada.
+
+- [x] Title e description localizados.
 - [x] Canonical correto.
-- [x] hreflang pt-BR/en/es.
-- [x] x-default.
+- [x] hreflang pt-BR/en/es + x-default.
 - [x] Open Graph.
 - [x] Twitter/X card.
 - [x] Imagem social.
 - [x] JSON-LD de aplicativo.
 - [x] sitemap.xml.
 - [x] robots.txt.
-- [x] favicon.
-- [x] apple-touch-icon.
-- [x] Sem `noindex` acidental.
-  - Foundation e 404 têm `noindex` deliberado (não são conteúdo
-    público); as nove rotas públicas não têm `noindex`.
+- [x] favicon e apple-touch-icon.
+- [x] Sem `noindex` acidental nas nove rotas públicas (404 tem `noindex` deliberado).
 
 ### Legal
-- [x] Privacy PT-BR.
-- [x] Privacy EN.
-- [x] Privacy ES.
-- [x] Terms PT-BR.
-- [x] Terms EN.
-- [x] Terms ES.
+
+- [x] Privacy PT-BR/EN/ES.
+- [x] Terms PT-BR/EN/ES.
 - [x] GitHub Pages mencionado adequadamente na Privacy.
 - [x] Ausência de analytics descrita corretamente.
 - [x] Relação com AniList/MAL descrita corretamente.
 - [x] Disclaimer de projeto não oficial.
-- [!] Uso de logos de providers revisado.
-  - Bloqueado: sem material oficial de branding revisado nesta fase.
-    Continua usando apenas nomes em texto (sem logos), conforme já
-    decidido nas Fases 02/03.
-- [ ] Texto legal revisado antes do lançamento.
-  - Conteúdo é preciso e público, mas não passou por revisão
-    jurídica/humana formal — não marcar como concluído até essa revisão
-    acontecer.
+- [ ] Uso de logos de providers revisado — nenhum material oficial de branding disponível ainda; a landing usa só nomes em texto, sem logos.
+- [ ] Texto legal revisado antes do lançamento — conteúdo é preciso e público, mas ainda não passou por revisão jurídica formal.
 
 ## Fase 06 — Testes, CI e Deploy
 
-- [x] Testes de locale (já existiam — `tests/i18n/locale-content.test.ts`, `language-switcher.test.tsx`).
-- [x] Testes de rotas (já existiam — `tests/i18n/routes.test.ts`; canonical/hreflang eram cobertos só manualmente na Fase 05).
-- [x] Testes de release parser (já existiam, Fase 04R — `tests/releases/parse-github-release.test.ts`).
-- [x] Testes de Download (já existiam, Fase 04R — `tests/sections/download-section.test.tsx`).
-- [x] Testes do menu mobile (já existiam — `tests/shell.test.tsx`, Sheet open/close/Escape).
-- [x] Testes de FAQ (já existiam — `tests/sections.test.tsx`, `locale-content.test.ts`).
-- [x] Testes de canonical/hreflang (lacuna real — adicionados em `tests/i18n/metadata.test.ts` para `buildPageLinks`).
-- [x] Validação forte de `ReleaseMetadata` gerado (nova — `app/lib/releases/validate-release-metadata.ts` + `tests/releases/validate-release-metadata.test.ts`).
-- [x] `getRequiredReleaseArtifact` substitui o `return null` silencioso em `download-section.tsx` (`tests/releases/get-required-release-artifact.test.ts`).
-- [x] Comentário stale do baseline (`get-release-metadata.test.ts`) corrigido.
-- [x] Validador de output estático (novo — `scripts/validate-static-output.ts` + `tests/scripts/validate-static-output.test.ts`).
-- [x] `pnpm verify` (format:check + lint + typecheck + test) e `pnpm validate:static` adicionados ao `package.json`.
-- [x] CI em PR (`.github/workflows/quality.yml`, trigger `pull_request`/`push` para `main`).
-- [x] CI em `main` (mesmo workflow, mais os quality gates dentro de `deploy-pages.yml`).
-- [x] `pnpm install --frozen-lockfile`.
-- [x] Lint no CI.
-- [x] Typecheck no CI.
-- [x] Testes no CI.
-- [x] Build no CI (production-style, `BASE_PATH=/puriki-site/`).
-- [x] Validação das rotas estáticas (`pnpm validate:static` no CI de PR e no deploy).
-- [x] CI de PR não depende de `pnpm release:fetch`/GitHub API (usa o baseline `available: false` versionado).
+- [x] Testes de locale, rotas, release parser, Download, menu mobile, FAQ (suíte já existente, auditada e reaproveitada).
+- [x] Testes de canonical/hreflang (lacuna real preenchida em `tests/i18n/metadata.test.ts`).
+- [x] Validação forte de `ReleaseMetadata` gerado (`app/lib/releases/validate-release-metadata.ts`).
+- [x] `getRequiredReleaseArtifact` substitui o `return null` silencioso em `download-section.tsx`.
+- [x] Comentário desatualizado do baseline (`get-release-metadata.test.ts`) corrigido.
+- [x] Validador de output estático (`scripts/validate-static-output.ts`).
+- [x] `pnpm verify` e `pnpm validate:static` adicionados ao `package.json`.
+- [x] CI em PR (`.github/workflows/quality.yml`) e em `main`.
+- [x] `pnpm install --frozen-lockfile`, lint, typecheck e testes no CI.
+- [x] Build no CI em estilo produção (`BASE_PATH=/puriki-site/`) e validação das rotas estáticas.
+- [x] CI de PR não depende de `pnpm release:fetch`/API do GitHub (usa o baseline `available: false` versionado).
 - [x] Workflow do GitHub Pages.
-- [x] Deploy executa quality gates (`pnpm verify`) antes de `release:fetch`/build/deploy.
-- [x] Deploy executa `pnpm validate:static` antes de publicar.
-- [!] Pages configurado para GitHub Actions.
-  - Não verificável a partir do repositório — requer confirmação manual do
-    maintainer em Settings → Pages → Build and deployment → Source →
-    GitHub Actions. Ver `PHASE_06_TESTING_CI_DEPLOY.md`.
-  - Atualização da Fase 07: a produção real
-    (`https://jvitorn.github.io/puriki-site/`) já está servindo a landing
-    React com dados da release real (JSON-LD com versão/artifact
-    corretos), o que só é possível se `deploy-pages.yml` já for a origem
-    da publicação — forte evidência funcional de que a configuração já
-    está correta. Mantido como `[!]` porque essa é uma inferência a partir
-    do comportamento observado, não uma confirmação direta da tela de
-    Settings. Ver `PHASE_07_LAUNCH_HARDENING.md`.
-- [!] Branch protection/ruleset exigindo o check `quality` em `main`.
-  - Não verificável a partir do repositório — requer configuração manual
-    do maintainer em Settings → Branches (ou Rules → Rulesets). Nome exato
-    do check: `quality` (job dentro do workflow `Quality`).
+- [x] Deploy executa quality gates (`pnpm verify`) e `pnpm validate:static` antes de publicar.
+- [ ] Pages configurado como fonte "GitHub Actions" em Settings — não verificável a partir do repositório; requer confirmação manual em Settings → Pages → Build and deployment → Source. A produção real já serve a landing React com dados da release real, o que só é possível se o workflow de deploy já for a origem da publicação — forte evidência funcional de que a configuração já está correta, mas isso continua sendo uma inferência, não uma confirmação direta da tela.
+- [ ] Branch protection/ruleset exigindo o check `quality` em `main` — não verificável a partir do repositório; requer configuração manual em Settings → Branches (ou Rules → Rulesets). Nome exato do check: `quality`.
 - [x] Deploy manual disponível (`workflow_dispatch`).
 - [x] Concorrência de deploy controlada.
-- [x] Base `/puriki-site/` validada (agora automaticamente, via `validate:static`).
-- [x] Assets funcionam no project site (validado automaticamente).
-- [x] Nenhum segredo no artefato publicado (validado automaticamente — scan por padrões de secret + ausência de APK/keystore/SHA256SUMS).
-- [-] ~~Dependabot configurado (`npm` + `github-actions`, semanal, sem auto-merge).~~
-  - A Fase 06 introduziu Dependabot; a configuração foi removida na Fase 07
-    (correções) por decisão de simplificação do projeto. Atualizações de
-    dependência voltaram a ser manuais. Ver `PHASE_06_TESTING_CI_DEPLOY.md`.
+- [x] Base `/puriki-site/` validada e assets funcionam no project site (via `validate:static`).
+- [x] Nenhum segredo no artefato publicado (scan automatizado por padrões de secret + ausência de APK/keystore/SHA256SUMS).
+- N/A — Dependabot configurado: introduzido nesta fase, removido depois (Fase 07, correções) por decisão de simplificação do projeto; atualizações de dependência voltaram a ser manuais.
 - [x] Revisão de performance do build documentada (sem budgets arbitrários).
 
-> Minimal GitHub Pages deployment infrastructure was intentionally implemented during Phase 01 to allow visual validation of each subsequent phase. Full CI/deployment hardening was completed in Phase 06 (see `PHASE_06_TESTING_CI_DEPLOY.md` for the full report).
+## Fase 07 — Validação final e lançamento
 
-Os únicos itens ainda pendentes desta fase são de configuração manual do
-GitHub (Pages Source e branch protection), marcados `[!]` acima — não
-podem ser verificados nem aplicados a partir do código.
-
-## Fase 07 — Lançamento
-
-- [x] Features descritas comparadas com a build real.
-  - Auditadas contra o código real de `jvitorn/puriki` (versão pública
-    v1.0.0, checkout local da branch `master`; `jvitorn/purikuki` é o nome
-    antigo do mesmo repositório, mantido só como redirect no GitHub):
-    AniList/MAL OAuth, guest mode, catálogo, busca, detalhes, progresso/
-    status/nota (sincronizam com o provedor real), tradução local de
-    sinopse (PT-BR/ES, Android-only), idiomas da UI, storage, ausência de
-    conta própria/anúncios, MIT/open source, ausência de sync entre
-    providers na 1.0. Nenhuma correção de conteúdo foi necessária.
-- [x] min Android confirmado antes de publicar.
-  - `minSdkVersion` real é 24 (Android 7.0); a landing não faz nenhuma
-    afirmação sobre versão mínima, então não há risco de divergência.
-- [x] Status do roadmap conferido.
-  - 1.0/2.0/3.0 corretos; nenhuma linguagem de pressão ("em breve"/"coming
-    soon") encontrada em nenhuma das três línguas.
-- [x] Estado sem release testado.
-- [x] Estado com release testado.
-  - `pnpm release:fetch` real + build de produção confirmam versão, JSON-LD,
-    tamanhos e nomes de arquivo corretos; baseline restaurado depois.
-- [!] Download real testado em Android.
-  - Pendente: validação manual em aparelho Android físico (ARM64 e
-    Universal). Não disponível neste ambiente.
-- [x] ~~SHA conferido~~ — item obsoleto.
-  - Superseded pela Fase 04R: não existe mais UI de SHA/checksum na
-    landing; verificação de integridade é feita direto na GitHub Release.
-- [x] Rotas diretas testadas em produção.
-  - Nove rotas + 404 testadas com navegador real contra
-    `https://jvitorn.github.io/puriki-site/`: carregamento direto, refresh,
-    navegação interna, troca de idioma, Back/Forward — todos corretos.
+- [x] Features descritas comparadas com o app real (`jvitorn/puriki`, versão pública v1.0.0): AniList/MAL OAuth, guest mode, catálogo, busca, detalhes, progresso/status/nota, tradução local de sinopse, idiomas, storage, ausência de conta própria/anúncios, MIT/open source, ausência de sync entre providers na 1.0. Nenhuma correção de conteúdo foi necessária.
+- [x] Versão mínima do Android confirmada (`minSdkVersion` 24 / Android 7.0) — a landing não faz afirmação sobre isso, então não há risco de divergência.
+- [x] Status do roadmap conferido — 1.0/2.0/3.0 corretos, nenhuma linguagem de pressão ("em breve") em nenhuma das três línguas.
+- [x] Estado sem release e estado com release testados (`pnpm release:fetch` real + build de produção confirmam versão, JSON-LD, tamanhos e nomes de arquivo; baseline restaurado depois).
+- [ ] Download real testado em aparelho Android físico (ARM64 e Universal) — não disponível neste ambiente.
+- N/A — conferência de SHA: item obsoleto desde a Fase 04R, sem UI de SHA/checksum na landing.
+- [x] Rotas diretas testadas em produção — nove rotas + 404 testadas com navegador real contra a produção: carregamento direto, refresh, navegação interna, troca de idioma, Back/Forward.
 - [x] PT-BR revisado.
-- [-] EN revisado.
-  - Estrutura, paridade e ausência de erros óbvios verificadas
-    (`locale-content.test.ts` + spot-check manual). Revisão humana fluente
-    não foi feita.
-- [-] ES revisado.
-  - Mesma situação do EN.
-- [x] Mobile pequeno revisado (320/360px, sem overflow).
-- [x] Mobile comum revisado (390/640px, sem overflow).
-- [x] Tablet revisado (768/820px, sem overflow).
-- [x] Desktop revisado (1280/1440px, sem overflow).
-- [x] Teclado revisado.
-  - Testado com eventos reais de teclado em navegador real: skip link,
-    menu mobile (abre com Enter, Escape devolve o foco), Accordion do FAQ,
-    Collapsible do Download.
-- [x] Reduced motion revisado.
-  - `prefers-reduced-motion: reduce` emulado em navegador real: zero
-    elementos com opacidade abaixo de 0,99 após o carregamento.
-- [-] Zoom 200% revisado.
-  - Aproximado redimensionando a viewport para a largura efetiva que um
-    zoom real de 200% produziria (sem overflow, menu mobile assume
-    corretamente) — mesmo nível de confiança já registrado na Fase 05;
-    não é um teste com o controle nativo de zoom de um navegador real.
-- [x] Lighthouse usado como diagnóstico.
-  - Rodado duas vezes contra a produção real: antes do deploy desta fase
-    (Performance 97/Accessibility 100/Best Practices 100/SEO 100,
-    encontrou o logo sem `width`/`height`) e de novo depois do deploy
-    (mesmas notas; o audit `unsized-images` passou de 0,5 para 1,0,
-    confirmando a correção ao vivo em produção).
-- [x] Links quebrados verificados.
-  - Todos os links externos retornam HTTP 200; nenhum placeholder `href="#"`.
-- [x] Metadados SEO verificados no HTML final.
-  - Inspecionado o HTML publicado real, não apenas o gerado localmente.
+- [ ] EN revisado por um falante fluente — estrutura e ausência de erros óbvios verificadas; revisão de naturalidade não foi feita.
+- [ ] ES revisado por um falante fluente — mesma situação do EN.
+- [x] Mobile pequeno (320/360px), mobile comum (390/640px), tablet (768/820px) e desktop (1280/1440px) revisados, sem overflow.
+- [x] Teclado revisado — testado com eventos reais em navegador real: skip link, menu mobile, Accordion do FAQ, Collapsible do Download.
+- [x] Reduced motion revisado — zero elementos com opacidade abaixo de 0,99 após o carregamento, em navegador real.
+- [x] Lighthouse usado como diagnóstico — rodado antes e depois do deploy desta fase contra a produção real: Performance 97, Accessibility 100, Best Practices 100, SEO 100 nas duas vezes; o audit `unsized-images` passou de 0,5 para 1,0 depois do deploy, confirmando a correção do logo ao vivo.
+- [x] Links quebrados verificados — todos os links externos retornam HTTP 200, nenhum placeholder `href="#"`.
+- [x] Metadados SEO verificados no HTML de produção real.
 - [x] Privacy/Terms verificados.
-- [x] Bundle verificado contra segredos.
-  - Grep no código-fonte e `pnpm validate:static` (scan automatizado do
-    artifact) — ambos limpos.
-- [x] Sem scripts de tracking inesperados.
-  - Inspeção de rede real na produção: apenas `jvitorn.github.io` é
-    contatado ao carregar a home.
-- [x] README de manutenção atualizado.
-  - Revisado; nenhuma informação pública incorreta encontrada, então
-    nenhuma alteração foi necessária.
-- [-] Checklist EN sincronizado.
-  - Decisão registrada: `CHECKLIST-EN.md` não recebe investimento de
-    sincronização nesta fase (será removido na Fase 08); também não foi
-    removido agora.
+- [x] Bundle verificado contra segredos (grep no código-fonte + `pnpm validate:static`, ambos limpos).
+- [x] Sem scripts de tracking inesperados — inspeção de rede real na produção confirma que só `jvitorn.github.io` é contatado.
+- [x] README revisado — nenhuma informação pública incorreta encontrada.
 - [x] HTTPS funcionando.
 
 ## Pós-lançamento
 
 - [x] Smoke test em navegador limpo.
-- [-] Smoke test em janela privada.
-  - Testado com um contexto de navegador isolado sem armazenamento
-    persistente (equivalente funcional a uma janela privada), não
-    literalmente a janela anônima de um navegador com interface real.
-- [-] Smoke test em Android.
-  - Aproximado com viewport mobile em navegador real (Chromium), não em
-    Android/Chrome mobile de fato. Ver também "Download real testado em
-    Android" acima.
-- [x] Download oficial confirmado.
-  - Links ARM64/Universal na produção apontam para os assets reais da
-    release `v1.0.0`.
-- [x] Layout novo do Download confirmado em produção pós-deploy.
-  - Depois do merge desta fase em `main` e da publicação pelo workflow
-    `Deploy to GitHub Pages`, a produção real foi reinspecionada: contêiner
-    compartilhado, ARM64 com barra de destaque e badge "Recomendado",
-    Universal secundário e CTAs em largura total já estão ao vivo — não
-    apenas no build local.
-- [x] Console sem erros críticos.
-  - Zero erros de console ao carregar a produção real.
-- [x] GitHub Links confirmados.
-- [x] Rotas aninhadas confirmadas.
-  - Carregamento direto e refresh de `/en/privacy/` confirmados em produção.
+- [x] Smoke test em contexto isolado sem armazenamento persistente (equivalente funcional a uma janela privada).
+- [ ] Smoke test em Android real — só aproximado via viewport mobile em navegador desktop; não é o motor/engine real do Android.
+- [x] Download oficial confirmado — links ARM64/Universal na produção apontam para os assets reais da release `v1.0.0`.
+- [x] Layout novo do Download confirmado em produção depois do deploy — contêiner compartilhado, ARM64 com barra de destaque e badge "Recomendado", Universal secundário e CTAs em largura total, ao vivo.
+- [x] Console sem erros críticos — zero erros ao carregar a produção real.
+- [x] GitHub links confirmados.
+- [x] Rotas aninhadas confirmadas — carregamento direto e refresh de `/en/privacy/` em produção.
+
+## Fase 08 — Limpeza e consolidação
+
+- [x] Documentação interna traduzida para PT-BR (fases, decisões, design system, índice).
+- [x] Arquivos cuja função principal era instrução de execução removidos (`IMPLEMENTATION_PLAN.md`, `CONTENT_SPEC.md`); conteúdo de política de produto ainda relevante foi incorporado a `DECISIONS.md`.
+- [x] `CHECKLIST-EN.md` removido; `CHECKLIST-PT-BR.md` passa a ser o checklist único.
+- [x] Estados de checklist padronizados (`[x]`/`[ ]`/`N/A`); linguagem de aprovação/bloqueio removida.
+- [x] Identificadores `PURIKUKI_*` renomeados para `PURIKI_*` (código, imports, conteúdo).
+- [x] Sandbox `/foundation/` removido (rota, componente, prerender, referências em SEO e static validator).
+- [x] Comentários com linguagem operacional de agente revisados e removidos onde encontrados.
+- [x] Descrições dos steps e comentários dos workflows traduzidos para PT-BR.
+- [x] `pnpm verify`, `pnpm build`, `pnpm validate:static` e a release real seguem funcionando após a limpeza.
 
 ## Domínio futuro
 
@@ -425,8 +268,4 @@ Quando houver domínio próprio:
 - [ ] Domínio verificado no GitHub quando aplicável.
 - [ ] `SITE_URL` atualizado.
 - [ ] `BASE_PATH=/`.
-- [ ] Canonical revisado.
-- [ ] hreflang revisado.
-- [ ] sitemap revisado.
-- [ ] Open Graph revisado.
-- [ ] Rotas diretas revisadas.
+- [ ] Canonical, hreflang, sitemap, Open Graph e rotas diretas revisados.

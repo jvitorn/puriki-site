@@ -44,7 +44,7 @@ Cada afirmação da landing foi comparada com a implementação real do app
 local da branch `master` usado como fonte de verdade — `jvitorn/purikuki`
 é o nome antigo do mesmo repositório antes de um rename no GitHub; a URL
 antiga ainda redireciona, mas `jvitorn/puriki` é o nome atual e é o que a
-landing já usa em `PURIKUKI_REPO_URL`): autenticação AniList (OAuth real),
+landing já usa em `PURIKI_REPO_URL`): autenticação AniList (OAuth real),
 autenticação MyAnimeList (OAuth com PKCE), modo guest (catálogo e busca funcionam sem
 conta conectada), catálogo, busca, tela de detalhes, atualização de
 progresso/status/nota (todas sincronizam de volta ao provedor real, não

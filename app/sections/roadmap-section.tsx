@@ -3,7 +3,7 @@ import type { RoadmapContent } from "../content/types";
 import { Section, SectionHeader } from "../components/layout/section";
 import { Button } from "../components/ui/button";
 import { Reveal } from "../components/motion/reveal";
-import { PURIKUKI_ROADMAP_DOC_URL } from "../lib/external-links";
+import { PURIKI_ROADMAP_DOC_URL } from "../lib/external-links";
 import type { ReleaseMetadata } from "../lib/releases/types";
 
 interface RoadmapSectionProps {
@@ -72,7 +72,7 @@ export function RoadmapSection({ content, release }: RoadmapSectionProps) {
       </p>
       <div className="mt-4">
         <Button asChild variant="secondary">
-          <a href={PURIKUKI_ROADMAP_DOC_URL} rel="noreferrer" target="_blank">
+          <a href={PURIKI_ROADMAP_DOC_URL} rel="noreferrer" target="_blank">
             {content.cta}
           </a>
         </Button>

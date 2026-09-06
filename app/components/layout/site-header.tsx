@@ -2,7 +2,7 @@ import { CodeXml, Download, Menu } from "lucide-react";
 import { useState } from "react";
 import { PurikiLogo } from "../brand/puriki-logo";
 import { getContent } from "../../content";
-import { PURIKUKI_REPO_URL } from "../../lib/external-links";
+import { PURIKI_REPO_URL } from "../../lib/external-links";
 import { homeAnchorHref, pageHref } from "../../lib/i18n/links";
 import type { Locale } from "../../lib/i18n/locales";
 import type { PageKey } from "../../lib/i18n/pages";
@@ -73,7 +73,7 @@ export function SiteHeader({ locale, page }: SiteHeaderProps) {
             page={page}
           />
           <Button asChild variant="secondary">
-            <a href={PURIKUKI_REPO_URL} rel="noreferrer" target="_blank">
+            <a href={PURIKI_REPO_URL} rel="noreferrer" target="_blank">
               <CodeXml aria-hidden="true" className="size-4" />
               {navigation.githubLabel}
             </a>
@@ -137,7 +137,7 @@ export function SiteHeader({ locale, page }: SiteHeaderProps) {
               <div className="mt-auto grid gap-3 pt-8">
                 <Button asChild variant="secondary">
                   <a
-                    href={PURIKUKI_REPO_URL}
+                    href={PURIKI_REPO_URL}
                     onClick={() => setIsOpen(false)}
                     rel="noreferrer"
                     target="_blank"

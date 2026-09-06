@@ -62,7 +62,7 @@ describe("locale + page -> URL mapping", () => {
 });
 
 describe("prerender path list", () => {
-  it("includes every required public path plus /foundation and /404", async () => {
+  it("includes every required public path plus /404", async () => {
     const { default: prerenderConfig } =
       (await import("../../react-router.config.ts")) as {
         default: { prerender: string[] };
@@ -79,7 +79,7 @@ describe("prerender path list", () => {
       expect(prerenderConfig.prerender).toContain(path);
     }
 
-    expect(prerenderConfig.prerender).toContain("/foundation");
     expect(prerenderConfig.prerender).toContain("/404");
+    expect(prerenderConfig.prerender).not.toContain("/foundation");
   });
 });
