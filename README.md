@@ -19,13 +19,51 @@ The development server uses `/` by default. The project-site deployment base pat
 ## Validation
 
 ```bash
-pnpm lint
-pnpm typecheck
-pnpm test
-pnpm build
+pnpm verify          # format:check + lint + typecheck + test
+pnpm build           # static build (needs its own SITE_URL/BASE_PATH per invocation)
+pnpm validate:static # checks build/client after a build
 ```
 
-The build uses React Router Framework Mode with `ssr: false` and static prerendering. The final static artifact is always `build/client`; its generated `index.html` and `foundation/index.html` prove the root and nested static routes are available without a server runtime.
+`pnpm verify` chains `format:check`, `lint`, `typecheck` and `test` — the
+same four gates `.github/workflows/quality.yml` runs as separate steps on
+every PR. Individual commands (`pnpm lint`, `pnpm typecheck`, `pnpm test`,
+`pnpm format:check`) remain available for running just one check locally.
+
+`pnpm build` uses React Router Framework Mode with `ssr: false` and static
+prerendering. The final static artifact is always `build/client`; its
+generated `index.html` and `foundation/index.html` prove the root and
+nested static routes are available without a server runtime.
+
+`pnpm validate:static` (`scripts/validate-static-output.ts`) runs after a
+build and checks `build/client` for the nine public routes' HTML (title,
+description, canonical, hreflang + x-default, Open Graph, Twitter Card,
+`lang`, JSON-LD placement, base-path-correct asset references), the
+GitHub Pages `404.html`, `sitemap.xml`/`robots.txt` content, required
+brand assets, absence of any `.apk`/keystore/`SHA256SUMS.txt`, and absence
+of secret-like text in the build output. It works against both release
+states (`available: false` baseline and a real fetched release) and never
+hardcodes a version.
+
+### CI and deployment flow
+
+- **Pull requests to `main`** (`.github/workflows/quality.yml`): install
+  (frozen lockfile) → `format:check` → `lint` → `typecheck` → `test` →
+  production-style `pnpm build` → `pnpm validate:static`. This workflow
+  never calls the GitHub Release API — it always validates the committed
+  `{ "available": false }` baseline, so PR CI stays fast, deterministic
+  and independent of GitHub API rate limits/outages.
+- **`main` deploy** (`.github/workflows/deploy-pages.yml`): install →
+  `pnpm verify` (the same four gates) → `pnpm release:fetch` (real,
+  against the live `jvitorn/puriki` release) → production `pnpm build` →
+  `pnpm validate:static` → upload → deploy to GitHub Pages. Any gate
+  failing — including a future stable release missing a required
+  `arm64-v8a`/`universal` artifact — stops the job before anything
+  publishes; the previously deployed site stays live.
+
+See `docs/planos/PHASE_06_TESTING_CI_DEPLOY.md` for the full Phase 06
+report, including the two items that require manual GitHub repository
+configuration (Pages Source, branch protection) and cannot be verified
+from the code.
 
 ## Release metadata
 

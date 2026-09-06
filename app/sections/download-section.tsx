@@ -18,7 +18,10 @@ import {
 import { cn } from "../lib/utils";
 import { PURIKUKI_REPO_URL } from "../lib/external-links";
 import type { Locale } from "../lib/i18n/locales";
-import { getReleaseArtifact } from "../lib/releases";
+import {
+  getReleaseArtifact,
+  getRequiredReleaseArtifact,
+} from "../lib/releases";
 import { formatFileSize, formatReleaseDate } from "../lib/releases/format";
 import type {
   AndroidReleaseArtifact,
@@ -174,17 +177,18 @@ function AvailableReleaseView({
   content,
   release,
 }: AvailableReleaseViewProps) {
-  const arm64 = getReleaseArtifact(release, "arm64-v8a");
-  const universal = getReleaseArtifact(release, "universal");
+  // arm64-v8a and universal are required invariants enforced by
+  // getReleaseMetadata()'s validation (see
+  // app/lib/releases/validate-release-metadata.ts) for every
+  // `available: true` release. getRequiredReleaseArtifact() throws instead
+  // of silently hiding the Download section if that invariant is ever
+  // violated — such a build/test must fail loudly, not ship quietly
+  // incomplete.
+  const arm64 = getRequiredReleaseArtifact(release, "arm64-v8a");
+  const universal = getRequiredReleaseArtifact(release, "universal");
   const arm32 = getReleaseArtifact(release, "armeabi-v7a");
   const x8664 = getReleaseArtifact(release, "x86_64");
   const x86 = getReleaseArtifact(release, "x86");
-
-  // arm64-v8a and universal are guaranteed by parseGitHubRelease for every
-  // `available: true` release — see app/lib/releases/parse-github-release.ts.
-  if (!arm64 || !universal) {
-    return null;
-  }
 
   const optionalArtifacts: Array<{
     artifact: AndroidReleaseArtifact;

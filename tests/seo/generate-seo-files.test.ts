@@ -41,7 +41,9 @@ describe("getPublicUrls", () => {
 describe("buildSitemapXml", () => {
   it("contains exactly nine <url> entries with absolute <loc> values", () => {
     const xml = buildSitemapXml(SITE_URL);
-    const locMatches = [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1]);
+    const locMatches = [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map(
+      (m) => m[1],
+    );
 
     expect(locMatches).toHaveLength(9);
     for (const loc of locMatches) {

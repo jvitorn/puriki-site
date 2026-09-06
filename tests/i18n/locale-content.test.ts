@@ -22,21 +22,32 @@ function collectShapeKeys(value: unknown, prefix = ""): string[] {
   return [prefix];
 }
 
-function assertNoEmptyStrings(value: unknown, locale: string, path = "content") {
+function assertNoEmptyStrings(
+  value: unknown,
+  locale: string,
+  path = "content",
+) {
   if (Array.isArray(value)) {
-    value.forEach((entry, index) => assertNoEmptyStrings(entry, locale, `${path}[${index}]`));
+    value.forEach((entry, index) =>
+      assertNoEmptyStrings(entry, locale, `${path}[${index}]`),
+    );
     return;
   }
 
   if (value !== null && typeof value === "object") {
-    for (const [key, entry] of Object.entries(value as Record<string, unknown>)) {
+    for (const [key, entry] of Object.entries(
+      value as Record<string, unknown>,
+    )) {
       assertNoEmptyStrings(entry, locale, `${path}.${key}`);
     }
     return;
   }
 
   if (typeof value === "string") {
-    expect(value.trim().length, `${locale} -> ${path} is empty`).toBeGreaterThan(0);
+    expect(
+      value.trim().length,
+      `${locale} -> ${path} is empty`,
+    ).toBeGreaterThan(0);
   }
 }
 
@@ -118,17 +129,22 @@ describe("locale content", () => {
       ].join("\n");
 
       for (const pattern of FORBIDDEN_ABSOLUTE_CLAIM_PATTERNS) {
-        expect(text, `${locale} privacyPage matched forbidden pattern ${pattern}`).not.toMatch(
-          pattern,
-        );
+        expect(
+          text,
+          `${locale} privacyPage matched forbidden pattern ${pattern}`,
+        ).not.toMatch(pattern);
       }
     }
   });
 
   it("privacyPage and termsPage carry a fixed ISO lastUpdated date and label", () => {
     for (const locale of LOCALES) {
-      expect(content[locale].privacyPage.lastUpdated).toMatch(/^\d{4}-\d{2}-\d{2}$/);
-      expect(content[locale].termsPage.lastUpdated).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+      expect(content[locale].privacyPage.lastUpdated).toMatch(
+        /^\d{4}-\d{2}-\d{2}$/,
+      );
+      expect(content[locale].termsPage.lastUpdated).toMatch(
+        /^\d{4}-\d{2}-\d{2}$/,
+      );
     }
   });
 });

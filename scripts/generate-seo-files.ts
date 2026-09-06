@@ -9,7 +9,10 @@ import { buildAbsoluteUrl, normalizeSiteUrl } from "../app/lib/seo/site-url";
 const DEFAULT_SITE_URL = "http://localhost:5173";
 
 function escapeXml(value: string): string {
-  return value.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  return value
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
 }
 
 /**
@@ -20,7 +23,9 @@ function escapeXml(value: string): string {
 export function getPublicUrls(siteUrl: string): string[] {
   const normalized = normalizeSiteUrl(siteUrl);
   return LOCALES.flatMap((locale) =>
-    PAGES.map((page) => buildAbsoluteUrl(normalized, getPagePath(locale, page))),
+    PAGES.map((page) =>
+      buildAbsoluteUrl(normalized, getPagePath(locale, page)),
+    ),
   );
 }
 

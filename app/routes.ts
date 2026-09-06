@@ -1,4 +1,9 @@
-import { index, prefix, route, type RouteConfig } from "@react-router/dev/routes";
+import {
+  index,
+  prefix,
+  route,
+  type RouteConfig,
+} from "@react-router/dev/routes";
 import { LOCALES, localeConfig } from "./lib/i18n/locales";
 import { PAGES, PAGE_SLUGS } from "./lib/i18n/pages";
 

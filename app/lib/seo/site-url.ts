@@ -21,7 +21,10 @@ export function normalizeSiteUrl(value: string): string {
  * `buildAbsoluteUrl("https://jvitorn.github.io/puriki-site/", "/")`
  * -> `"https://jvitorn.github.io/puriki-site/"` (pt-BR home).
  */
-export function buildAbsoluteUrl(siteUrl: string, relativePath: string): string {
+export function buildAbsoluteUrl(
+  siteUrl: string,
+  relativePath: string,
+): string {
   const base = normalizeSiteUrl(siteUrl);
   const relative = relativePath.replace(/^\/+/, "");
   return `${base}${relative}`;

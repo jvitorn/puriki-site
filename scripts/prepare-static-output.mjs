@@ -26,10 +26,9 @@ async function writeGitHubPages404() {
   try {
     await stat(prerendered404);
   } catch (error) {
-    throw new Error(
-      `Expected the prerendered 404 page at ${prerendered404}.`,
-      { cause: error },
-    );
+    throw new Error(`Expected the prerendered 404 page at ${prerendered404}.`, {
+      cause: error,
+    });
   }
 
   await copyFile(prerendered404, destination);
