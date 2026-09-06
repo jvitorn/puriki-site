@@ -287,11 +287,23 @@ previously deployed site stays live untouched. Permissions are unchanged:
 
 ## 8. Dependabot
 
+> **Update (Phase 07 fixes):** Dependabot was removed after this phase —
+> see below.
+
 `.github/dependabot.yml` (new): `npm` (pnpm uses the npm ecosystem
 identifier in Dependabot) and `github-actions`, both `weekly`,
 `open-pull-requests-limit: 10`. No auto-merge — every PR (including a
 major bump) still requires the Quality check to pass and a human review,
 per the brief.
+
+Dependabot ran for a few weeks after this phase, and its already-merged
+version bumps (each reviewed and merged individually, never auto-merged)
+remain in `package.json`/`pnpm-lock.yaml` as normal history. The
+`dependabot.yml` configuration itself was later removed as a deliberate
+project simplification decision (Phase 07 fixes) — future dependency
+updates are handled manually when the project actually needs them, rather
+than through an automated bot. This is a project-simplification decision,
+not a reversal of any dependency version already approved.
 
 ## 9. Security sanity checks
 

@@ -296,7 +296,10 @@ feitas na Fase 03. Detalhes completos em `PHASE_03_LANDING_SECTIONS.md`.
 - [x] Base `/puriki-site/` validada (agora automaticamente, via `validate:static`).
 - [x] Assets funcionam no project site (validado automaticamente).
 - [x] Nenhum segredo no artefato publicado (validado automaticamente — scan por padrões de secret + ausência de APK/keystore/SHA256SUMS).
-- [x] Dependabot configurado (`npm` + `github-actions`, semanal, sem auto-merge).
+- [-] ~~Dependabot configurado (`npm` + `github-actions`, semanal, sem auto-merge).~~
+  - A Fase 06 introduziu Dependabot; a configuração foi removida na Fase 07
+    (correções) por decisão de simplificação do projeto. Atualizações de
+    dependência voltaram a ser manuais. Ver `PHASE_06_TESTING_CI_DEPLOY.md`.
 - [x] Revisão de performance do build documentada (sem budgets arbitrários).
 
 > Minimal GitHub Pages deployment infrastructure was intentionally implemented during Phase 01 to allow visual validation of each subsequent phase. Full CI/deployment hardening was completed in Phase 06 (see `PHASE_06_TESTING_CI_DEPLOY.md` for the full report).
@@ -308,7 +311,9 @@ podem ser verificados nem aplicados a partir do código.
 ## Fase 07 — Lançamento
 
 - [x] Features descritas comparadas com a build real.
-  - Auditadas contra o código real de `jvitorn/purikuki` (branch `master`):
+  - Auditadas contra o código real de `jvitorn/puriki` (versão pública
+    v1.0.0, checkout local da branch `master`; `jvitorn/purikuki` é o nome
+    antigo do mesmo repositório, mantido só como redirect no GitHub):
     AniList/MAL OAuth, guest mode, catálogo, busca, detalhes, progresso/
     status/nota (sincronizam com o provedor real), tradução local de
     sinopse (PT-BR/ES, Android-only), idiomas da UI, storage, ausência de
@@ -358,9 +363,11 @@ podem ser verificados nem aplicados a partir do código.
     corretamente) — mesmo nível de confiança já registrado na Fase 05;
     não é um teste com o controle nativo de zoom de um navegador real.
 - [x] Lighthouse usado como diagnóstico.
-  - Rodado contra a produção real: Performance 97, Accessibility 100,
-    Best Practices 100, SEO 100. Único achado prático (logo sem
-    `width`/`height`) corrigido nesta fase.
+  - Rodado duas vezes contra a produção real: antes do deploy desta fase
+    (Performance 97/Accessibility 100/Best Practices 100/SEO 100,
+    encontrou o logo sem `width`/`height`) e de novo depois do deploy
+    (mesmas notas; o audit `unsized-images` passou de 0,5 para 1,0,
+    confirmando a correção ao vivo em produção).
 - [x] Links quebrados verificados.
   - Todos os links externos retornam HTTP 200; nenhum placeholder `href="#"`.
 - [x] Metadados SEO verificados no HTML final.
@@ -395,6 +402,12 @@ podem ser verificados nem aplicados a partir do código.
 - [x] Download oficial confirmado.
   - Links ARM64/Universal na produção apontam para os assets reais da
     release `v1.0.0`.
+- [x] Layout novo do Download confirmado em produção pós-deploy.
+  - Depois do merge desta fase em `main` e da publicação pelo workflow
+    `Deploy to GitHub Pages`, a produção real foi reinspecionada: contêiner
+    compartilhado, ARM64 com barra de destaque e badge "Recomendado",
+    Universal secundário e CTAs em largura total já estão ao vivo — não
+    apenas no build local.
 - [x] Console sem erros críticos.
   - Zero erros de console ao carregar a produção real.
 - [x] GitHub Links confirmados.

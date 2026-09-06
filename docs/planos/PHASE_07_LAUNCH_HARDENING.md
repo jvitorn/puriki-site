@@ -14,12 +14,38 @@ O Puriki v1.0.0 já é uma release pública estável distribuída via GitHub
 Releases; esta fase valida esse estado real, não um cenário hipotético de
 "antes do primeiro lançamento".
 
+### Cronologia da validação em produção
+
+Esta fase gerou código novo (refinamento visual do Download, correção de
+`width`/`height` no logo) e também validou produção real. Como esse código
+só chega ao site publicado depois que a branch é mergeada em `main` e o
+workflow `Deploy to GitHub Pages` roda, existem duas rodadas distintas de
+verificação, registradas separadamente abaixo para não misturar as duas:
+
+1. **Verificações de infraestrutura, feitas contra a produção ainda
+   rodando o código da Fase 06** (antes do merge desta fase) — a suspeita
+   de publicação via Jekyll, rotas públicas, 404, sitemap/robots, SEO
+   (canonical/hreflang/OG/JSON-LD), ausência de tracker/segredo e console
+   limpo. Nenhuma dessas checagens depende do código específico desta
+   fase (Download/logo), então continuam válidas mesmo tendo sido feitas
+   antes do deploy — são sobre o mecanismo de publicação e sobre conteúdo
+   que já existia.
+2. **Verificação pós-deploy, feita depois que o commit da Fase 07 foi
+   mergeado em `main` e publicado de fato** — especificamente a
+   confirmação visual do novo layout do Download e a correção do logo,
+   ambas comprovadas diretamente no HTML e no Lighthouse rodados contra a
+   produção já atualizada (ver as seções correspondentes abaixo, cada uma
+   já registrando isso explicitamente).
+
 ## Auditoria de conteúdo
 
 Cada afirmação da landing foi comparada com a implementação real do app
-(repositório `jvitorn/purikuki`, branch `master`, checkout local usado como
-fonte de verdade): autenticação AniList (OAuth real), autenticação
-MyAnimeList (OAuth com PKCE), modo guest (catálogo e busca funcionam sem
+(repositório `jvitorn/puriki`, versão pública auditada v1.0.0, checkout
+local da branch `master` usado como fonte de verdade — `jvitorn/purikuki`
+é o nome antigo do mesmo repositório antes de um rename no GitHub; a URL
+antiga ainda redireciona, mas `jvitorn/puriki` é o nome atual e é o que a
+landing já usa em `PURIKUKI_REPO_URL`): autenticação AniList (OAuth real),
+autenticação MyAnimeList (OAuth com PKCE), modo guest (catálogo e busca funcionam sem
 conta conectada), catálogo, busca, tela de detalhes, atualização de
 progresso/status/nota (todas sincronizam de volta ao provedor real, não
 apenas localmente), tradução local de sinopse (Google ML Kit on-device,
@@ -108,6 +134,19 @@ passando sem nenhuma alteração de asserção — eles já testavam semântica 
 comportamento (role, texto, `href`), não classes CSS específicas, então o
 refinamento visual não exigiu tocar nos testes.
 
+### Confirmação pós-deploy
+
+Depois que o commit desta fase foi mergeado em `main` e publicado pelo
+workflow `Deploy to GitHub Pages`, a produção real
+(`https://jvitorn.github.io/puriki-site/`) foi inspecionada de novo e
+confirma o layout novo ao vivo: contêiner compartilhado com fundo
+`bg-surface/60`, card ARM64 com a barra de destaque e o badge
+"Recomendado", card Universal secundário, e os dois CTAs em largura
+total — com os dados reais da release `v1.0.0` (61,1 MB / 168,1 MB,
+publicado em 6 de setembro de 2026). Não é mais apenas o build local
+verificado em `pnpm dev`/screenshot local descrito acima — é o HTML
+efetivamente servido pelo GitHub Pages.
+
 ## Validação da release real
 
 `pnpm release:fetch` contra a API pública do GitHub encontrou `v1.0.0` com
@@ -127,7 +166,9 @@ projeto desde a Fase 04.
 Havia uma suspeita registrada antes desta fase de que o GitHub Pages
 pudesse estar publicando o repositório via Jekyll (renderizando o README
 como página inicial) em vez de usar o build React/Vite. Essa hipótese foi
-verificada diretamente contra a produção:
+verificada diretamente contra a produção (checagem de infraestrutura feita
+antes do deploy desta fase, ver "Cronologia da validação" acima — o
+mecanismo de publicação em si não é algo que o código desta fase altera):
 
 - `https://jvitorn.github.io/puriki-site/` responde com a landing React
   real (título, hero, seções, Download com dados da release real), não com
@@ -152,7 +193,10 @@ funcional, não como verificação direta da tela de configurações.
 ## Rotas em produção
 
 Testado diretamente contra `https://jvitorn.github.io/puriki-site/` (não
-apenas localhost), com um navegador real (Chromium via Playwright):
+apenas localhost), com um navegador real (Chromium via Playwright).
+Checagem de infraestrutura feita antes do deploy desta fase (roteamento,
+404 e SEO já existiam e não fazem parte do refinamento do Download/logo —
+ver "Cronologia da validação"):
 
 - As nove rotas públicas (`/`, `/privacy/`, `/terms/`, `/en/`,
   `/en/privacy/`, `/en/terms/`, `/es/`, `/es/privacy/`, `/es/terms/`)
@@ -233,21 +277,27 @@ registrados na Fase 06 (JS ~608 KB, CSS ~36 KB, fontes ~84 KB, imagens/
 assets ~72 KB, sem regressão de tamanho perceptível pelo refinamento visual
 do Download).
 
-Lighthouse foi executado contra a URL de produção real
-(`https://jvitorn.github.io/puriki-site/`), não apenas localhost:
+Lighthouse foi executado duas vezes contra a URL de produção real
+(`https://jvitorn.github.io/puriki-site/`), não apenas localhost — uma vez
+antes do deploy desta fase (quando encontrou o problema do logo) e outra
+vez depois, contra a produção já publicada com a correção:
 
-| Categoria | Nota |
-|---|---|
-| Performance | 97 |
-| Accessibility | 100 |
-| Best Practices | 100 |
-| SEO | 100 |
+| Categoria | Antes do deploy | Depois do deploy |
+|---|---|---|
+| Performance | 97 | 97 |
+| Accessibility | 100 | 100 |
+| Best Practices | 100 | 100 |
+| SEO | 100 | 100 |
 
-Métricas centrais: LCP 2,1s, CLS 0, TBT 80ms. O único achado prático do
-relatório (imagem sem `width`/`height` explícitos no header) já foi
-corrigido nesta mesma fase (ver seção de refinamento visual acima). Nenhum
-outro ajuste foi feito para perseguir 100 artificialmente — a pontuação
-atual já reflete um site rápido e sem regressão real.
+Métricas centrais na execução pós-deploy: LCP 2,0s, CLS 0, TBT 90ms —
+equivalentes à execução anterior, dentro da variação normal de uma medição
+de rede real. A diferença que importa está no audit `unsized-images`
+("Image elements do not have explicit width and height"): pontuava 0,5
+antes do deploy (o logo do header sem `width`/`height`) e pontua 1,0 na
+execução pós-deploy — confirmação direta e datada de que a correção
+(`app/components/brand/puriki-logo.tsx`, ver seção de refinamento visual
+acima) está de fato presente na produção publicada, não só no código local.
+Nenhum outro ajuste foi feito para perseguir 100 artificialmente.
 
 ## Auditoria de links
 
@@ -259,7 +309,9 @@ foram confirmados na seção de rotas em produção acima.
 
 ## Auditoria de SEO em produção
 
-Inspecionado o HTML realmente publicado (não apenas o gerado localmente):
+Inspecionado o HTML realmente publicado (não apenas o gerado localmente,
+na mesma checagem de infraestrutura pré-deploy descrita em "Cronologia da
+validação" — metadados de SEO não fazem parte do que esta fase mudou):
 title e description localizados por página, canonical correto e sem
 duplicação de `/puriki-site/`, hreflang completo (`pt-BR`/`en`/`es`/
 `x-default`), Open Graph e Twitter Card completos, JSON-LD
@@ -299,9 +351,13 @@ como item concluído.
   nenhuma chamada em runtime para a API do GitHub (a release continua
   sendo dado gerado em build-time). Console do navegador sem nenhum erro
   ao carregar a produção real.
-- Dependabot já configurado desde a Fase 06 (sem auto-merge); nenhum
-  upgrade de dependência foi feito nesta fase por não haver
-  vulnerabilidade ou quebra real identificada.
+- Dependabot estava configurado desde a Fase 06 (sem auto-merge) durante
+  esta fase; nenhum upgrade de dependência foi feito diretamente nesta fase
+  por não haver vulnerabilidade ou quebra real identificada — os upgrades
+  que chegaram a ser mergeados vieram de PRs individuais do próprio
+  Dependabot, revisados um a um. A configuração foi removida depois, na
+  rodada de correções da Fase 07 (`PHASE_06_TESTING_CI_DEPLOY.md` tem o
+  registro atualizado).
 
 ## Testes automatizados
 
@@ -344,7 +400,10 @@ corretamente pelo workflow certo (não Jekyll), as nove rotas públicas e o
 os artifacts corretos da release `v1.0.0`, o conteúdo já é fiel ao app
 real, o roadmap não faz promessas indevidas, SEO e dados estruturados estão
 corretos em produção, não há segredo nem tracker no site publicado, e o
-console de produção está limpo. As pendências listadas acima são reais e
+console de produção está limpo. O código desta própria fase (refinamento
+visual do Download e correção do logo) já foi confirmado ao vivo na
+produção publicada, não apenas localmente — ver "Confirmação pós-deploy" e
+a tabela de Lighthouse pós-deploy. As pendências listadas acima são reais e
 devem continuar sendo acompanhadas, mas nenhuma delas é um bloqueador
 técnico de lançamento — são validações complementares (dispositivo físico,
 leitor de tela real, revisão jurídica/humana formal) que não impedem o uso

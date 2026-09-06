@@ -286,7 +286,10 @@ Full detail in `PHASE_03_LANDING_SECTIONS.md`.
 - [x] `/puriki-site/` base validated (now automated, via `validate:static`).
 - [x] Project-site assets work (validated automatically).
 - [x] No secret in published artifact (validated automatically — secret-pattern scan + absence of APK/keystore/SHA256SUMS).
-- [x] Dependabot configured (`npm` + `github-actions`, weekly, no auto-merge).
+- [-] ~~Dependabot configured (`npm` + `github-actions`, weekly, no auto-merge).~~
+  - Phase 06 introduced Dependabot; the configuration was removed in the
+    Phase 07 fixes round as a project-simplification decision. Dependency
+    updates are manual again. See `PHASE_06_TESTING_CI_DEPLOY.md`.
 - [x] Build performance review documented (no arbitrary budgets).
 
 > Minimal GitHub Pages deployment infrastructure was intentionally implemented during Phase 01 to allow visual validation of each subsequent phase. Full CI/deployment hardening was completed in Phase 06 (see `PHASE_06_TESTING_CI_DEPLOY.md` for the full report).
