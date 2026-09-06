@@ -17,7 +17,7 @@ interface HeroSectionProps {
 // This is the intentional visual solution for the landing (not a
 // placeholder for a future screenshot) — purely visual (bars/blocks, no
 // literal words) so it never leaks Portuguese copy onto the EN/ES pages.
-// A future polish pass may refine the shapes by referencing purikuki's
+// A future polish pass may refine the shapes by referencing Puriki's
 // real components (My List, AnimeListItem), but that's UI polish, not a
 // blocking asset.
 function HeroMockupPreview() {

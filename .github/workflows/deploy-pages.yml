@@ -5,8 +5,8 @@ on:
     branches:
       - main
   workflow_dispatch:
-  # Reserved for a future purikuki workflow to trigger a rebuild after a
-  # stable release is published. No sender exists yet in purikuki (see
+  # Reserved for a future puriki workflow to trigger a rebuild after a
+  # stable release is published. No sender exists yet in puriki (see
   # docs/planos/PHASE_04_DOWNLOAD_RELEASES.md) — this only declares the
   # event type the site is prepared to accept; it changes no current
   # behavior. The site always re-fetches release data itself below rather
@@ -41,7 +41,7 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Fetch latest stable release metadata
-        # jvitorn/purikuki is public; this is a single unauthenticated GET
+        # jvitorn/puriki is public; this is a single unauthenticated GET
         # per deploy, well under GitHub's unauthenticated rate limit, so
         # the repository-scoped GITHUB_TOKEN isn't needed here. An
         # optional RELEASE_FETCH_TOKEN (non-VITE_*, never exposed to the

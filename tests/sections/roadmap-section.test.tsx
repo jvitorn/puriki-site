@@ -9,9 +9,9 @@ const AVAILABLE: ReleaseMetadata = {
   available: true,
   version: "1.0.0",
   publishedAt: "2026-08-15T10:00:00Z",
-  fileName: "puriki-1.0.0-android.apk",
+  fileName: "puriki-v1.0.0.apk",
   sizeBytes: 24_300_000,
-  downloadUrl: "https://example.invalid/puriki-1.0.0-android.apk",
+  downloadUrl: "https://example.invalid/puriki-v1.0.0.apk",
   releaseUrl: "https://example.invalid/releases/tag/v1.0.0",
   sha256: null,
 };
@@ -58,7 +58,7 @@ describe("RoadmapSection — 1.0 status derived from release state", () => {
     const cta = screen.getByRole("link", { name: content.roadmap.cta });
     expect(cta).toHaveAttribute(
       "href",
-      "https://github.com/jvitorn/purikuki/blob/master/PURIKI_PRODUCT_ENGINEERING_ROADMAP.md",
+      "https://github.com/jvitorn/puriki/blob/master/PURIKI_PRODUCT_ENGINEERING_ROADMAP.md",
     );
   });
 });

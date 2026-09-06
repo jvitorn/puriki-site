@@ -23,7 +23,7 @@ interface DownloadSectionProps {
 // Release metadata is generated at build time (see app/lib/releases and
 // scripts/fetch-release.ts) and passed in as a prop — this component never
 // calls GitHub itself. When `release.available` is false (today's real
-// state: jvitorn/purikuki has no stable release yet), only the honest
+// state: jvitorn/puriki has no stable release yet), only the honest
 // "in preparation" shell renders; nothing here fakes a version, size,
 // date, or SHA-256. A single discreet Reveal (no stagger) covers both
 // states so the no-release card never reads like an alert/error.

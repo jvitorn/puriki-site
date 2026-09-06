@@ -163,7 +163,7 @@ Implemented in `app/sections/open-source-section.tsx`, its own section
       EN/ES equivalents);
 - [x] roadmap disclaimer;
 - [x] GitHub roadmap link — **fixed**: now points to
-      `https://github.com/jvitorn/purikuki/blob/master/PURIKI_PRODUCT_ENGINEERING_ROADMAP.md`
+      `https://github.com/jvitorn/puriki/blob/master/PURIKI_PRODUCT_ENGINEERING_ROADMAP.md`
       instead of the removed `purikuki#roadmap` anchor.
 
 Desktop:

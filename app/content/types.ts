@@ -14,7 +14,7 @@ export interface NavItem {
 }
 
 export interface NavigationContent {
-  /** Desktop/mobile primary nav, in display order (Resources, How it works, Open Source, Roadmap). */
+  /** Desktop/mobile primary nav, in display order (Resources, How it works, Source Code, Roadmap). */
   items: [NavItem, NavItem, NavItem, NavItem];
   primaryNavLabel: string;
   mobileNavLabel: string;

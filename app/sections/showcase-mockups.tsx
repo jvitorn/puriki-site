@@ -7,7 +7,7 @@ import { Reveal } from "../components/motion/reveal";
 // intentional visual solution for these showcases, not placeholders for a
 // future screenshot. Purely visual (bars/blocks, no literal words) so
 // nothing here leaks Portuguese copy onto the EN/ES pages. A future polish
-// pass may refine these by referencing purikuki's real screens (Search,
+// pass may refine these by referencing Puriki's real screens (Search,
 // Anime Details), but that's UI polish, not release/content infrastructure.
 // Each preview is already inside a parent with role="img" (see
 // ShowcasePanel below), so its subtree is opaque to assistive tech —

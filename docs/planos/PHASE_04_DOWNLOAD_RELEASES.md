@@ -2,7 +2,7 @@
 
 > **Hardening addendum (done during Phase 05):**
 > - [x] Removed `GITHUB_TOKEN` from the `release:fetch` workflow step —
->       `jvitorn/purikuki` is public and one unauthenticated request per
+>       `jvitorn/puriki` is public and one unauthenticated request per
 >       deploy is well under GitHub's rate limit; `RELEASE_FETCH_TOKEN`
 >       remains supported for local/future use but is not required.
 > - [x] `parse-github-release.ts`'s doc comment now explicitly ties the
@@ -20,7 +20,7 @@
 
 ## Goal
 
-Connect the static site to the latest stable official `jvitorn/purikuki` GitHub Release at build time.
+Connect the static site to the latest stable official `jvitorn/puriki` GitHub Release at build time.
 
 No browser visit should need to call the GitHub API to render release metadata.
 
@@ -59,7 +59,7 @@ Responsibilities:
 - [x] reject/ignore prereleases for primary CTA;
 - [x] normalize leading `v` in tag/version if required;
 - [x] locate exactly one intended Android APK asset;
-- [x] prefer the naming convention `puriki-{version}-android.apk`;
+- [x] require the naming convention `puriki-v{version}.apk`;
 - [x] capture browser download URL;
 - [x] capture release HTML URL;
 - [x] capture asset size;
@@ -91,7 +91,7 @@ If the API returns no stable release:
 - [x] do not display fake `0.0.0`.
 
 Confirmed against the **live** API during implementation:
-`jvitorn/purikuki` has no stable release yet, and `pnpm release:fetch`
+`jvitorn/puriki` has no stable release yet, and `pnpm release:fetch`
 correctly wrote `{ "available": false }` — identical to the committed
 baseline in `app/generated/release.json`, so the working tree stayed
 clean (`git diff` empty after running the real fetch).
@@ -191,7 +191,7 @@ Puriki-specific malware detection.
 
 ## 10. Release naming discipline
 
-- [x] `puriki-{version}-android.apk` is enforced by the parser
+- [x] `puriki-v{version}.apk` is enforced by the parser
       (`expectedFileName`), documented in `DECISIONS.md` (existing) and in
       code comments in `parse-github-release.ts`.
 - [x] The parser logs/throws actionable errors listing what it actually
@@ -230,7 +230,7 @@ Puriki-specific malware detection.
 
 A public browser receives a completely static HTML page with the current
 stable release metadata (today: the honest no-release state, since
-`jvitorn/purikuki` has no stable release), and clicking Download would go
+`jvitorn/puriki` has no stable release), and clicking Download would go
 directly to the official GitHub Release APK once one exists.
 
 No GitHub credential exists in the browser bundle — confirmed by

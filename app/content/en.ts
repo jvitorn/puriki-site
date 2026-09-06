@@ -24,14 +24,14 @@ export const en = {
     terms: {
       title: "Terms of Use — Puriki",
       description:
-        "Terms for using Puriki, an independent, open-source project that connects to third-party providers.",
+        "Terms for using Puriki, an independent project whose source is publicly available.",
     },
   },
   navigation: {
     items: [
       { label: "Features", anchor: "benefits" },
       { label: "How it works", anchor: "providers" },
-      { label: "Open Source", anchor: "open-source" },
+      { label: "Source Code", anchor: "open-source" },
       { label: "Roadmap", anchor: "roadmap" },
     ],
     primaryNavLabel: "Main navigation",
@@ -50,7 +50,7 @@ export const en = {
       "Connect AniList or MyAnimeList and manage your anime list through a simple, fast experience built for Android.",
     primaryCta: "Download for Android",
     secondaryCta: "View on GitHub",
-    trustLine: "AniList · MyAnimeList · Open Source · No ads",
+    trustLine: "AniList · MyAnimeList · Source on GitHub · No ads",
     mockupAlt: "Preview of Puriki's list screen, showing episode progress",
   },
   providers: {
@@ -103,7 +103,7 @@ export const en = {
       {
         id: "details",
         title: "Details when you need them",
-        body: "See synopsis and details for each title right on the info screen. On Android, synopses are automatically translated on-device using Google ML Kit for Portuguese and Spanish readers.",
+        body: "See synopsis and details for each title right on the info screen. On Android, Portuguese and Spanish readers can translate English synopses on demand using Google ML Kit on the device.",
         imageAlt: "An anime's details screen in Puriki, with translated synopsis",
       },
     ],
@@ -131,9 +131,9 @@ export const en = {
     cta: "Learn more about privacy",
   },
   openSource: {
-    eyebrow: "Open Source",
-    title: "Open by nature",
-    body: "Puriki is free, ad-free, and has its source code open on GitHub. You can follow development, report issues, and contribute to the project.",
+    eyebrow: "Source Code",
+    title: "Built in public",
+    body: "Puriki is free, ad-free, and has its source code available on GitHub. You can follow development, report issues, and review the project.",
     cta: "View project on GitHub",
   },
   roadmap: {
@@ -173,7 +173,7 @@ export const en = {
   download: {
     eyebrow: "Download",
     title: "Download Puriki for Android",
-    supportCopy: "Free, open source, and ad-free.",
+    supportCopy: "Free, source available, and ad-free.",
     primaryCta: "Download for Android",
     originLine: "Official download through GitHub Releases.",
     noRelease: {
@@ -352,13 +352,13 @@ export const en = {
         body: "Privacy questions can be opened as an issue on Puriki's official GitHub repository. Issues are public — never include access tokens, passwords, or other sensitive information in them.",
       },
     ],
-    lastUpdated: "2026-09-02",
+    lastUpdated: "2026-09-05",
     lastUpdatedLabel: "Last updated",
   },
   termsPage: {
     title: "Terms of Use",
     intro:
-      "These terms set out the conditions for using Puriki, an independent, open-source project.",
+      "These terms set out the conditions for using Puriki, an independent project whose source is publicly available.",
     sections: [
       {
         heading: "Independent, unofficial project",
@@ -377,8 +377,8 @@ export const en = {
         body: "You are responsible for keeping your credentials secure and for using Puriki in accordance with AniList's and MyAnimeList's own terms of use.",
       },
       {
-        heading: "Open-source nature",
-        body: "Puriki is an open-source project, available for review and contribution on GitHub.",
+        heading: "Source availability",
+        body: "Puriki's source is available for review on GitHub. The repository does not currently declare a project-wide license, so source availability alone does not grant reuse or redistribution rights.",
       },
       {
         heading: "Software availability",
@@ -390,10 +390,10 @@ export const en = {
       },
       {
         heading: "Limitations of a non-commercial project",
-        body: "As a free, open-source, non-commercial project, the support, maintenance, and guarantees offered are proportionally limited.",
+        body: "As a free, non-commercial project, the support, maintenance, and guarantees offered are proportionally limited.",
       },
     ],
-    lastUpdated: "2026-09-02",
+    lastUpdated: "2026-09-05",
     lastUpdatedLabel: "Last updated",
   },
 } satisfies SiteContent;
