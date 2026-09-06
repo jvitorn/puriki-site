@@ -279,6 +279,14 @@ feitas na Fase 03. Detalhes completos em `PHASE_03_LANDING_SECTIONS.md`.
   - Não verificável a partir do repositório — requer confirmação manual do
     maintainer em Settings → Pages → Build and deployment → Source →
     GitHub Actions. Ver `PHASE_06_TESTING_CI_DEPLOY.md`.
+  - Atualização da Fase 07: a produção real
+    (`https://jvitorn.github.io/puriki-site/`) já está servindo a landing
+    React com dados da release real (JSON-LD com versão/artifact
+    corretos), o que só é possível se `deploy-pages.yml` já for a origem
+    da publicação — forte evidência funcional de que a configuração já
+    está correta. Mantido como `[!]` porque essa é uma inferência a partir
+    do comportamento observado, não uma confirmação direta da tela de
+    Settings. Ver `PHASE_07_LAUNCH_HARDENING.md`.
 - [!] Branch protection/ruleset exigindo o check `quality` em `main`.
   - Não verificável a partir do repositório — requer configuração manual
     do maintainer em Settings → Branches (ou Rules → Rulesets). Nome exato
@@ -299,43 +307,99 @@ podem ser verificados nem aplicados a partir do código.
 
 ## Fase 07 — Lançamento
 
-- [ ] Features descritas comparadas com a build real.
-- [ ] min Android confirmado antes de publicar.
-- [ ] Status do roadmap conferido.
-- [ ] Estado sem release testado.
-- [ ] Estado com release testado.
-- [ ] Download real testado em Android.
-- [ ] SHA conferido.
-- [ ] Rotas diretas testadas em produção.
-- [ ] PT-BR revisado.
-- [ ] EN revisado.
-- [ ] ES revisado.
-- [ ] Mobile pequeno revisado.
-- [ ] Mobile comum revisado.
-- [ ] Tablet revisado.
-- [ ] Desktop revisado.
-- [ ] Teclado revisado.
-- [ ] Reduced motion revisado.
-- [ ] Zoom 200% revisado.
-- [ ] Lighthouse usado como diagnóstico.
-- [ ] Links quebrados verificados.
-- [ ] Metadados SEO verificados no HTML final.
-- [ ] Privacy/Terms verificados.
-- [ ] Bundle verificado contra segredos.
-- [ ] Sem scripts de tracking inesperados.
-- [ ] README de manutenção atualizado.
-- [ ] Checklist EN sincronizado.
-- [ ] HTTPS funcionando.
+- [x] Features descritas comparadas com a build real.
+  - Auditadas contra o código real de `jvitorn/purikuki` (branch `master`):
+    AniList/MAL OAuth, guest mode, catálogo, busca, detalhes, progresso/
+    status/nota (sincronizam com o provedor real), tradução local de
+    sinopse (PT-BR/ES, Android-only), idiomas da UI, storage, ausência de
+    conta própria/anúncios, MIT/open source, ausência de sync entre
+    providers na 1.0. Nenhuma correção de conteúdo foi necessária.
+- [x] min Android confirmado antes de publicar.
+  - `minSdkVersion` real é 24 (Android 7.0); a landing não faz nenhuma
+    afirmação sobre versão mínima, então não há risco de divergência.
+- [x] Status do roadmap conferido.
+  - 1.0/2.0/3.0 corretos; nenhuma linguagem de pressão ("em breve"/"coming
+    soon") encontrada em nenhuma das três línguas.
+- [x] Estado sem release testado.
+- [x] Estado com release testado.
+  - `pnpm release:fetch` real + build de produção confirmam versão, JSON-LD,
+    tamanhos e nomes de arquivo corretos; baseline restaurado depois.
+- [!] Download real testado em Android.
+  - Pendente: validação manual em aparelho Android físico (ARM64 e
+    Universal). Não disponível neste ambiente.
+- [x] ~~SHA conferido~~ — item obsoleto.
+  - Superseded pela Fase 04R: não existe mais UI de SHA/checksum na
+    landing; verificação de integridade é feita direto na GitHub Release.
+- [x] Rotas diretas testadas em produção.
+  - Nove rotas + 404 testadas com navegador real contra
+    `https://jvitorn.github.io/puriki-site/`: carregamento direto, refresh,
+    navegação interna, troca de idioma, Back/Forward — todos corretos.
+- [x] PT-BR revisado.
+- [-] EN revisado.
+  - Estrutura, paridade e ausência de erros óbvios verificadas
+    (`locale-content.test.ts` + spot-check manual). Revisão humana fluente
+    não foi feita.
+- [-] ES revisado.
+  - Mesma situação do EN.
+- [x] Mobile pequeno revisado (320/360px, sem overflow).
+- [x] Mobile comum revisado (390/640px, sem overflow).
+- [x] Tablet revisado (768/820px, sem overflow).
+- [x] Desktop revisado (1280/1440px, sem overflow).
+- [x] Teclado revisado.
+  - Testado com eventos reais de teclado em navegador real: skip link,
+    menu mobile (abre com Enter, Escape devolve o foco), Accordion do FAQ,
+    Collapsible do Download.
+- [x] Reduced motion revisado.
+  - `prefers-reduced-motion: reduce` emulado em navegador real: zero
+    elementos com opacidade abaixo de 0,99 após o carregamento.
+- [-] Zoom 200% revisado.
+  - Aproximado redimensionando a viewport para a largura efetiva que um
+    zoom real de 200% produziria (sem overflow, menu mobile assume
+    corretamente) — mesmo nível de confiança já registrado na Fase 05;
+    não é um teste com o controle nativo de zoom de um navegador real.
+- [x] Lighthouse usado como diagnóstico.
+  - Rodado contra a produção real: Performance 97, Accessibility 100,
+    Best Practices 100, SEO 100. Único achado prático (logo sem
+    `width`/`height`) corrigido nesta fase.
+- [x] Links quebrados verificados.
+  - Todos os links externos retornam HTTP 200; nenhum placeholder `href="#"`.
+- [x] Metadados SEO verificados no HTML final.
+  - Inspecionado o HTML publicado real, não apenas o gerado localmente.
+- [x] Privacy/Terms verificados.
+- [x] Bundle verificado contra segredos.
+  - Grep no código-fonte e `pnpm validate:static` (scan automatizado do
+    artifact) — ambos limpos.
+- [x] Sem scripts de tracking inesperados.
+  - Inspeção de rede real na produção: apenas `jvitorn.github.io` é
+    contatado ao carregar a home.
+- [x] README de manutenção atualizado.
+  - Revisado; nenhuma informação pública incorreta encontrada, então
+    nenhuma alteração foi necessária.
+- [-] Checklist EN sincronizado.
+  - Decisão registrada: `CHECKLIST-EN.md` não recebe investimento de
+    sincronização nesta fase (será removido na Fase 08); também não foi
+    removido agora.
+- [x] HTTPS funcionando.
 
 ## Pós-lançamento
 
-- [ ] Smoke test em navegador limpo.
-- [ ] Smoke test em janela privada.
-- [ ] Smoke test em Android.
-- [ ] Download oficial confirmado.
-- [ ] Console sem erros críticos.
-- [ ] GitHub Links confirmados.
-- [ ] Rotas aninhadas confirmadas.
+- [x] Smoke test em navegador limpo.
+- [-] Smoke test em janela privada.
+  - Testado com um contexto de navegador isolado sem armazenamento
+    persistente (equivalente funcional a uma janela privada), não
+    literalmente a janela anônima de um navegador com interface real.
+- [-] Smoke test em Android.
+  - Aproximado com viewport mobile em navegador real (Chromium), não em
+    Android/Chrome mobile de fato. Ver também "Download real testado em
+    Android" acima.
+- [x] Download oficial confirmado.
+  - Links ARM64/Universal na produção apontam para os assets reais da
+    release `v1.0.0`.
+- [x] Console sem erros críticos.
+  - Zero erros de console ao carregar a produção real.
+- [x] GitHub Links confirmados.
+- [x] Rotas aninhadas confirmadas.
+  - Carregamento direto e refresh de `/en/privacy/` confirmados em produção.
 
 ## Domínio futuro
 

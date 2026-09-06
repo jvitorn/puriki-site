@@ -49,8 +49,11 @@ interface PrimaryCardProps {
 }
 
 // The recommended (ARM64) and Universal cards share this layout — `primary`
-// only changes the button/border emphasis, never the only signal that one
-// is recommended (that's the textual `badge`, per WCAG 1.4.1).
+// only changes the border/elevation/accent-bar emphasis, never the only
+// signal that one is recommended (that's the textual `badge`, per WCAG
+// 1.4.1). Both cards stretch to the same height (see the grid's
+// `items-stretch`) and push their CTA to the bottom via `mt-auto`, so the
+// two read as one guided choice rather than two unrelated blocks.
 function PrimaryCard({
   icon: Icon,
   title,
@@ -66,14 +69,35 @@ function PrimaryCard({
   return (
     <div
       className={cn(
-        "flex flex-col rounded-block border p-6",
+        "relative flex h-full flex-col overflow-hidden rounded-card border p-6",
         primary
-          ? "border-brand/50 bg-surface-raised"
+          ? "border-brand/60 bg-surface-raised shadow-[0_8px_28px_var(--brand-shadow)]"
           : "border-border bg-surface",
       )}
     >
+      {primary ? (
+        <span
+          aria-hidden="true"
+          className="absolute inset-x-0 top-0 h-1 bg-brand"
+        />
+      ) : null}
       <div className="flex items-center justify-between gap-3">
-        <Icon aria-hidden="true" className="size-6 text-foreground-subtle" />
+        <span
+          className={cn(
+            "grid size-10 place-items-center rounded-[0.7rem] border",
+            primary
+              ? "border-brand/40 bg-brand-soft"
+              : "border-border-strong bg-surface-raised",
+          )}
+        >
+          <Icon
+            aria-hidden="true"
+            className={cn(
+              "size-5",
+              primary ? "text-danger" : "text-foreground-subtle",
+            )}
+          />
+        </span>
         {badge ? (
           <span className="rounded-full border border-border-strong bg-brand-soft px-3 py-1 text-xs font-bold uppercase tracking-[0.08em] text-foreground">
             {badge}
@@ -102,9 +126,10 @@ function PrimaryCard({
       <p className="mt-3 text-xs font-medium text-foreground-subtle">
         {sizeLabel}
       </p>
-      <div className="mt-5">
+      <div className="mt-5 pt-1 md:mt-auto">
         <Button
           asChild
+          className="w-full"
           size="large"
           variant={primary ? "primary" : "secondary"}
         >
@@ -201,45 +226,59 @@ function AvailableReleaseView({
 
   return (
     <>
-      <div className="mt-6 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-foreground-muted">
-        <span className="font-semibold text-foreground">
-          Puriki v{release.version}
-        </span>
-        <span aria-hidden="true">·</span>
-        <span>{content.releaseLabels.platformLabel}</span>
-      </div>
-      <p className="mt-1 text-xs text-foreground-subtle">
-        {content.releaseLabels.publishedLabel}{" "}
-        {formatReleaseDate(release.publishedAt, locale)}
-        {" · "}
-        {content.releaseLabels.latestLabel}
-      </p>
+      {/* One shared "guided choice" frame around the release metadata and
+          the two primary cards, so ARM64 + Universal read as a single
+          decision block instead of two unrelated cards floating in the
+          section. Nested radius (rounded-block outside, rounded-card on
+          each card) follows the same convention already used elsewhere
+          in the design system (e.g. the no-release block below). */}
+      <div className="mt-6 rounded-block border border-border bg-surface/60 p-4 sm:p-6">
+        <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
+          <div>
+            <p className="text-xl font-bold text-foreground sm:text-2xl">
+              Puriki v{release.version}
+            </p>
+            <p className="mt-1 text-xs text-foreground-subtle">
+              {content.releaseLabels.publishedLabel}{" "}
+              {formatReleaseDate(release.publishedAt, locale)}
+              {" · "}
+              {content.releaseLabels.latestLabel}
+            </p>
+          </div>
+          <span className="rounded-full border border-border-strong bg-surface-raised px-3 py-1 text-xs font-semibold text-foreground-muted">
+            {content.releaseLabels.platformLabel}
+          </span>
+        </div>
 
-      <Reveal className="mt-6 grid gap-4 sm:grid-cols-2" staggerChildren={90}>
-        <PrimaryCard
-          badge={content.current.badge}
-          ctaLabel={content.primaryCta}
-          description={content.current.description}
-          href={arm64.downloadUrl}
-          icon={Smartphone}
-          note={content.current.note}
-          primary
-          sizeLabel={formatFileSize(arm64.sizeBytes, locale)}
-          title={content.current.title}
-        />
-        <PrimaryCard
-          ctaLabel={content.universal.cta}
-          description={content.universal.description}
-          href={universal.downloadUrl}
-          icon={Boxes}
-          sizeLabel={formatFileSize(universal.sizeBytes, locale)}
-          subtitle={content.universal.subtitle}
-          title={content.universal.title}
-        />
-      </Reveal>
+        <Reveal
+          className="mt-5 grid items-stretch gap-4 md:grid-cols-2"
+          staggerChildren={90}
+        >
+          <PrimaryCard
+            badge={content.current.badge}
+            ctaLabel={content.primaryCta}
+            description={content.current.description}
+            href={arm64.downloadUrl}
+            icon={Smartphone}
+            note={content.current.note}
+            primary
+            sizeLabel={formatFileSize(arm64.sizeBytes, locale)}
+            title={content.current.title}
+          />
+          <PrimaryCard
+            ctaLabel={content.universal.cta}
+            description={content.universal.description}
+            href={universal.downloadUrl}
+            icon={Boxes}
+            sizeLabel={formatFileSize(universal.sizeBytes, locale)}
+            subtitle={content.universal.subtitle}
+            title={content.universal.title}
+          />
+        </Reveal>
+      </div>
 
       {optionalArtifacts.length > 0 ? (
-        <Collapsible className="mt-6 max-w-2xl border-t border-border pt-6">
+        <Collapsible className="mt-8 max-w-2xl border-t border-border pt-6">
           <CollapsibleTrigger>{content.otherVersions.title}</CollapsibleTrigger>
           <CollapsibleContent>
             <div className="mt-2">
@@ -281,7 +320,7 @@ function AvailableReleaseView({
         </Collapsible>
       ) : null}
 
-      <Collapsible className="mt-4 max-w-2xl border-t border-border pt-6">
+      <Collapsible className="mt-6 max-w-2xl border-t border-border pt-6">
         <CollapsibleTrigger>
           <span className="inline-flex items-center gap-2">
             <CircleHelp aria-hidden="true" className="size-4 shrink-0" />
