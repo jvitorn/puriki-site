@@ -19,7 +19,7 @@ function isRouteHandle(value: unknown): value is RouteHandle {
  * exports `handle: RouteHandle`; this walks the active matches to find it
  * instead of parsing `window.location` or re-checking `locale === "..."`
  * across components. Falls back to the default locale/home for routes
- * outside the localized set (e.g. the temporary /foundation sandbox).
+ * outside the localized set (404/catch-all).
  */
 export function useRouteHandle(): RouteHandle {
   const matches = useMatches();

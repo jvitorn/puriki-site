@@ -5,15 +5,11 @@ import { fileURLToPath } from "node:url";
 import { LOCALES, localeConfig, type Locale } from "../app/lib/i18n/locales";
 import { getPagePath, PAGES, type PageKey } from "../app/lib/i18n/pages";
 import { buildAbsoluteUrl, normalizeSiteUrl } from "../app/lib/seo/site-url";
-import {
-  buildRobotsTxt,
-  buildSitemapXml,
-  getPublicUrls,
-} from "./generate-seo-files";
+import { buildRobotsTxt, buildSitemapXml } from "./generate-seo-files";
 
-// Same defaults `pnpm build`/`generate-seo-files.ts` use, so
-// `pnpm build && pnpm validate:static` works with no env vars for local,
-// offline, non-production iteration.
+// Mesmos defaults que `pnpm build`/`generate-seo-files.ts` usam, para que
+// `pnpm build && pnpm validate:static` funcione sem env vars, para
+// iteração local, offline e fora de produção.
 const DEFAULT_SITE_URL = "http://localhost:5173";
 const DEFAULT_BASE_PATH = "/";
 
@@ -23,9 +19,10 @@ const REPO_ROOT = path.resolve(
 );
 const CLIENT_DIR = path.join(REPO_ROOT, "build", "client");
 
-// Text-ish extensions worth scanning for a stray secret/localhost string or
-// (for the small set of extensions relevant here) route content. Binary
-// assets (png/woff2) are skipped — there is nothing textual to find there.
+// Extensões de texto que vale a pena varrer em busca de um segredo/
+// localhost perdido ou (para esse pequeno conjunto de extensões) conteúdo
+// de rota. Assets binários (png/woff2) são ignorados — não há nada
+// textual para encontrar ali.
 const TEXT_EXTENSIONS = new Set([
   ".html",
   ".js",
@@ -36,10 +33,10 @@ const TEXT_EXTENSIONS = new Set([
   ".map",
 ]);
 
-// Extensions/file names that must never ship in the public static artifact
-// — APKs and checksums are a GitHub Release concern only (see
-// docs/planos/PHASE_04R_MULTI_ABI_RELEASES.md), never something this site
-// hosts or mirrors.
+// Extensões/nomes de arquivo que nunca podem ir para o artifact estático
+// público — APKs e checksums são responsabilidade só da GitHub Release
+// (ver docs/planos/PHASE_04R_MULTI_ABI_RELEASES.md), nunca algo que este
+// site hospeda ou espelha.
 const FORBIDDEN_ARTIFACT_PATTERNS: RegExp[] = [
   /\.apk$/i,
   /\.keystore$/i,
@@ -47,12 +44,13 @@ const FORBIDDEN_ARTIFACT_PATTERNS: RegExp[] = [
   /^sha256sums\.txt$/i,
 ];
 
-// Identifiers that should never appear in a static client bundle: this site
-// never ships a GitHub token, a local-dev release-fetch token, or an
-// Android/EAS secret to the browser (see docs/planos/DECISIONS.md — no
-// runtime GitHub API dependency, no VITE_*-prefixed secret). Their mere
-// textual presence in build output is the sanity check, not a full secret
-// scanner.
+// Identificadores que nunca deveriam aparecer em um bundle de cliente
+// estático: este site nunca envia um token do GitHub, um token local de
+// release-fetch, ou um segredo Android/EAS para o navegador (ver
+// docs/planos/DECISIONS.md — sem dependência runtime da API do GitHub,
+// sem segredo com prefixo VITE_*). A mera presença textual desses nomes
+// no output de build é a checagem de sanidade, não um scanner completo de
+// segredos.
 const SECRET_PATTERNS: RegExp[] = [
   /ghp_[A-Za-z0-9]{20,}/,
   /github_pat_[A-Za-z0-9_]{20,}/,
@@ -464,10 +462,6 @@ export async function runValidation({
         "sitemap.xml does not match the expected nine-URL sitemap for the configured SITE_URL " +
           "(check for a stale build, a missing locale/page, or an unexpected extra entry).",
       );
-    }
-    const publicUrls = getPublicUrls(normalizedSiteUrl);
-    if (publicUrls.some((url) => /foundation|\/404/.test(url))) {
-      errors.push("sitemap.xml unexpectedly references /foundation or /404.");
     }
   }
 

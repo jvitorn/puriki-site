@@ -1,14 +1,14 @@
-// Pure, environment-independent URL helpers — no `import.meta.env`, no
-// `process.env`. Safe to import both from Vite/browser code (via
-// `app/lib/config.ts`) and from a plain Node script run outside Vite
-// (`scripts/generate-seo-files.ts`), so the two never drift.
+// Helpers de URL puros, independentes de ambiente — sem `import.meta.env`,
+// sem `process.env`. Seguro para importar tanto de código Vite/browser
+// (via `app/lib/config.ts`) quanto de um script Node puro fora do Vite
+// (`scripts/generate-seo-files.ts`), então os dois nunca desalinham.
 //
-// `SITE_URL` already represents the full public root of the deployment,
-// including any GitHub Pages project-site segment (e.g.
-// `https://jvitorn.github.io/puriki-site/`). It must never be combined
-// with `BASE_PATH` — that would double the `/puriki-site/` segment. Only
-// combine it with a path that's relative to the site's own root, such as
-// what `getPagePath()` returns.
+// `SITE_URL` já representa a raiz pública completa do deploy, incluindo
+// qualquer segmento de project site do GitHub Pages (ex.:
+// `https://jvitorn.github.io/puriki-site/`). Nunca deve ser combinado com
+// `BASE_PATH` — isso duplicaria o segmento `/puriki-site/`. Combine só com
+// um path relativo à própria raiz do site, como o que `getPagePath()`
+// retorna.
 
 export function normalizeSiteUrl(value: string): string {
   return value.endsWith("/") ? value : `${value}/`;

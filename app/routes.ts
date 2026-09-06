@@ -21,7 +21,6 @@ export default [
     const segment = localeConfig[locale].urlSegment;
     return segment ? prefix(segment, routesForLocale) : routesForLocale;
   }),
-  route("foundation", "routes/foundation.tsx"),
   route("404", "routes/not-found.tsx"),
   route("*", "routes/catch-all.tsx"),
 ] satisfies RouteConfig;

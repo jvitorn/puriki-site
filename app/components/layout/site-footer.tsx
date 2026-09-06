@@ -1,7 +1,7 @@
 import { PurikiLogo } from "../brand/puriki-logo";
 import { getContent } from "../../content";
 import type { FooterLinkTarget } from "../../content/types";
-import { PURIKUKI_LICENSE_URL } from "../../lib/external-links";
+import { PURIKI_LICENSE_URL } from "../../lib/external-links";
 import { homeAnchorHref, pageHref } from "../../lib/i18n/links";
 import type { Locale } from "../../lib/i18n/locales";
 import { Container } from "./container";
@@ -94,7 +94,7 @@ export function SiteFooter({ locale }: SiteFooterProps) {
           <p>{footer.copyright}</p>
           <a
             className="rounded-sm no-underline transition-colors hover:text-foreground"
-            href={PURIKUKI_LICENSE_URL}
+            href={PURIKI_LICENSE_URL}
             rel="noreferrer"
             target="_blank"
           >

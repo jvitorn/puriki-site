@@ -2,12 +2,9 @@
   "project": "Puriki Site",
   "directory": "docs/planos",
   "files": [
-    "CHECKLIST-EN.md",
     "CHECKLIST-PT-BR.md",
-    "CONTENT_SPEC.md",
     "DECISIONS.md",
     "DESIGN_SYSTEM.md",
-    "IMPLEMENTATION_PLAN.md",
     "PHASE_00_FOUNDATION.md",
     "PHASE_01_DESIGN_SYSTEM.md",
     "PHASE_02_ROUTING_I18N_CONTENT.md",
@@ -17,11 +14,9 @@
     "PHASE_05_ACCESSIBILITY_SEO_LEGAL.md",
     "PHASE_06_TESTING_CI_DEPLOY.md",
     "PHASE_07_LAUNCH_HARDENING.md",
+    "PHASE_08_REPOSITORY_CLEANUP.md",
     "README.md"
   ],
   "phase_count": 9,
-  "checklists": [
-    "CHECKLIST-PT-BR.md",
-    "CHECKLIST-EN.md"
-  ]
+  "checklists": ["CHECKLIST-PT-BR.md"]
 }

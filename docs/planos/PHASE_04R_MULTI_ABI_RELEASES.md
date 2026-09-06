@@ -1,332 +1,113 @@
-# Phase 04R — Multi-ABI Release Integration Refinement
+# Fase 04R — Revisão da Integração de Releases Multi-ABI
 
-## Why this phase exists
+## Por que esta fase existe
 
-Phase 04 modeled the GitHub Release integration around a single Android
-APK (`puriki-v{version}.apk`). That was accurate for the state of the
-`jvitorn/puriki` app repository at the time.
+A Fase 04 modelou a integração com a GitHub Release em torno de um único APK Android (`puriki-v{version}.apk`). Isso era preciso para o estado do repositório `jvitorn/puriki` na época.
 
-Puriki has since reached its first public stable release, `v1.0.0`, and
-the real distribution strategy that shipped with it uses **one APK per
-Android ABI** rather than a single universal binary:
+O Puriki desde então alcançou sua primeira release pública estável, `v1.0.0`, e a estratégia de distribuição real que foi lançada com ela usa **um APK por ABI Android**, em vez de um binário universal único:
 
 - `puriki-v1.0.0-arm64-v8a.apk`
 - `puriki-v1.0.0-universal.apk`
 - `puriki-v1.0.0-armeabi-v7a.apk`
 - `puriki-v1.0.0-x86_64.apk`
 - `puriki-v1.0.0-x86.apk`
-- `SHA256SUMS.txt` (a GitHub Release artifact, not part of this site's
-  contract — see "SHA-256 / checksums" below)
+- `SHA256SUMS.txt` (um asset da GitHub Release, não parte do contrato deste site — ver "SHA-256 / checksums" abaixo)
 
-The Phase 04 single-APK contract no longer matches reality, so this
-revision replaces it with a multi-artifact model *before* Phase 06
-(Testing/CI/Deploy) begins. Phase 06 is **not** implemented here — only
-its plan document is updated where it still assumed a single APK.
+O contrato de APK único da Fase 04 deixou de corresponder à realidade, então esta revisão o substitui por um modelo multi-artifact antes do início da Fase 06 (Testes/CI/Deploy).
 
-## What changed, at a glance
+## O que mudou, em resumo
 
-| | Phase 04 (original) | Phase 04R |
+| | Fase 04 (original) | Fase 04R |
 |---|---|---|
-| Release shape | one APK per release | N Android artifacts per release |
-| Expected filename | `puriki-v{version}.apk` | `puriki-v{version}-{variant}.apk` |
-| Required assets | the one APK | `arm64-v8a` **and** `universal` |
-| Optional assets | none | `armeabi-v7a`, `x86_64`, `x86` |
-| SHA-256 | shown + copyable in the landing | not part of the landing UX |
-| Primary download CTA | the only APK | `arm64-v8a` (recommended) |
-| Secondary CTA | none | `universal` (highlighted alternative) |
-| ABI detection | n/a | explicitly never implemented |
+| Formato da release | um APK por release | N artifacts Android por release |
+| Nome de arquivo esperado | `puriki-v{version}.apk` | `puriki-v{version}-{variant}.apk` |
+| Assets obrigatórios | o único APK | `arm64-v8a` **e** `universal` |
+| Assets opcionais | nenhum | `armeabi-v7a`, `x86_64`, `x86` |
+| SHA-256 | exibido e copiável na landing | fora da UX da landing |
+| CTA primário | o único APK | `arm64-v8a` (recomendado) |
+| CTA secundário | nenhum | `universal` (alternativa destacada) |
+| Detecção de ABI | n/a | explicitamente nunca implementada |
 
-## New `ReleaseMetadata` contract
+## Novo contrato `ReleaseMetadata`
 
-`app/lib/releases/types.ts`:
+Em `app/lib/releases/types.ts`: uma release passou a ter uma lista `artifacts[]` (`AndroidReleaseArtifact`, com `variant`/`fileName`/`sizeBytes`/`downloadUrl`), ordenada sempre `arm64-v8a`, `universal`, `armeabi-v7a`, `x86_64`, `x86` (só os presentes) — a mesma ordem que a UX de Download usa, então nenhum componente precisa reordenar.
 
-```ts
-export const RECOGNIZED_ARTIFACT_VARIANTS = [
-  "arm64-v8a",
-  "universal",
-  "armeabi-v7a",
-  "x86_64",
-  "x86",
-] as const;
+Princípios de design preservados: uma release tem muitos artifacts, não um; cada artifact só conhece seus próprios campos — `version`, `publishedAt`, `releaseUrl` vivem uma única vez na release, nunca duplicados por artifact; "recomendado" é uma decisão de **apresentação** (a UI de Download sempre trata `arm64-v8a` como primário), não um campo que os metadados do GitHub carregam; `sha256` foi removido inteiramente (ver abaixo).
 
-export type AndroidArtifactVariant = (typeof RECOGNIZED_ARTIFACT_VARIANTS)[number];
+## Artifacts obrigatórios vs. opcionais
 
-export const REQUIRED_ARTIFACT_VARIANTS: readonly AndroidArtifactVariant[] = [
-  "arm64-v8a",
-  "universal",
-];
+**Obrigatórios:** `arm64-v8a`, `universal`. Uma release estável sem algum dos dois falha `parseGitHubRelease()` (e portanto `pnpm release:fetch`, e portanto o step de build do deploy) com um `ReleaseParseError` explícito e acionável. A landing nunca é publicada silenciosamente incompleta.
 
-export interface AndroidReleaseArtifact {
-  variant: AndroidArtifactVariant;
-  fileName: string;
-  sizeBytes: number;
-  downloadUrl: string;
-}
+**Opcionais:** `armeabi-v7a`, `x86_64`, `x86`. Uma release futura pode abandonar qualquer um deles (por exemplo, parar de suportar ARM de 32 bits) sem falhar o build — o parser simplesmente omite essa variante de `artifacts`, e a UI de Download omite essa opção de "Outras versões" em vez de mostrar um placeholder ou link quebrado.
 
-export interface ReleaseUnavailable {
-  available: false;
-}
+**Assets não reconhecidos:** qualquer outro `.apk` na release (uma variante futura inesperada, um artifact de build perdido) é ignorado em vez de tratado como ambíguo, desde que as duas variantes obrigatórias estejam presentes e nomeadas corretamente. `SHA256SUMS.txt` é ignorado da mesma forma (nem é um `.apk`, então nunca entra no conjunto de candidatos).
 
-export interface ReleaseAvailable {
-  available: true;
-  version: string;
-  publishedAt: string;
-  releaseUrl: string;
-  artifacts: AndroidReleaseArtifact[];
-}
+**Nomes quase corretos:** um asset com nome parecido mas não exatamente igual à convenção `puriki-v{version}-{variant}.apk` (por exemplo `puriki-v1.0.0-arm64.apk`, faltando `-v8a`) nunca é confundido com um artifact válido — o casamento é por string exata, não fuzzy.
 
-export type ReleaseMetadata = ReleaseUnavailable | ReleaseAvailable;
-```
+## Contrato de nome de arquivo
 
-Design principles preserved from the brief:
+Centralizado em um único lugar, `buildArtifactFileName(version, variant)` em `app/lib/releases/parse-github-release.ts`: `puriki-v{version}-{variant}.apk`. Nenhum componente de UI jamais re-deriva ou re-templatiza essa string — componentes só consomem `fileName`/`downloadUrl` já presentes em um `AndroidReleaseArtifact` já processado.
 
-1. a release owns many artifacts, not one;
-2. each artifact only knows its own `variant`/`fileName`/`sizeBytes`/
-   `downloadUrl` — `version`, `publishedAt`, `releaseUrl` live once on the
-   release, never duplicated per artifact;
-3. "recommended" is a **presentation** decision (the Download UI always
-   treats `arm64-v8a` as primary), not a field GitHub metadata carries;
-4. `sha256` was removed entirely — see below.
+## Comportamento do parser (`parseGitHubRelease`)
 
-## Required vs. optional artifacts
+Todo o hardening da Fase 04 foi preservado: releases draft rejeitadas; prereleases rejeitadas para o CTA primário; `published_at` ausente/inválido rejeitado; JSON/payload malformado rejeitado; `browser_download_url` ausente em um artifact rejeitado; tamanho de artifact inválido rejeitado; `raw === null` (404 de `GET /releases/latest`) é o único caminho que produz `{ available: false }`.
 
-- **Required:** `arm64-v8a`, `universal`. A stable release missing either
-  one fails `parseGitHubRelease()` (and therefore `pnpm release:fetch`,
-  and therefore the deploy workflow's build step) with an explicit,
-  actionable `ReleaseParseError`. The landing is never silently published
-  incomplete.
-- **Optional:** `armeabi-v7a`, `x86_64`, `x86`. A future release is free
-  to drop any of these (e.g. dropping 32-bit ARM support) without failing
-  the build — the parser just omits that variant from `artifacts`, and
-  the Download UI omits that option from "Other versions" instead of
-  showing a placeholder or a broken link.
-- **Unrecognized assets:** any other `.apk` on the release (an unexpected
-  future variant, a stray build artifact) is ignored rather than treated
-  as ambiguous, as long as the two required variants are present and
-  correctly named. `SHA256SUMS.txt` is ignored the same way (it isn't a
-  `.apk`, so it never enters the candidate set at all).
-- **Near-miss filenames:** an asset named close to but not exactly
-  matching a recognized `puriki-v{version}-{variant}.apk` (e.g.
-  `puriki-v1.0.0-arm64.apk`, missing `-v8a`) is never confused with a
-  valid artifact — matching is exact-string, not fuzzy.
+Novidade multi-ABI: o parser percorre `RECOGNIZED_ARTIFACT_VARIANTS` em ordem, procura um nome de arquivo exato por variante, e só então checa se cada `REQUIRED_ARTIFACT_VARIANTS` foi encontrado.
 
-## Filename contract
+## SHA-256 / checksums — removidos da UX pública
 
-Centralized in one place, `buildArtifactFileName(version, variant)` in
-`app/lib/releases/parse-github-release.ts`:
+Decisão registrada explicitamente aqui: `SHA256SUMS.txt` e qualquer digest por asset **não** fazem parte da UX da landing. A própria GitHub Release continua sendo o lugar correto para um usuário tecnicamente inclinado verificar a integridade via `SHA256SUMS.txt` ou o digest de asset do próprio GitHub.
 
-```
-puriki-v{version}-{variant}.apk
-```
+Consequentemente, esta fase removeu: o campo `sha256` de `ReleaseMetadata`/`AndroidReleaseArtifact`; `normalizeSha256()` do parser; o componente `ShaDisclosure` (`app/sections/sha-disclosure.tsx`) e todo campo de conteúdo que só existia para suportá-lo; os testes específicos de SHA (dobrados na nova suíte de testes da seção Download, que agora garante que uma disclosure de checksum **nunca** é renderizada).
 
-Examples: `puriki-v1.0.0-arm64-v8a.apk`, `puriki-v1.0.0-universal.apk`.
-No UI/component ever re-derives or re-templates this string — components
-only ever consume the `fileName`/`downloadUrl` already present on a
-parsed `AndroidReleaseArtifact`.
+Isso é escopo apenas do `puriki-site`. O repositório do app continua publicando `SHA256SUMS.txt` em toda release; nada muda na própria prática de checksum do app.
 
-## Parser behavior (`parseGitHubRelease`)
+## UX de Download
 
-All Phase 04 hardening is preserved unchanged:
+`app/sections/download-section.tsx` foi reescrito em torno de uma hierarquia clara, para que um usuário comum nunca precise entender uma ABI de CPU para escolher o arquivo certo:
 
-- draft releases rejected;
-- prereleases rejected for the primary/only stable CTA;
-- missing/invalid `published_at` rejected (`Date.parse` validated);
-- malformed JSON/payload rejected;
-- missing `browser_download_url` on a matched artifact rejected;
-- invalid (`<= 0`, non-finite, non-number) artifact size rejected;
-- `raw === null` (404 from `GET /releases/latest`) is the only path that
-  produces `{ available: false }`.
+1. **Android atual (ARM64)** — card primário, badge "Recomendado" (um badge textual, nunca só por cor), CTA aponta diretamente para o `downloadUrl` do artifact `arm64-v8a`.
+2. **Versão Universal** — segundo card, subtítulo "Não sabe qual escolher?", CTA aponta diretamente para o artifact `universal`. A copy evita deliberadamente "funciona em qualquer Android"/"compatível com qualquer dispositivo" — só afirma suporte a múltiplas arquiteturas.
+3. **Outras versões** — um Collapsible que só renderiza quando existe pelo menos um artifact opcional; cada variante presente ganha sua própria linha com título em linguagem simples, nota de arquitetura secundária, tamanho e link próprio de download. Uma variante opcional ausente não renderiza nada.
+4. **"Qual versão devo baixar?"** — um segundo Collapsible, deliberadamente não técnico, sempre presente quando uma release existe, explicando as quatro escolhas práticas (ARM64, Universal, Android ARM 32-bit mais antigo, emuladores x86/x86_64).
+5. **Link da GitHub Release** — papel inalterado: o destino para changelog e detalhes técnicos (incluindo checksums).
 
-New for multi-ABI: the parser walks `RECOGNIZED_ARTIFACT_VARIANTS` in
-order, looks for an exact filename match per variant, and only then
-checks that every `REQUIRED_ARTIFACT_VARIANTS` entry was found. The
-returned `artifacts[]` array is always ordered `arm64-v8a`, `universal`,
-`armeabi-v7a`, `x86_64`, `x86` (only the ones actually present) — the
-same order the Download UX presents them in, so no component needs to
-re-sort.
+Nenhuma detecção de CPU/ABI/User-Agent foi implementada ou considerada — por privacidade, simplicidade e previsibilidade, a landing sempre apresenta as mesmas escolhas explícitas a todo visitante e deixa o usuário decidir.
 
-## SHA-256 / checksums — removed from the landing UX
-
-Maintainer decision, recorded here explicitly: `SHA256SUMS.txt` and any
-per-asset digest are **not** part of the landing's UX. The GitHub Release
-itself remains the correct place for a technically inclined user to
-verify integrity via `SHA256SUMS.txt` or GitHub's own asset digest.
-
-Consequently, this phase removed:
-
-- the `sha256` field from `ReleaseMetadata`/`AndroidReleaseArtifact`;
-- `normalizeSha256()` from the parser (dead code, no remaining caller);
-- the `ShaDisclosure` component (`app/sections/sha-disclosure.tsx`) and
-  every content field that only existed to support it (`shaLabel`,
-  `copyLabel`, `copiedLabel`, `copyFailedLabel`);
-- the SHA-specific tests that exercised that component (folded into the
-  new Download-section test suite, which now asserts a checksum
-  disclosure is **never** rendered).
-
-This is scoped to `puriki-site` only. `purikuki` continues publishing
-`SHA256SUMS.txt` on every release; nothing about the app repository's own
-checksum practice changes.
-
-## Download UX
-
-`app/sections/download-section.tsx` was rewritten around a clear
-hierarchy, so a non-technical user never has to understand a CPU ABI to
-pick the right file:
-
-1. **Android atual (ARM64)** — primary card, badge "Recomendado" (a
-   textual badge, never color-only), CTA points directly at the
-   `arm64-v8a` artifact's `downloadUrl`.
-2. **Versão Universal** — second card, subtitle "Não sabe qual
-   escolher?", CTA points directly at the `universal` artifact. Copy
-   deliberately avoids "works on any Android"/"compatible with every
-   device" — it only claims multi-architecture support.
-3. **Outras versões** — a `Collapsible` (reusing the existing primitive,
-   no new motion system) that only renders when at least one optional
-   artifact (`armeabi-v7a`/`x86_64`/`x86`) exists on the release; each
-   present variant gets its own row with a plain-language title, a
-   secondary architecture note, size, and its own download link. A
-   missing optional variant renders nothing — no placeholder, no
-   "unavailable" text, no broken layout.
-4. **"Qual versão devo baixar?"** — a second `Collapsible`, deliberately
-   non-technical (no ABI/instruction-set/CPU-architecture jargon), always
-   present once a release exists, explaining all four practical choices
-   (ARM64, Universal, older ARM 32-bit Android, x86/x86_64 emulators).
-5. **GitHub Release link** — unchanged role: the destination for
-   changelog and technical details (including checksums).
-
-No CPU/ABI/User-Agent detection was implemented or considered — the
-brief explicitly forbids it (privacy, simplicity, predictability), so the
-landing always presents the same explicit choices to every visitor and
-lets the user decide.
-
-The no-release ("in preparation") branch is functionally unchanged from
-Phase 04/05: no fake version, no fake size, no disabled fake download
-target, GitHub CTA preserved.
+O estado sem release ("em preparação") permanece funcionalmente inalterado desde a Fase 03/04: sem versão falsa, sem tamanho falso, sem alvo de download falso desabilitado, CTA do GitHub preservado.
 
 ## JSON-LD
 
-`buildSoftwareApplicationJsonLd()` (`app/lib/i18n/metadata.ts`) now reads
-`getReleaseArtifact(release, "arm64-v8a")` and uses that artifact's
-`downloadUrl` as `SoftwareApplication.downloadUrl` — `universal` (or any
-other variant) is never used for structured data. `available: false`
-still correctly omits `softwareVersion`/`downloadUrl` entirely.
+`buildSoftwareApplicationJsonLd()` (`app/lib/i18n/metadata.ts`) lê `getReleaseArtifact(release, "arm64-v8a")` e usa o `downloadUrl` desse artifact como `SoftwareApplication.downloadUrl` — `universal` (ou qualquer outra variante) nunca é usado no dado estruturado. `available: false` continua omitindo `softwareVersion`/`downloadUrl` corretamente.
 
 ## Roadmap
 
-Unchanged architecture from Phase 05: `release.available` still flips the
-1.0 item's status between "Em preparação"/"Atual" and "Disponível"
-(and their EN/ES equivalents). 2.0/3.0 statuses are never derived from
-release state. Verified against the real `v1.0.0` release during this
-phase (see below).
+Arquitetura inalterada desde a Fase 05: `release.available` continua alternando o status do item 1.0 entre "Em preparação"/"Atual" e "Disponível" (e equivalentes EN/ES). Os status de 2.0/3.0 nunca derivam do estado da release. Verificado contra a release real `v1.0.0` durante esta fase.
 
-## Content model additions
+## Modelo de conteúdo
 
-`DownloadContent` (`app/content/types.ts`) grew:
+`DownloadContent` (`app/content/types.ts`) ganhou: `current` (título/badge/nota/descrição do card ARM64); `universal` (título/subtítulo/descrição/cta do card Universal); `otherVersions` (título + uma entrada por variante opcional, cada uma com título/nota/descrição/cta); `chooser` (título + quatro explicações não técnicas); `releaseLabels` perdeu todo campo relacionado a SHA e ganhou `latestLabel` ("Última versão estável" e equivalentes). PT-BR é a fonte editorial; EN e ES foram escritos como equivalentes naturais, não traduções literais, e termos técnicos (ARM64, x86, x86_64, APK) ficam sem tradução nos três locales.
 
-- `current` (title/badge/note/description for the ARM64 card);
-- `universal` (title/subtitle/description/cta for the Universal card);
-- `otherVersions` (title + one entry per optional variant:
-  `armeabi_v7a`/`x86_64`/`x86`, each with title/note/description/cta);
-- `chooser` (title + four non-technical explanations: current/universal/
-  arm32/x86 — x86 and x86_64 deliberately share one explanation, per the
-  brief);
-- `releaseLabels` lost every SHA-related field and gained `latestLabel`
-  ("Última versão estável"/"Latest stable version"/"Última versión
-  estable").
+## Menção à licença MIT
 
-PT-BR is the editorial source; EN and ES were written as natural
-equivalents (not literal translations), and technical terms (ARM64, x86,
-x86_64, APK) are left untranslated in all three locales, per the brief.
-`tests/i18n/locale-content.test.ts`'s existing shape-equality check
-(`collectShapeKeys`) enforces that all three locales stay structurally
-complete — a locale missing a new field fails that test, not just the
-type system.
+A copy da seção Open Source foi mantida como estava; em vez disso, um link discreto "Licenciado sob MIT" foi adicionado à linha de copyright do footer, apontando para o arquivo LICENSE do repositório do app.
 
-## MIT license mention
+## Atualizações do FAQ
 
-The Open Source section's existing copy was left as-is (already accurate
-and well-balanced); instead, a discreet "Licenciado sob MIT" /
-"Licensed under MIT" / "Con licencia MIT" link to
-`jvitorn/puriki`'s `LICENSE` file was added to the footer's copyright
-row (`app/components/layout/site-footer.tsx`, new
-`FooterContent.licenseLabel` field, new `PURIKUKI_LICENSE_URL` constant
-in `app/lib/external-links.ts`).
+Duas respostas foram refinadas para a nova realidade de estado de release sem introduzir explicação de SHA/checksum na landing: "Como verifico se o APK é oficial?" agora aponta para este site ou a GitHub Release oficial do Puriki, mencionando que os detalhes técnicos de integridade vivem diretamente na GitHub Release; "Como atualizo o Puriki?" agora reflete que uma release real existe.
 
-## FAQ updates
+## Script `release:fetch`
 
-Two answers were refined to match the new release-state reality without
-introducing SHA/checksum explanation on the landing:
+`scripts/fetch-release.ts` não assume mais um único `fileName`/`sizeBytes` no nível da release; seu log de sucesso agora reporta a versão e a lista de artifacts Android encontrados. Todas as garantias da Fase 04 permanecem inalteradas: timeout de 15s, fetch da API pública, sem `GITHUB_TOKEN` obrigatório, `RELEASE_FETCH_TOKEN` local opcional (nunca com nome `VITE_*`), 404 -> `{ available: false }`, qualquer outra falha sai com código não-zero em vez de mascarar um erro técnico como "sem release".
 
-- **"Como verifico se o APK é oficial?"** now points at "this site or
-  Puriki's official GitHub release" and mentions that technical integrity
-  details live directly on the GitHub release, without explaining how to
-  use them.
-- **"Como atualizo o Puriki?"** now reflects that a real release exists:
-  download the latest stable version from the landing or GitHub Releases
-  and install the matching APK over the current installation.
+## Validação ao vivo contra a release real `v1.0.0`
 
-## `release:fetch` script
+`pnpm release:fetch` foi executado contra a API pública real de `jvitorn/puriki` durante esta fase. As cinco variantes reconhecidas estavam presentes e corretamente classificadas (`arm64-v8a`/`universal` obrigatórias e encontradas; `armeabi-v7a`/`x86_64`/`x86` opcionais e encontradas). Os tamanhos vieram inteiramente da resposta real da API do GitHub — nada hardcoded. Um build de produção foi então rodado contra esse dado real e o HTML gerado foi inspecionado diretamente. Depois da validação, `app/generated/release.json` foi restaurado para o baseline commitado `{ "available": false }` — a mesma política já estabelecida nas Fases 04/05, então `pnpm build` continua funcionando totalmente offline.
 
-`scripts/fetch-release.ts` no longer assumes a single `fileName`/
-`sizeBytes` at the release level; its success log now reports the
-version and the count/variant list of Android artifacts found, e.g.:
+## Estratégia de testes
 
-```
-release:fetch — wrote v1.0.0 with 5 Android artifact(s): arm64-v8a, universal, armeabi-v7a, x86_64, x86.
-```
+`tests/releases/fixtures.ts` e `tests/releases/parse-github-release.test.ts` foram totalmente reescritos em torno de fixtures multi-ABI (todos os cinco artifacts, só os dois obrigatórios, cada artifact obrigatório ausente individualmente, cada artifact opcional ausente individualmente, um `.apk` não relacionado presente, um nome quase correto, `SHA256SUMS.txt` ignorado, artifact duplicado com match exato, tamanho inválido, URL de download ausente, tag com/sem `v`/`V` inicial, payloads malformados). `tests/sections/download-section.test.tsx` foi totalmente reescrito para cobrir a nova hierarquia. `tests/sections/roadmap-section.test.tsx` e `tests/a11y/axe-smoke.test.tsx` foram atualizados só para a nova forma de fixture `ReleaseAvailable` — sem mudança de comportamento no que é testado. Um novo `tests/i18n/json-ld.test.ts` cobre explicitamente a regra do `downloadUrl` do JSON-LD usar só `arm64-v8a`.
 
-All Phase 04 script-level guarantees are unchanged: 15s timeout, public
-API fetch, no required `GITHUB_TOKEN`, optional local
-`RELEASE_FETCH_TOKEN` (never a `VITE_*` name), 404 -> `{ available: false
-}`, any other failure exits non-zero instead of masking a technical error
-as "no release".
+## O que as Fases 06/07 ainda são responsáveis por fazer
 
-## Live validation against the real `v1.0.0` release
-
-`pnpm release:fetch` was run against the actual public `jvitorn/puriki`
-API during this phase. Result:
-
-```
-release:fetch — wrote v1.0.0 with 5 Android artifact(s): arm64-v8a, universal, armeabi-v7a, x86_64, x86.
-```
-
-All five recognized variants were present and correctly classified
-(`arm64-v8a`/`universal` required and found; `armeabi-v7a`/`x86_64`/`x86`
-optional and found). Sizes came entirely from the live GitHub API
-response — nothing hardcoded. A production build
-(`BASE_PATH=/puriki-site/ SITE_URL=https://jvitorn.github.io/puriki-site/
-pnpm build`) was then run against this real data and the generated HTML
-was inspected directly (see the Phase 04R final report for the exact
-JSON-LD/version/link excerpts). After validation, `app/generated/
-release.json` was restored to the committed `{ "available": false }`
-baseline — the same policy Phase 04/05 already established, so
-`pnpm build` keeps working fully offline and CI/local diffs stay clean
-unless someone deliberately changes the baseline.
-
-## Test strategy
-
-`tests/releases/fixtures.ts` and `tests/releases/parse-github-release.test.ts`
-were fully rewritten around multi-ABI fixtures (all five artifacts, only
-the two required ones, each required artifact missing individually, each
-optional artifact missing individually, an unrelated `.apk` present, a
-near-miss filename, `SHA256SUMS.txt` ignored, duplicate exact-match
-artifact, invalid size, missing download URL, tag with/without leading
-`v`/`V`, malformed payloads). `tests/sections/download-section.test.tsx`
-was fully rewritten to cover the new hierarchy (ARM64 primary, Universal
-highlighted, optional rows only when present, both disclosures openable
-by keyboard-equivalent click events, no SHA text ever rendered).
-`tests/sections/roadmap-section.test.tsx` and `tests/a11y/axe-smoke.test.tsx`
-were updated only to match the new `ReleaseAvailable` fixture shape — no
-behavioral change to what they assert. A new `tests/i18n/json-ld.test.ts`
-covers the `arm64-v8a`-only JSON-LD `downloadUrl` rule explicitly (no
-prior test exercised this directly).
-
-## What Phase 06/07 still own
-
-This phase does not implement CI gates, static-output validation,
-Dependabot, or any of Phase 06's automation — it only updated that plan
-document where it still assumed a single APK/single download/single SHA.
-It does not perform the Phase 07 real-device download validation, content
-accuracy audit, or launch-gate sign-off — it only updated that plan
-document's release/download validation section for the multi-artifact
-reality. Both remain explicitly unmarked as complete.
+Esta fase não implementou os gates de CI, a validação de output estático, o Dependabot, ou qualquer uma das automações da Fase 06 — só atualizou o texto do plano onde ainda assumia um único APK. Também não fez a validação de download em dispositivo real, a auditoria de precisão de conteúdo, ou o sign-off de lançamento da Fase 07.

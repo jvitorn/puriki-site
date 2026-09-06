@@ -1,55 +1,50 @@
-# Puriki Site — Visual and Interaction System
+# Puriki Site — Sistema Visual e de Interação
 
-## Direction
+## Direção
 
-Design style:
+Estilo: **editorial escuro + produto em primeiro plano**.
 
-**Dark editorial + product-first**
+O site funciona como uma moldura ao redor dos screenshots do aplicativo Puriki, em vez de competir visualmente com eles.
 
-The site should act as a frame around the Puriki application screenshots rather than visually competing with them.
+Evitar:
 
-Avoid:
+- decoração genérica de "site de anime";
+- papel de parede de sakura/kanji;
+- paleta cyberpunk neon;
+- gradientes excessivos;
+- glassmorphism generalizado;
+- partículas ruidosas;
+- terminais de código decorativos grandes;
+- dezenas de cards.
 
-- generic “anime website” decoration;
-- sakura/kanji wallpaper;
-- neon cyberpunk palette;
-- excessive gradients;
-- global glassmorphism;
-- noisy particles;
-- large decorative code terminals;
-- dozens of cards.
+## Tema
 
-## Theme
+O lançamento inicial é dark-only. Não implementar alternância para modo claro na primeira versão.
 
-Initial launch is dark-only.
+## Tipografia
 
-Do not implement a light-mode toggle in the first release.
+Família principal: `Geist`.
 
-## Typography
+Regras:
 
-Primary family:
-`Geist`
+- hospedar os arquivos da fonte localmente quando a licença/distribuição permitir;
+- definir fallbacks de sistema robustos;
+- não buscar a fonte do Google Fonts em runtime;
+- usar fallbacks compatíveis com japonês para os glifos da marca quando necessário;
+- não usar fontes japonesas decorativas em corpo de texto ou headings de seção.
 
-Rules:
+Escala de título:
 
-- self-host font assets when license/distribution permits;
-- define safe system fallbacks;
-- do not fetch the font from Google Fonts at runtime;
-- use normal Japanese-compatible fallbacks for brand glyphs if required;
-- do not use decorative Japanese fonts for body/section headings.
+- Hero desktop: aproximadamente 56–64px;
+- Hero mobile: aproximadamente 38–44px;
+- manter dimensionamento fluido e acessível;
+- evitar alturas fixas amarradas a um tamanho de fonte específico.
 
-Headline scale direction:
+## Tokens de cor
 
-- desktop Hero: roughly 56–64px equivalent;
-- mobile Hero: roughly 38–44px equivalent;
-- keep fluid sizing accessible;
-- avoid fixed heights tied to a specific font size.
+A implementação final usa tokens semânticos.
 
-## Color tokens
-
-Final implementation should use semantic tokens.
-
-Suggested baseline:
+Base sugerida:
 
 ```text
 --background
@@ -74,7 +69,7 @@ Suggested baseline:
 --danger
 ```
 
-Initial palette direction:
+Direção de paleta inicial:
 
 ```text
 background      #0B0E14
@@ -86,231 +81,207 @@ brand-highlight #D9474C
 foreground      #F8FAFC
 ```
 
-The actual WCAG contrast of every foreground/background combination must be tested.
+O contraste WCAG real de cada combinação foreground/background precisa ser testado (ver o registro da Fase 01 para os valores finais medidos). Não hardcodear `#970C10` em componentes individuais — componentes sempre referenciam o token `brand`.
 
-Do not hardcode `#970C10` in individual components. Components reference `brand`.
+## Uso da cor de marca
 
-## Brand color usage
+O vermelho da marca deve ser relativamente raro.
 
-Brand red should be relatively rare.
+Usar para:
 
-Use it for:
+- CTA primário;
+- detalhes de destaque/ativo;
+- estados selecionados/ativos;
+- ênfase pontual no roadmap;
+- destaque do conector entre providers;
+- pequenos acentos do logo.
 
-- primary CTA;
-- active/accent details;
-- selected/active states;
-- roadmap emphasis where appropriate;
-- provider connector highlight;
-- small logo accents.
+Evitar:
 
-Avoid:
+- todo heading em vermelho;
+- toda borda de card em vermelho;
+- grandes fundos vermelhos ao longo da página.
 
-- every heading in red;
-- every card border in red;
-- large red backgrounds throughout the page.
-
-## Surfaces
+## Superfícies
 
 Cards:
 
-- moderate radius;
-- subtle 1px border;
-- minimal shadow;
-- no global translucent blur treatment.
+- raio moderado;
+- borda sutil de 1px;
+- sombra mínima;
+- sem tratamento de blur translúcido generalizado.
 
-Suggested radius hierarchy:
+Hierarquia de raio sugerida:
 
-- button: ~8–10px;
+- botão: ~8–10px;
 - card: ~14–18px;
-- major block: ~20–24px;
-- pill only for badges/status where semantically appropriate.
+- bloco maior: ~20–24px;
+- pill apenas para badges/status quando semanticamente apropriado.
 
 ## Layout
 
-General max content width:
-~1200–1280px.
+Largura máxima geral de conteúdo: ~1200–1280px.
 
-Readable text line width:
-roughly 600–700px for long body copy.
+Largura de linha legível para corpo de texto longo: ~600–700px.
 
-Desktop section vertical spacing:
-roughly 120–140px depending on content.
-
-Mobile:
-roughly 72–96px.
-
-Do not blindly use these as fixed numbers; preserve visual rhythm.
+Espaçamento vertical de seção no desktop: ~120–140px, dependendo do conteúdo. No mobile: ~72–96px. Esses números são uma referência de ritmo visual, não constantes fixas obrigatórias.
 
 ## Header
 
 Desktop:
 
-- brand left;
-- compact navigation;
-- GitHub secondary action;
-- Download primary action;
-- sticky behavior allowed;
-- on scroll, add subtle opaque/blur-free or lightly translucent background and bottom border as needed for readability.
+- marca à esquerda;
+- navegação compacta;
+- ação secundária GitHub;
+- ação primária Download;
+- comportamento sticky permitido;
+- ao rolar, fundo levemente opaco/translúcido e borda inferior sutil, quando necessário para legibilidade.
 
 Mobile:
 
-- brand left;
-- accessible menu button right;
-- shadcn Sheet for navigation;
-- language selector inside;
-- prominent Download action.
+- marca à esquerda;
+- botão de menu acessível à direita;
+- Sheet do shadcn para navegação;
+- seletor de idioma dentro do menu;
+- ação de Download em destaque.
 
 ## Hero
 
 Desktop:
 
-- two-column composition;
-- copy/CTA left;
-- single strong app mockup right.
+- composição em duas colunas;
+- copy/CTA à esquerda;
+- um único mockup forte do app à direita.
 
-Mobile semantic order:
+Ordem semântica no mobile:
 
 1. H1
-2. support text
-3. CTA group
-4. product mockup
+2. texto de apoio
+3. grupo de CTAs
+4. mockup do produto
 
-Do not use `min-height: 100vh` as a hard requirement.
+Não usar `min-height: 100vh` como requisito rígido. A próxima seção pode entrar sutilmente na viewport para incentivar o scroll.
 
-The next section may subtly enter the viewport to encourage scrolling.
+## Screenshots do app
 
-## App screenshots
+Screenshots são a principal evidência visual.
 
-Screenshots are the main visual evidence.
-
-Hero:
-- full generic smartphone frame is allowed.
+Hero: moldura completa de smartphone genérico é permitida.
 
 Showcases:
-- do not repeat the same full phone frame every time;
-- use cropped app panels, partially clipped screenshots, or restrained overlap;
-- keep actual app UI readable;
-- avoid fake hardware manufacturer branding.
 
-Optimize assets:
+- não repetir a mesma moldura de telefone completa toda vez;
+- usar painéis recortados, screenshots parcialmente cortados ou sobreposição comedida;
+- manter a UI real do app legível;
+- evitar marca falsa de fabricante de hardware.
 
-- source capture may remain PNG;
-- web derivatives should use WebP/AVIF where appropriate;
-- dimensions must be declared;
-- below-the-fold images should lazy load;
-- Hero visual should be prioritized.
+Otimização de assets:
 
-## Provider relationship visual
+- a captura de origem pode continuar em PNG;
+- derivados web devem usar WebP/AVIF quando apropriado;
+- dimensões precisam ser declaradas;
+- imagens abaixo da dobra devem usar lazy load;
+- o visual do Hero deve ser priorizado.
 
-Desktop conceptual layout:
+## Visual da relação entre providers
+
+Layout conceitual no desktop:
 
 `AniList -> Puriki <- MyAnimeList`
 
-Mobile:
+Mobile: composição vertical que ainda comunica "os dois provedores se conectam ao Puriki".
 
-vertical composition that still communicates “both providers connect to Puriki”.
+Importante:
 
-Important:
+- não sugerir visualmente AniList -> MAL na 1.0;
+- as identidades dos providers não podem dominar o Puriki;
+- o layout precisa funcionar com rótulos de texto mesmo sem logos aprovados/usados.
 
-- do not visually imply AniList -> MAL in 1.0;
-- provider identities must not dominate Puriki;
-- layout should work with text labels even if logos are not approved/used.
+## Motion com Anime.js
 
-## Motion with Anime.js
+Duração de movimento deve ser comedida.
 
-Motion duration should be restrained.
+Usar para:
 
-Use for:
+- revelação de seção;
+- stagger pequeno;
+- entrada de screenshot;
+- desenho do conector entre providers;
+- polimento sutil de hover/focus.
 
-- section reveal;
-- small stagger;
-- screenshot entry;
-- provider connector drawing;
-- subtle hover/focus polish.
+Não usar para:
 
-Do not use for:
+- movimento em loop no hero;
+- efeito que segue o cursor;
+- partículas;
+- flutuação contínua;
+- embaralhamento decorativo de texto;
+- transições que atrasam a leitura.
 
-- looping hero motion;
-- cursor following;
-- particles;
-- continuous floating;
-- decorative text scrambling;
-- transitions that delay reading.
+Reduced motion — quando `prefers-reduced-motion: reduce`:
 
-Reduced motion:
+- renderizar o conteúdo imediatamente;
+- desabilitar parallax;
+- minimizar/desabilitar animações de transform não essenciais;
+- evitar scroll suave forçado.
 
-If `prefers-reduced-motion: reduce`:
+## Regras responsivas
 
-- render content immediately;
-- disable parallax;
-- minimize/disable non-essential transform animations;
-- avoid forced smooth scrolling.
+Os breakpoints principais podem seguir as faixas comuns do Tailwind.
 
-## Responsive rules
-
-Primary breakpoints can align with common Tailwind ranges.
-
-Behavioral intent:
+Intenção comportamental:
 
 - mobile-first;
-- tablet as transition, not a separate redesign;
-- desktop from around 1024px;
-- no interaction depends on hover;
-- touch targets for key actions approximately 44x44px minimum.
+- tablet como transição, não um redesign separado;
+- desktop a partir de ~1024px;
+- nenhuma interação depende de hover;
+- alvos de toque para ações-chave com ~44x44px no mínimo.
 
-Showcases desktop may alternate image/text sides.
+Showcases no desktop podem alternar os lados de imagem/texto. A ordem de leitura do DOM no mobile precisa continuar sendo: título, copy, imagem — nunca reordenar a semântica só para preservar a alternância visual do desktop.
 
-Mobile DOM reading order must stay:
+## Tratamento de fundo
 
-1. title
-2. copy
-3. image
+Opcional:
 
-Do not reorder semantics only to preserve alternating desktop visuals.
+- tratamento de grid muito sutil no Hero ou em uma área estratégica;
+- glow radial de marca com baixa opacidade atrás do mockup do Hero.
 
-## Background treatment
+Não aplicar grid ou fundo animado na página inteira.
 
-Optional:
+## Iconografia
 
-- very subtle grid treatment in the Hero or one strategic area;
-- low-opacity radial brand glow behind the Hero mockup.
+Usar Lucide React.
 
-Do not apply a grid or animated background across the whole page.
+Diretrizes:
 
-## Iconography
+- peso de traço consistente;
+- o ícone reforça o significado;
+- não adicionar ícone a todo rótulo/botão;
+- ícones significativos não substituem texto;
+- ícones decorativos são escondidos de tecnologia assistiva apropriadamente.
 
-Use Lucide React.
+## Estados de foco
 
-Guidelines:
+O foco precisa ser claramente visível contra fundos escuros.
 
-- consistent stroke weight;
-- icon supports meaning;
-- do not add an icon to every label/button;
-- meaningful icons do not replace text;
-- decorative icons are hidden from assistive tech appropriately.
+O estilo de foco deve:
 
-## Focus states
-
-Focus must be clearly visible against dark backgrounds.
-
-Focus styling should:
-
-- not depend only on color if contrast is weak;
-- be consistent across links/buttons/accordion/menu;
-- remain visible in both default and brand-colored surfaces.
+- não depender só de cor quando o contraste for fraco;
+- ser consistente entre links/botões/accordion/menu;
+- permanecer visível tanto em superfícies padrão quanto nas com cor de marca.
 
 ## 404
 
-Small branded 404 is acceptable.
+Uma 404 pequena e com identidade de marca é aceitável.
 
-Tone example:
+Exemplo de tom:
 
 `Página não encontrada`
 
-Optional light product-themed line:
+Linha temática opcional:
 `Parece que esse anime não está nesta lista.`
 
 CTA:
 `Voltar para o Puriki`
 
-Keep it accessible and simple.
+Manter acessível e simples.

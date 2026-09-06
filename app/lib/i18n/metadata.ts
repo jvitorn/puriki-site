@@ -155,7 +155,7 @@ export function getAllPublicCanonicalUrls(): string[] {
   );
 }
 
-/** noindex meta for non-public routes (Foundation sandbox, 404). */
+/** noindex meta for the 404 route. */
 export function buildNoIndexMeta(
   title: string,
   description: string,

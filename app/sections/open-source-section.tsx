@@ -2,7 +2,7 @@ import { CodeXml } from "lucide-react";
 import type { OpenSourceContent } from "../content/types";
 import { Section, SectionHeader } from "../components/layout/section";
 import { Button } from "../components/ui/button";
-import { PURIKUKI_REPO_URL } from "../lib/external-links";
+import { PURIKI_REPO_URL } from "../lib/external-links";
 
 interface OpenSourceSectionProps {
   content: OpenSourceContent;
@@ -21,7 +21,7 @@ export function OpenSourceSection({ content }: OpenSourceSectionProps) {
       />
       <div className="mt-6">
         <Button asChild variant="secondary">
-          <a href={PURIKUKI_REPO_URL} rel="noreferrer" target="_blank">
+          <a href={PURIKI_REPO_URL} rel="noreferrer" target="_blank">
             <CodeXml aria-hidden="true" className="size-4" />
             {content.cta}
           </a>
