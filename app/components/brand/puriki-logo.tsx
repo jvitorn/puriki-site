@@ -11,6 +11,16 @@ const SOURCES = {
   mark: markDark,
 } as const;
 
+// Intrinsic aspect ratio (from each SVG's own viewBox), passed through as
+// HTML `width`/`height` so the browser can reserve the correct box before
+// the stylesheet loads (Lighthouse "Image elements do not have explicit
+// width and height") — the actual rendered size still comes entirely from
+// the Tailwind classes callers pass (e.g. `h-7 w-auto`), never from these.
+const DIMENSIONS = {
+  horizontal: { width: 1362, height: 373 },
+  mark: { width: 1147, height: 1146 },
+} as const;
+
 interface PurikiLogoProps {
   variant?: keyof typeof SOURCES;
   className?: string;
@@ -34,6 +44,7 @@ export function PurikiLogo({
       aria-hidden={decorative ? "true" : undefined}
       className={className}
       src={SOURCES[variant]}
+      {...DIMENSIONS[variant]}
     />
   );
 }
