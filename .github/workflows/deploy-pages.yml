@@ -5,12 +5,13 @@ on:
     branches:
       - main
   workflow_dispatch:
-  # Reserved for a future puriki workflow to trigger a rebuild after a
-  # stable release is published. No sender exists yet in puriki (see
-  # docs/planos/PHASE_04_DOWNLOAD_RELEASES.md) — this only declares the
-  # event type the site is prepared to accept; it changes no current
-  # behavior. The site always re-fetches release data itself below rather
-  # than trusting a payload from the dispatching workflow.
+  # Reservado para um futuro workflow do jvitorn/puriki disparar um
+  # rebuild depois que uma release estável é publicada. Ainda não existe
+  # emissor no jvitorn/puriki (ver docs/planos/PHASE_04_DOWNLOAD_RELEASES.md)
+  # — isso só declara o tipo de evento que o site está preparado para
+  # aceitar; não muda nenhum comportamento atual. O site sempre rebusca os
+  # dados de release por conta própria (abaixo), nunca confia no payload
+  # do workflow que dispara o evento.
   repository_dispatch:
     types:
       - puriki-release-published
@@ -25,56 +26,57 @@ jobs:
     permissions:
       contents: read
     steps:
-      - name: Checkout repository
+      - name: Fazer checkout do repositório
         uses: actions/checkout@v7
 
-      - name: Set up pnpm
+      - name: Configurar pnpm
         uses: pnpm/action-setup@v6
 
-      - name: Set up Node.js
+      - name: Configurar Node.js
         uses: actions/setup-node@v7
         with:
           node-version: 22
           cache: pnpm
 
-      - name: Install dependencies
+      - name: Instalar dependências
         run: pnpm install --frozen-lockfile
 
-      - name: Quality gate (format, lint, typecheck, tests)
-        # Same gate the Quality workflow (.github/workflows/quality.yml)
-        # runs on every PR to main — a broken quality gate must never
-        # publish. Consolidated as `pnpm verify` to avoid duplicating four
-        # steps' worth of YAML across both workflows for a project this
-        # size (see docs/planos/PHASE_06_TESTING_CI_DEPLOY.md).
+      - name: Gate de qualidade (format, lint, typecheck, tests)
+        # Mesmo gate que o workflow Quality (.github/workflows/quality.yml)
+        # roda em todo PR para main — um gate de qualidade quebrado nunca
+        # pode publicar. Consolidado como `pnpm verify` para não duplicar
+        # quatro steps de YAML entre os dois workflows, num projeto deste
+        # tamanho (ver docs/planos/PHASE_06_TESTING_CI_DEPLOY.md).
         run: pnpm verify
 
-      - name: Fetch latest stable release metadata
-        # jvitorn/puriki is public; this is a single unauthenticated GET
-        # per deploy, well under GitHub's unauthenticated rate limit, so
-        # the repository-scoped GITHUB_TOKEN isn't needed here. An
-        # optional RELEASE_FETCH_TOKEN (non-VITE_*, never exposed to the
-        # browser) remains supported by the script for local development
-        # or a future explicit need — see scripts/fetch-release.ts. A
-        # stable release missing a required Android artifact (arm64-v8a/
-        # universal) makes this step fail loudly instead of publishing an
-        # incomplete Download section — see ReleaseParseError in
-        # app/lib/releases/parse-github-release.ts. If this step fails,
-        # the previously published site remains live untouched.
+      - name: Buscar metadados da última release estável
+        # jvitorn/puriki é público; isso é um único GET não autenticado
+        # por deploy, bem abaixo do limite de taxa não autenticado do
+        # GitHub, então o GITHUB_TOKEN do repositório não é necessário
+        # aqui. Um RELEASE_FETCH_TOKEN opcional (não-VITE_*, nunca exposto
+        # ao navegador) continua suportado pelo script para uso local ou
+        # uma necessidade futura explícita — ver scripts/fetch-release.ts.
+        # Uma release estável sem um artifact Android obrigatório
+        # (arm64-v8a/universal) faz este step falhar de forma clara, em
+        # vez de publicar uma seção de Download incompleta — ver
+        # ReleaseParseError em app/lib/releases/parse-github-release.ts.
+        # Se este step falhar, o site publicado anteriormente continua no
+        # ar sem ser tocado.
         run: pnpm release:fetch
 
-      - name: Build static site
+      - name: Gerar site estático
         env:
           BASE_PATH: /puriki-site/
           SITE_URL: https://jvitorn.github.io/puriki-site/
         run: pnpm build
 
-      - name: Validate static output
+      - name: Validar saída estática
         env:
           BASE_PATH: /puriki-site/
           SITE_URL: https://jvitorn.github.io/puriki-site/
         run: pnpm validate:static
 
-      - name: Upload static site
+      - name: Enviar artefato do site
         uses: actions/upload-pages-artifact@v5
         with:
           path: build/client
@@ -89,9 +91,9 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - name: Configure GitHub Pages
+      - name: Configurar GitHub Pages
         uses: actions/configure-pages@v6
 
-      - name: Deploy to GitHub Pages
+      - name: Publicar no GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v5

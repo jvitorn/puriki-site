@@ -14,9 +14,9 @@ const basePath = normalizeBasePath(
 );
 
 // The nine public localized pages, derived from the same locale/page model
-// the routes and content use, plus the temporary /foundation sandbox and
-// the /404 page needed for GitHub Pages. Explicit list instead of
-// `prerender: true` now that the public route surface is fixed and small.
+// the routes and content use, plus the /404 page needed for GitHub Pages.
+// Explicit list instead of `prerender: true` now that the public route
+// surface is fixed and small.
 const publicRoutePaths = LOCALES.flatMap((locale) =>
   PAGES.map((page) => {
     const pattern = getRoutePattern(locale, page);
@@ -27,5 +27,5 @@ const publicRoutePaths = LOCALES.flatMap((locale) =>
 export default {
   basename: basePath,
   ssr: false,
-  prerender: [...publicRoutePaths, "/foundation", "/404"],
+  prerender: [...publicRoutePaths, "/404"],
 } satisfies Config;

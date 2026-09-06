@@ -22,34 +22,34 @@ jobs:
     permissions:
       contents: read
     env:
-      # Simulates the real GitHub Pages project-site deployment so this
-      # gate catches base-path/canonical/localhost regressions before they
-      # reach main — the same values deploy-pages.yml uses for its
-      # production build. This workflow never runs `pnpm release:fetch`:
-      # it always validates the committed `{ "available": false }`
-      # baseline (see app/generated/release.json), so PR CI stays
-      # deterministic and independent of the GitHub API. The real,
-      # currently-published release is validated separately, by the
-      # deploy workflow, right before publishing.
+      # Simula o deploy real de project-site do GitHub Pages, para que
+      # este gate capture regressões de base-path/canonical/localhost
+      # antes de chegarem à main — os mesmos valores que o deploy-pages.yml
+      # usa no build de produção. Este workflow nunca roda
+      # `pnpm release:fetch`: sempre valida o baseline commitado
+      # `{ "available": false }` (ver app/generated/release.json), então o
+      # CI de PR fica determinístico e independente da API do GitHub. A
+      # release real, publicada atualmente, é validada separadamente pelo
+      # workflow de deploy, logo antes de publicar.
       BASE_PATH: /puriki-site/
       SITE_URL: https://jvitorn.github.io/puriki-site/
     steps:
-      - name: Checkout repository
+      - name: Fazer checkout do repositório
         uses: actions/checkout@v7
 
-      - name: Set up pnpm
+      - name: Configurar pnpm
         uses: pnpm/action-setup@v6
 
-      - name: Set up Node.js
+      - name: Configurar Node.js
         uses: actions/setup-node@v7
         with:
           node-version: 22
           cache: pnpm
 
-      - name: Install dependencies
+      - name: Instalar dependências
         run: pnpm install --frozen-lockfile
 
-      - name: Check formatting
+      - name: Verificar formatação
         run: pnpm format:check
 
       - name: Lint
@@ -58,11 +58,11 @@ jobs:
       - name: Typecheck
         run: pnpm typecheck
 
-      - name: Test
+      - name: Testes
         run: pnpm test
 
-      - name: Build (production-style static output)
+      - name: Build (saída estática em estilo produção)
         run: pnpm build
 
-      - name: Validate static output
+      - name: Validar saída estática
         run: pnpm validate:static

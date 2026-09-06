@@ -1,145 +1,83 @@
-# Phase 00 — Project Foundation
+# Fase 00 — Fundação do Projeto
 
-## Goal
+## Objetivo
 
-Create a clean, reproducible base for `puriki-site` without implementing the full landing page.
+Criar uma base limpa e reprodutível para o `puriki-site`, sem ainda implementar a landing completa. Ao final, outro desenvolvedor deveria conseguir clonar, instalar, testar e buildar o site usando comandos documentados.
 
-At completion, another developer should be able to clone, install, test, and build the site using documented commands.
+## Escopo
 
-## Scope
+### Gerenciamento de pacotes
 
-### Package management
-
-- [x] Use `pnpm`.
-- [-] Commit `pnpm-lock.yaml`.
-
-  Lockfile is generated and validated, but this implementation does not create Git commits.
-- [x] Define a supported Node.js range in `package.json`.
-- [x] Prefer an LTS-compatible Node version for GitHub Actions.
-- [x] Do not include npm/yarn lockfiles.
+- [x] Uso de `pnpm`.
+- [x] `pnpm-lock.yaml` commitado.
+- [x] Faixa suportada de Node.js definida no `package.json`.
+- [x] Versão de Node compatível com LTS para o GitHub Actions.
+- [x] Sem lockfiles de npm/yarn.
 
 ### React/Vite/TypeScript
 
-- [x] Initialize React + TypeScript.
-- [x] Configure Vite.
-- [x] Enable strict TypeScript settings appropriate for a small production project.
-- [x] Configure path aliases only if they improve imports; do not build a complex alias taxonomy.
-- [x] Keep source code in English.
+- [x] React + TypeScript inicializados.
+- [x] Vite configurado.
+- [x] TypeScript estrito, adequado a um projeto pequeno de produção.
+- [x] Aliases de path apenas onde melhoram os imports, sem taxonomia complexa.
+- [x] Código-fonte em inglês.
 
-### React Router static architecture
+### Arquitetura estática do React Router
 
-- [x] Configure React Router Framework Mode.
-- [x] Configure `ssr: false`.
-- [x] Prepare static prerender configuration.
-- [x] Confirm a test route generates usable static output.
-- [x] Confirm a direct nested route can be represented as an actual static file path.
-- [x] Do not use HashRouter.
+- [x] React Router Framework Mode configurado.
+- [x] `ssr: false`.
+- [x] Configuração de prerender preparada.
+- [x] Rota de teste gera output estático utilizável.
+- [x] Rota aninhada direta é representável como um caminho de arquivo estático real.
+- [x] Sem HashRouter.
 
-### Styling
+### Estilo
 
-- [x] Add Tailwind CSS.
-- [x] Add base style entry.
-- [x] Add shadcn/ui configuration.
-- [x] Do not install a large component set yet.
-- [x] Add Lucide React.
-- [x] Add Anime.js.
+- [x] Tailwind CSS.
+- [x] Entrada de estilo base.
+- [x] Configuração do shadcn/ui.
+- [x] Nenhum conjunto grande de componentes instalado ainda.
+- [x] Lucide React.
+- [x] Anime.js.
 
-### Testing
+### Testes
 
-- [x] Add Vitest.
-- [x] Add React Testing Library.
-- [x] Add `@testing-library/jest-dom` or equivalent DOM matchers.
-- [x] Add test setup file.
-- [x] Add one basic smoke test proving the test environment works.
+- [x] Vitest.
+- [x] React Testing Library.
+- [x] `@testing-library/jest-dom` (matchers de DOM).
+- [x] Arquivo de setup de testes.
+- [x] Um smoke test básico provando que o ambiente de teste funciona.
 
-### Code quality
+### Qualidade de código
 
-- [x] Configure ESLint suitable for React/TypeScript.
-- [x] Add formatting conventions. Prettier is acceptable if chosen; avoid conflicting formatters.
-- [x] Add `.editorconfig`.
-- [x] Ensure line endings and final newlines are consistent.
-- [x] Ensure generated build output is ignored.
+- [x] ESLint configurado para React/TypeScript.
+- [x] Convenção de formatação (Prettier).
+- [x] `.editorconfig`.
+- [x] Final de linha e newline final consistentes.
+- [x] Output de build ignorado pelo Git.
 
 ### Scripts
 
-Expected script intent:
+- [x] `dev`, `build`, `test`, `test:watch`, `lint`, `typecheck`, `format`/`format:check` — todos funcionando a partir de um clone limpo.
 
-- [x] `dev`
-- [x] `build`
-- [x] `test`
-- [x] `test:watch`
-- [x] `lint`
-- [x] `typecheck`
-- [x] optional `format` / `format:check`
+### Modelo de configuração/ambiente
 
-All commands must work from a clean checkout.
+- [x] `SITE_URL` e `BASE_PATH` como configuração pública de build.
+- [x] Nenhum segredo em variáveis de ambiente do Vite.
+- [x] Nenhum placeholder falso de segredo em `.env`.
+- [x] Documentado o que é configuração segura/pública.
 
-### Environment/config model
+Suposições iniciais: origem local de dev conforme apropriado; base de produção do project site `/puriki-site/`; base de um futuro domínio próprio `/`.
 
-Create a public build configuration model for:
+### Documentação do repositório
 
-- [x] `SITE_URL`
-- [x] `BASE_PATH`
+README raiz atualizado com propósito do projeto, pré-requisitos, instalação, dev, teste, build, caminho dos documentos de planejamento, aviso de que nenhum APK é hospedado neste repositório, e link para o repositório do app — sem duplicar os documentos de planejamento completos.
 
-Initial development/default assumptions:
+## Fora de escopo nesta fase
 
-- local dev origin as appropriate;
-- production project-site base: `/puriki-site/`;
-- future custom domain base: `/`.
+Design final, rotas completas de idioma, seções completas da landing, fetch de GitHub Release, Action de GitHub Pages, conteúdo de Privacy/Terms, schema de SEO.
 
-Rules:
-
-- [x] No secrets in Vite client environment variables.
-- [x] Do not create fake `.env` secret placeholders.
-- [x] Document which configuration is safe/public.
-
-### Repository documentation
-
-Update/create root `README.md` with:
-
-- [x] project purpose;
-- [x] prerequisites;
-- [x] install;
-- [x] dev;
-- [x] test;
-- [x] build;
-- [x] plan docs path;
-- [x] no APK is hosted in this repo;
-- [x] link to app repo.
-
-Do not duplicate the full planning documents in the README.
-
-## Out of scope
-
-Do not implement yet:
-
-- final design;
-- full locale routes;
-- complete landing sections;
-- GitHub Release fetch;
-- GitHub Pages Action;
-- Privacy/Terms content;
-- SEO schema.
-
-## Suggested initial structure
-
-```text
-app/
-  components/
-  routes/
-  content/
-  lib/
-  styles/
-public/
-scripts/
-docs/planos/
-```
-
-Only create directories that are immediately useful. Empty folder forests are unnecessary.
-
-## Validation
-
-Run:
+## Validação
 
 ```bash
 pnpm install --frozen-lockfile
@@ -149,20 +87,12 @@ pnpm test
 pnpm build
 ```
 
-Confirm:
+- [x] todos os comandos passam;
+- [x] o output é compatível com deploy estático;
+- [x] nenhum segredo aparece no bundle do cliente;
+- [x] o dev server carrega sem erros de console;
+- [x] o ambiente de teste funciona.
 
-- [x] all commands pass;
-- [x] output is static-deploy compatible;
-- [x] no secret appears in the built client bundle;
-- [x] dev server loads without console errors;
-- [x] test environment works.
+## Critérios de aceite
 
-## Acceptance criteria
-
-Phase 00 is complete only when:
-
-- a clean clone can run all validation commands;
-- static prerender architecture is proven, not only planned;
-- the project does not depend on a server runtime;
-- the base-path strategy is documented;
-- no product content has been prematurely overbuilt.
+A Fase 00 está completa quando um clone limpo consegue rodar todos os comandos de validação, a arquitetura de prerender estático está comprovada (não só planejada), o projeto não depende de um runtime de servidor, a estratégia de base path está documentada, e nenhum conteúdo de produto foi construído prematuramente.

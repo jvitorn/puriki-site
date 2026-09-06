@@ -16,9 +16,10 @@ if (baseSegments.some((segment) => segment === "." || segment === "..")) {
   throw new Error(`Unsafe BASE_PATH: ${rawBasePath}`);
 }
 
-// GitHub Pages serves a physical 404.html file at the site root for any
-// unmatched path. React Router prerenders the /404 route as a regular
-// folder (404/index.html); copy it to the root so GitHub Pages finds it.
+// O GitHub Pages serve um arquivo físico 404.html na raiz do site para
+// qualquer path não encontrado. O React Router pré-renderiza a rota /404
+// como uma pasta comum (404/index.html); copiamos para a raiz para o
+// GitHub Pages encontrar.
 async function writeGitHubPages404() {
   const prerendered404 = path.join(clientDirectory, "404", "index.html");
   const destination = path.join(clientDirectory, "404.html");

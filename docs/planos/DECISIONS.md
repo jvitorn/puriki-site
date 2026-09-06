@@ -1,204 +1,196 @@
-# Puriki Site — Locked Product and Technical Decisions
+# Puriki Site — Decisões de Produto e Técnicas
 
-This file records decisions that should not be casually re-litigated during implementation.
+Este arquivo registra decisões que não devem ser questionadas a cada nova mudança. É a fonte mais estável do repositório: quando uma dúvida de produto ou arquitetura surgir, a resposta provavelmente já está aqui.
 
-## Product purpose
+## Propósito do produto
 
-Puriki Site is the official landing page and download surface for the Puriki Android application.
+O Puriki Site é a landing page oficial e a superfície de download do aplicativo Android Puriki.
 
-It must:
+Ele deve:
 
-- explain what Puriki is;
-- show the product visually;
-- explain its relationship with AniList and MyAnimeList;
-- communicate privacy/local-first principles accurately;
-- present current features without overstating future functionality;
-- expose the official Android APK download;
-- point developers and contributors to GitHub;
-- provide a compact roadmap;
-- provide Privacy Policy and Terms of Use pages.
+- explicar o que é o Puriki;
+- mostrar o produto visualmente;
+- explicar a relação com AniList e MyAnimeList;
+- comunicar os princípios de privacidade/local-first com precisão;
+- apresentar apenas os recursos atuais como atuais, sem superestimar o futuro;
+- expor o download oficial do APK Android;
+- direcionar desenvolvedores e contribuidores ao GitHub;
+- oferecer um roadmap compacto;
+- oferecer Política de Privacidade e Termos de Uso.
 
-It must **not** become:
+Ele **não** deve se tornar:
 
-- technical documentation;
-- an account/dashboard system;
-- an application backend;
-- a release artifact host;
-- a replacement for the GitHub README, Issues, Releases, or detailed roadmap.
+- documentação técnica;
+- um sistema de contas/dashboard;
+- um backend de aplicação;
+- um host de artefatos de release;
+- um substituto do README, Issues, Releases ou do roadmap detalhado do GitHub.
 
-## Product positioning
+## Posicionamento
 
-Primary headline direction:
+Headline principal:
 
 > Sua lista de anime, do seu jeito.
 
-Primary supporting idea:
+Ideia de apoio:
 
-> Connect AniList or MyAnimeList and manage your anime list through a simpler Android-focused experience.
+> Conecte AniList ou MyAnimeList e gerencie sua lista de anime através de uma experiência mais simples, focada em Android.
 
-Core philosophy:
+Filosofia central:
 
-- AniList and MyAnimeList remain the list providers.
-- Puriki is the experience/orchestration layer.
-- Puriki does not present itself as a replacement database.
-- Provider limitations must not be hidden behind misleading claims.
+- AniList e MyAnimeList continuam sendo os provedores da lista.
+- O Puriki é a camada de experiência/orquestração.
+- O Puriki não se apresenta como um banco de dados substituto.
+- Limitações dos provedores não podem ser escondidas atrás de afirmações enganosas.
 
-## Current vs future functionality
+## Funcionalidade atual vs. futura
 
 ### Puriki 1.0 — Foundation
-Current/current-public-state content may include:
 
-- catalog/home;
-- search;
-- anime details;
-- user list;
-- AniList authentication;
-- MyAnimeList authentication;
-- list reading;
-- progress updates;
-- status updates;
-- score updates;
-- provider selection;
-- supported guest/no-provider flows where verified;
-- local synopsis translation on Android where verified;
-- local cache/resilience;
-- multiple languages.
+Conteúdo que pode ser apresentado como atual:
 
-### Puriki 2.0 — List Sync + visual refresh
-Roadmap only until released.
+- catálogo/home;
+- busca;
+- detalhes de anime;
+- lista do usuário;
+- autenticação AniList;
+- autenticação MyAnimeList;
+- leitura de lista;
+- atualização de progresso;
+- atualização de status;
+- atualização de nota;
+- seleção de provedor;
+- fluxos guest/sem provedor, onde verificados;
+- tradução local de sinopse no Android, onde verificada;
+- cache/resiliência local;
+- múltiplos idiomas.
 
-List Sync is:
+### Puriki 2.0 — List Sync + novo visual
+
+Roadmap apenas, até ser lançado.
+
+List Sync é:
 
 - manual;
-- one-way;
-- explicit source -> destination;
-- analysis before writing;
-- conflict-aware;
-- designed to avoid regressions;
-- non-destructive to destination-only titles.
+- unidirecional;
+- origem -> destino explícita;
+- com análise antes de escrever;
+- consciente de conflitos;
+- projetada para evitar regressões;
+- não destrutiva para títulos exclusivos do destino.
 
-Do not describe it as continuous automatic synchronization.
+Não descrever como sincronização automática contínua.
 
 ### Puriki 3.0 — Multi-provider Sync
-Roadmap only until released.
 
-Concept:
+Roadmap apenas, até ser lançado.
 
-- replication of future changes made through Puriki to connected providers.
+Conceito: replicar, entre os provedores conectados, mudanças futuras feitas através do Puriki.
 
-Do not confuse it with List Sync.
+Não confundir com List Sync.
 
-## Current public roadmap presentation
+## Apresentação pública do roadmap
 
-Only three high-level items:
+Apenas três itens de alto nível:
 
-1. `1.0 — Foundation` — Current / Available when the first public release exists
-2. `2.0 — List Sync + new visual` — Next
-3. `3.0 — Multi-provider Sync` — Planned
+1. `1.0 — Foundation` — Atual / Disponível quando a primeira release pública existir
+2. `2.0 — List Sync + novo visual` — Próximo
+3. `3.0 — Multi-provider Sync` — Planejado
 
-Rules:
+Regras:
 
-- no percentages;
-- no invented dates;
-- do not use “coming soon” for uncertain timelines;
-- detailed roadmap stays on GitHub.
+- sem porcentagens;
+- sem datas inventadas;
+- não usar "em breve"/"coming soon" para prazos incertos;
+- o roadmap detalhado fica no GitHub.
 
-## Primary CTA
+## CTA principal
 
-Primary action:
+Ação primária:
 
 > Baixar para Android
 
-The Hero CTA scrolls to the Download section rather than immediately downloading a binary.
+O CTA do Hero rola até a seção Download em vez de baixar um binário imediatamente. O CTA final da seção Download é quem executa o download real do APK.
 
-The final Download CTA performs the actual APK download.
-
-Secondary CTA:
+CTA secundário:
 
 > Ver no GitHub
 
-## Distribution
+## Distribuição
 
-Official binary flow:
+Fluxo oficial do binário:
 
-`puriki -> stable GitHub Release -> APK asset -> puriki-site download UI`
+`puriki -> GitHub Release estável -> asset APK -> UI de download do puriki-site`
 
-Rules:
+Regras:
 
-- APKs are never committed to `puriki-site`.
-- The site does not mirror or proxy APKs.
-- The APK is downloaded directly from the official GitHub Release asset.
-- Stable releases are the default public download.
-- Drafts and prereleases do not replace the stable CTA.
-- The site must support a clean “first public release is still in preparation” state.
+- APKs nunca são commitados no `puriki-site`;
+- o site não espelha nem faz proxy de APKs;
+- o APK é baixado diretamente do asset da GitHub Release oficial;
+- releases estáveis são o download público padrão;
+- drafts e prereleases nunca substituem o CTA estável;
+- o site precisa suportar um estado limpo de "primeira release pública ainda em preparação".
 
-Expected APK naming convention (updated by Phase 04R after the `v1.0.0`
-public release replaced the single-APK assumption with multi-ABI
-distribution — see `PHASE_04R_MULTI_ABI_RELEASES.md`):
+Convenção de nome de APK (atualizada pela Fase 04R depois que a release pública `v1.0.0` substituiu a suposição de APK único pela distribuição multi-ABI — ver `PHASE_04R_MULTI_ABI_RELEASES.md`):
 
-`puriki-v{version}-{variant}.apk`, where `{variant}` is one of
-`arm64-v8a`, `universal`, `armeabi-v7a`, `x86_64`, `x86`. `arm64-v8a` and
-`universal` are required on every stable release; the other three are
-optional.
+`puriki-v{version}-{variant}.apk`, onde `{variant}` é um de `arm64-v8a`, `universal`, `armeabi-v7a`, `x86_64`, `x86`. `arm64-v8a` e `universal` são obrigatórios em toda release estável; os outros três são opcionais.
 
-Examples:
+Exemplos:
 
 - `puriki-v1.0.0-arm64-v8a.apk`
 - `puriki-v1.0.0-universal.apk`
 
 ## Stack
 
-Locked initial stack:
+Stack inicial travada:
 
 - React
 - TypeScript
 - Vite
 - React Router Framework Mode
 - `ssr: false`
-- static prerender for all public routes
+- pré-renderização estática de todas as rotas públicas
 - Tailwind CSS
-- shadcn/ui only for justified primitives/interactions
+- shadcn/ui apenas para primitivas/interações justificadas
 - Lucide React
 - Anime.js
-- Geist as the primary font
+- Geist como fonte principal
 - pnpm
 - Vitest
 - React Testing Library
 - GitHub Actions
 - GitHub Pages
 
-Explicitly not selected:
+Explicitamente não escolhidos:
 
 - Next.js
 - Astro
 - Vercel
-- backend/server runtime
-- database
+- backend/runtime de servidor
+- banco de dados
 - CMS
-- runtime GitHub API dependency
-- analytics at launch
+- dependência runtime da API do GitHub
+- analytics no lançamento
 - Google Analytics
-- cookie banner at launch
+- banner de cookies no lançamento
 
-## Rendering model
+## Modelo de renderização
 
-The site must be deployable as static files.
+O site precisa ser implantável como arquivos estáticos.
 
-Public routes must be pre-rendered at build time so direct navigation and refresh work on GitHub Pages without SPA 404 hacks.
+As rotas públicas precisam ser pré-renderizadas em build time para que navegação direta e refresh funcionem no GitHub Pages sem hacks de SPA 404.
 
-No HashRouter URLs.
+Sem URLs com HashRouter. Não distribuir rotas de idioma apenas como variantes de query-string.
 
-Do not ship language routes as query-string-only variants.
+## Idiomas
 
-## Languages
+Idiomas iniciais:
 
-Initial languages:
+- Português (Brasil) — padrão
+- Inglês
+- Espanhol
 
-- Portuguese (Brazil) — default
-- English
-- Spanish
-
-URL model:
+Modelo de URL:
 
 - `/` — pt-BR
 - `/privacy/`
@@ -210,142 +202,146 @@ URL model:
 - `/es/privacy/`
 - `/es/terms/`
 
-Rules:
+Regras:
 
-- no forced language redirect;
-- the selected URL remains authoritative;
-- optional locale preference may be stored locally;
-- translations are static/editorial, not runtime machine translation;
-- all SEO metadata must be localized.
+- sem redirecionamento forçado de idioma;
+- a URL escolhida permanece autoritativa;
+- uma preferência de idioma opcional pode ser guardada localmente;
+- traduções são estáticas/editoriais, nunca tradução automática em runtime;
+- todo metadado de SEO precisa ser localizado.
 
-## Visual direction
+## Direção visual
 
-- dark-only initially;
-- dark editorial/product aesthetic;
-- screenshots are the primary visual proof;
-- current brand red is a design token, not a hardcoded component color;
-- use a small, controlled set of surfaces;
-- minimal gradients;
-- no glassmorphism as a general pattern;
-- no cyberpunk/neon/anime-template styling;
-- Japanese brand elements are used as brand elements, not decorative wallpaper;
-- providers do not visually dominate Puriki.
+- dark-only inicialmente;
+- estética editorial/de produto escura;
+- screenshots são a principal prova visual;
+- o vermelho da marca é um token de design, nunca uma cor hardcoded no componente;
+- usar um conjunto pequeno e controlado de superfícies;
+- gradientes mínimos;
+- sem glassmorphism como padrão geral;
+- sem estética cyberpunk/neon/template de anime;
+- elementos de marca japoneses são usados como elementos de marca, não papel de parede decorativo;
+- os provedores não dominam visualmente o Puriki.
 
-Current token direction:
+Direção de tokens (valores finais em `app/styles/app.css`, ver Fase 01):
 
-- `#0B0E14` base background
-- `#111522` / `#1A2030` elevated surfaces
-- `#293043` stronger border/surface reference
-- `#970C10` current brand
-- `#D9474C` possible brand highlight
-- light foreground close to `#F8FAFC`
-
-Exact tokens are finalized in Phase 01.
+- `#0B0E14` fundo base
+- `#111522` / `#1A2030` superfícies elevadas
+- `#293043` borda/superfície forte de referência
+- `#970C10` marca atual
+- `#D9474C` possível destaque de marca
+- primeiro plano claro próximo de `#F8FAFC`
 
 ## Motion
 
-Anime.js is polish, not functionality.
+Anime.js é polimento, não funcionalidade.
 
-Allowed:
+Permitido:
 
-- short fade/translate entries;
-- restrained stagger;
-- subtle screenshot transforms;
-- provider-to-Puriki connector animation;
-- small hover enhancements.
+- fade/translate curtos de entrada;
+- stagger comedido;
+- transformações sutis de screenshot;
+- animação de conector provider-para-Puriki;
+- pequenos realces de hover.
 
-Avoid:
+Evitar:
 
-- looping floating objects;
-- background particle systems;
-- mouse-follow effects;
-- large 3D scenes;
-- letter-by-letter hero animation;
-- animation required to understand content.
+- objetos flutuantes em loop;
+- sistemas de partículas de fundo;
+- efeitos mouse-follow;
+- cenas 3D grandes;
+- animação de hero letra-por-letra;
+- animação obrigatória para entender o conteúdo.
 
-`prefers-reduced-motion` is mandatory.
+`prefers-reduced-motion` é obrigatório.
 
-## Accessibility
+## Acessibilidade
 
-Target: WCAG 2.2 AA.
+Meta: WCAG 2.2 AA.
 
-Core rules:
+Regras centrais:
 
-- semantic HTML;
-- one meaningful `h1`;
-- correct heading hierarchy;
-- keyboard support;
-- visible focus;
+- HTML semântico;
+- um único `h1` significativo;
+- hierarquia de headings correta;
+- suporte a teclado;
+- foco visível;
 - skip link;
-- no interaction that depends on hover;
-- no state communicated by color alone;
-- approximately 44px minimum touch target for key actions;
-- useful image alt text;
-- native HTML before ARIA;
+- nenhuma interação depende de hover;
+- nenhum estado é comunicado só por cor;
+- alvo de toque mínimo de ~44px para ações-chave;
+- alt text útil nas imagens;
+- HTML nativo antes de ARIA;
 - reduced motion;
-- no zoom blocking.
+- sem bloqueio de zoom.
 
-## Analytics and privacy
+## Analytics e privacidade
 
-Launch with no product analytics.
+Lançamento sem analytics de produto.
 
-Do not add:
+Não adicionar:
 
 - GA4;
-- tracking pixels;
-- behavioral analytics;
-- advertising SDKs;
-- cookie-based tracking.
+- pixels de rastreamento;
+- analytics comportamental;
+- SDKs de publicidade;
+- rastreamento via cookies.
 
-The site may still be subject to GitHub Pages infrastructure logging/privacy behavior. Privacy copy must not claim “the site collects nothing” in an absolute sense.
+O site continua sujeito ao comportamento de infraestrutura/logging do GitHub Pages. O texto de privacidade nunca deve afirmar "o site não coleta nada" em sentido absoluto.
 
-## Domain and hosting
+## Diretrizes de copy
 
-Initial hosting:
+Regras que valem para toda a copy pública (Hero, seções, FAQ, Privacy, Terms):
 
-GitHub Pages project site under:
+- nunca usar afirmações absolutas como "100% privado", "seus dados nunca saem do dispositivo" ou "totalmente seguro";
+- nunca sugerir que o Puriki está disponível na Google Play ou tem versão para iOS — hoje a distribuição é só via GitHub Releases e o foco é Android;
+- nunca descrever List Sync (2.0) como sincronização automática já disponível;
+- o aviso de segurança de instalação do APK nunca deve instruir o usuário a "ignorar" um alerta do Android ou desabilitar globalmente uma proteção do sistema — apenas orientar a confirmar a origem do arquivo;
+- Privacy e Terms devem refletir o comportamento real do app e do site (autenticação, cache/armazenamento local, dependência de serviços de terceiros, ausência de conta própria do Puriki, hospedagem no GitHub Pages, disclaimer de projeto independente/não oficial) — nunca inventar garantia jurídica não verificada.
+
+## Domínio e hospedagem
+
+Hospedagem inicial:
+
+GitHub Pages project site em:
 
 `https://jvitorn.github.io/puriki-site/`
 
-The project must support a configurable base path.
+O projeto precisa suportar um base path configurável.
 
-Future custom domain candidate:
+Candidato a domínio próprio futuro: `puriki.app`. Não bloquear o lançamento por causa da aquisição do domínio.
 
-`puriki.app`
+Ao adotar um domínio próprio:
 
-Do not block launch on acquiring a custom domain.
+- configurar através do GitHub Pages;
+- forçar HTTPS;
+- atualizar `SITE_URL`;
+- atualizar as URLs absolutas de canonical/hreflang/sitemap/Open Graph;
+- verificar o domínio no GitHub quando aplicável;
+- `BASE_PATH` passa a ser `/`.
 
-When a custom domain is adopted:
+## Fronteira entre os repositórios
 
-- configure it through GitHub Pages;
-- enforce HTTPS;
-- update `SITE_URL`;
-- update canonical/hreflang/sitemap/Open Graph absolute URLs;
-- verify the domain on GitHub when appropriate;
-- `BASE_PATH` becomes `/`.
+`puriki-site` é dono de:
 
-## Site/App repository boundary
-
-`puriki-site` owns:
-
-- presentation;
-- marketing copy;
-- localized content;
+- apresentação;
+- copy de marketing;
+- conteúdo localizado;
 - screenshots;
 - Privacy/Terms;
 - SEO;
-- GitHub Release metadata rendering;
-- GitHub Pages deployment.
+- renderização dos metadados da GitHub Release;
+- deploy no GitHub Pages.
 
-`purikuki` owns:
+`jvitorn/puriki` (nome atual do repositório do app; `purikuki` foi o nome anterior do mesmo repositório antes de um rename no GitHub) é dono de:
 
-- Android application code;
+- código do aplicativo Android;
 - Expo/EAS;
-- Android signing;
-- APK build;
-- GitHub Release creation;
+- assinatura Android;
+- build do APK;
+- criação da GitHub Release;
 - release notes/changelog;
-- app credentials;
-- application secrets.
+- credenciais do app;
+- segredos da aplicação.
 
-Never transfer app signing/EAS secrets to `puriki-site`.
+Nunca transferir segredos de assinatura/EAS do app para o `puriki-site`.

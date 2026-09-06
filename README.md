@@ -31,8 +31,8 @@ every PR. Individual commands (`pnpm lint`, `pnpm typecheck`, `pnpm test`,
 
 `pnpm build` uses React Router Framework Mode with `ssr: false` and static
 prerendering. The final static artifact is always `build/client`; its
-generated `index.html` and `foundation/index.html` prove the root and
-nested static routes are available without a server runtime.
+generated `index.html` and `en/index.html` prove the root and nested
+static routes are available without a server runtime.
 
 `pnpm validate:static` (`scripts/validate-static-output.ts`) runs after a
 build and checks `build/client` for the nine public routes' HTML (title,
@@ -121,8 +121,8 @@ the current multi-ABI contract, parser rules, and test coverage.
 Router build, before `prepare-static-output.mjs`), which writes
 `sitemap.xml` (the nine public pages, absolute URLs) and `robots.txt`
 directly into `build/client/` using the same `SITE_URL`/locale/page
-source of truth as routing — nothing is hardcoded. `/foundation/` and
-`/404` are intentionally excluded from the sitemap; both carry `noindex`.
+source of truth as routing — nothing is hardcoded. `/404` is intentionally
+excluded from the sitemap and carries `noindex`.
 
 The favicon, Apple touch icon, and Open Graph share image
 (`public/favicon.png`, `public/apple-touch-icon.png`,

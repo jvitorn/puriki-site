@@ -4,7 +4,7 @@ import { Container } from "../components/layout/container";
 import { Reveal } from "../components/motion/reveal";
 import { SmartphoneMockup } from "../components/product/smartphone-mockup";
 import { Button } from "../components/ui/button";
-import { PURIKUKI_REPO_URL } from "../lib/external-links";
+import { PURIKI_REPO_URL } from "../lib/external-links";
 import { homeAnchorHref } from "../lib/i18n/links";
 import type { Locale } from "../lib/i18n/locales";
 
@@ -111,7 +111,7 @@ export function HeroSection({ locale, content }: HeroSectionProps) {
               </a>
             </Button>
             <Button asChild size="large" variant="secondary">
-              <a href={PURIKUKI_REPO_URL} rel="noreferrer" target="_blank">
+              <a href={PURIKI_REPO_URL} rel="noreferrer" target="_blank">
                 <CodeXml aria-hidden="true" className="size-4" />
                 {content.secondaryCta}
               </a>

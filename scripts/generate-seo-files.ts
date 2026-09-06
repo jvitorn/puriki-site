@@ -16,9 +16,9 @@ function escapeXml(value: string): string {
 }
 
 /**
- * Exactly the nine public pages, absolute — Foundation and 404 are
- * intentionally excluded (they carry their own `noindex` meta and are
- * never canonical public content).
+ * Exactly the nine public pages, absolute — the 404 page is intentionally
+ * excluded (it carries its own `noindex` meta and is never canonical
+ * public content).
  */
 export function getPublicUrls(siteUrl: string): string[] {
   const normalized = normalizeSiteUrl(siteUrl);
@@ -38,13 +38,13 @@ ${urls.map((url) => `  <url>\n    <loc>${escapeXml(url)}</loc>\n  </url>`).join(
 `;
 }
 
-// NOTE: on GitHub Pages, this repository is a *project site*
-// (https://jvitorn.github.io/puriki-site/). This robots.txt only governs
-// requests actually served from that path — it has no authority over
-// https://jvitorn.github.io/robots.txt (the user/org site root), which
-// this repository does not control. Once a custom domain is adopted this
-// file naturally becomes the whole origin's robots.txt with no changes
-// needed here.
+// NOTA: no GitHub Pages, este repositório é um *project site*
+// (https://jvitorn.github.io/puriki-site/). Este robots.txt só governa
+// requisições de fato servidas a partir desse path — não tem autoridade
+// sobre https://jvitorn.github.io/robots.txt (a raiz do site do usuário/
+// organização), que este repositório não controla. Quando um domínio
+// próprio for adotado, este arquivo naturalmente passa a ser o
+// robots.txt da origem inteira, sem precisar de mudança aqui.
 export function buildRobotsTxt(siteUrl: string): string {
   return `User-agent: *
 Allow: /

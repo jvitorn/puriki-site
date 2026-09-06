@@ -1,240 +1,60 @@
-# Phase 02 — Static Routing, Internationalization and Content Model
+# Fase 02 — Rotas Estáticas, Internacionalização e Modelo de Conteúdo
 
-## Goal
+## Objetivo
 
-Create the complete route and locale structure before building the full landing.
+Criar a estrutura completa de rotas e locales antes de construir a landing completa.
 
-Reference:
-`CONTENT_SPEC.md`
+## 1. Modelo de locale
 
-## 1. Locale model
+Locales suportados: `pt-BR`, `en`, `es`, implementados em `app/lib/i18n/locales.ts` (`Locale`, `localeConfig`). Cada config define código, `lang` do HTML, prefixo de URL pública, nome de exibição, label curto opcional e estratégia de formatação de data.
 
-Supported locales:
+O prefixo de URL deriva de um único campo `urlSegment` (via `app/lib/i18n/pages.ts`), então os prefixos `/en/`, `/es/` nunca são digitados à mão em mais de um lugar. Nenhum componente contém comparações `locale === "..."` — o único ponto que resolve "o locale atual" é `useRouteHandle()`.
 
-- [x] `pt-BR`
-- [x] `en`
-- [x] `es`
+## 2. Rotas públicas
 
-Create a strict locale type and configuration map.
+As nove rotas (pt-BR, en, es × home/privacy/terms) mais o comportamento de 404 para o GitHub Pages foram confirmadas pré-renderizadas via `pnpm build` e via uma simulação com `BASE_PATH=/puriki-site/`; `build/client/404.html` é gerado por `scripts/prepare-static-output.mjs` a partir da rota `/404` pré-renderizada.
 
-Each locale config should define:
+## 3. Modelo de conteúdo
 
-- [x] locale code;
-- [x] HTML `lang`;
-- [x] public URL prefix;
-- [x] display name;
-- [x] optional short label;
-- [x] locale-specific date formatting strategy.
+Conteúdo tipado em vez de texto embutido profundamente em componentes de apresentação. Estrutura de topo: `seo`, `navigation`, `hero`, `providers`, `benefits`, `showcases`, `privacySummary`, `openSource`, `roadmap`, `download`, `faq`, `footer`, `privacyPage`, `termsPage`.
 
-Implemented in `app/lib/i18n/locales.ts` (`Locale`, `localeConfig`). URL prefix is
-derived from a single `urlSegment` field (via `app/lib/i18n/pages.ts`) so the
-"/en/", "/es/" prefixes are never hand-typed in more than one place.
+Implementado em `app/content/{types,pt-BR,en,es,index}.ts`. Cada arquivo de locale usa `satisfies SiteContent`, então o TypeScript detecta chaves faltando. Alvos de link de footer/nav são tipados como `{kind:"anchor"|"external", ...}` e resolvidos para hrefs reais pelo shell — o conteúdo nunca guarda uma string de URL, exceto URLs externas literais do GitHub. Não existe dicionário de tradução runtime com chaves mágicas (`t("...")`) — os componentes recebem objetos de conteúdo tipados.
 
-Avoid scattering locale comparisons across components.
+## 4. Copy fonte em PT-BR
 
-Satisfied: no component contains `locale === "..."` checks. The only place that
-resolves "current locale" is `useRouteHandle()` (`app/lib/i18n/use-route-handle.ts`).
+Copy aprovada implementada em `app/content/pt-BR.ts`. Nenhuma disponibilidade na Play Store foi inventada, nenhuma List Sync 1.0 foi afirmada, nenhuma disponibilidade em iOS foi afirmada, nenhuma afirmação absoluta de privacidade/segurança foi feita. O benefício #4 e o showcase #3 deliberadamente evitaram afirmar o recurso de tradução on-device nesta fase (mantidos genéricos) até que fosse verificado contra o app de produção — verificação que veio a acontecer na Fase 03.
 
-## 2. Public routes
+## 5. Inglês e Espanhol
 
-Must prerender:
+Conteúdo completo em `app/content/en.ts` e `app/content/es.ts` — traduções editoriais estáticas escritas para esta fase, sem serviço/API de tradução envolvido. Termos de produto como `List Sync` foram preservados onde intencionalmente uma marca; nomes de provedor mantidos sem alteração; copy cabe sem quebras de linha manuais específicas de layout.
 
-PT-BR:
+A revisão humana das traduções antes do lançamento ficou registrada como pendência explícita no checklist (ainda pendente).
 
-- [x] `/`
-- [x] `/privacy/`
-- [x] `/terms/`
+## 6. Seletor de idioma
 
-English:
+Implementado em `app/components/layout/language-switcher.tsx`, usado no header desktop e no Sheet mobile. Renderiza links `<a>` reais (`pageHref`) para os três locales, com `aria-current="page"` no ativo. Troca de `/privacy/` para inglês vai para `/en/privacy/`, não para `/en/`; de `/en/terms/` para espanhol vai para `/es/terms/`. Sem redirecionamento forçado ao carregar a página. Nenhuma preferência de locale via `localStorage` foi implementada nesta fase (é opcional); como não existe, não há risco de sobrepor uma URL diretamente solicitada.
 
-- [x] `/en/`
-- [x] `/en/privacy/`
-- [x] `/en/terms/`
+## 7. Modelo de metadados
 
-Spanish:
+`PageMetadataModel` / `getPageMetadataModel()` em `app/lib/i18n/metadata.ts`: title, description, canonical path, locale/title/description de Open Graph, referência opcional de imagem social. O caminho canônico e o locale de OG derivam da mesma fonte de verdade de locale+página usada pelo roteamento (`getPagePath`, `localeConfig`), nunca duplicados como strings de conteúdo.
 
-- [x] `/es/`
-- [x] `/es/privacy/`
-- [x] `/es/terms/`
+Apenas title/description eram de fato renderizados no HTML nesta fase, via o `meta()` de cada rota e o `<Meta />` do React Router — confirmado no output pré-renderizado. Canonical/OG ainda não eram emitidos (isso veio na Fase 05).
 
-Also:
+## 8. Arquitetura de rotas
 
-- [x] branded 404 behavior/output appropriate for GitHub Pages.
+Módulos de rota pequenos: `app/pages/{home-page,privacy-page,terms-page}.tsx` são os três componentes compartilhados (recebem só `{ locale }`). Nove arquivos wrapper finos em `app/routes/pages/<locale>/<page>.tsx` chamam `createLocalePageRoute(locale, page)` (`app/lib/i18n/route-factory.tsx`) e reexportam `{ default, handle, meta }` — nenhum JSX é duplicado por locale.
 
-All nine confirmed prerendered via `pnpm build` and via a
-`BASE_PATH=/puriki-site/` simulation build; `build/client/404.html` is
-generated by `scripts/prepare-static-output.mjs` from the prerendered
-`/404` route.
+## 9. Verificação de pré-renderização estática
 
-## 3. Content model
+- [x] `pnpm build` (basename `/`) — todas as nove páginas, `/foundation` e `/404` produziram `index.html` aninhados corretos, com `<html lang>` e `<title>` corretos por locale.
+- [x] `BASE_PATH=/puriki-site/ SITE_URL=... pnpm build` — output aninha corretamente sob `build/client/puriki-site/...` durante o build do React Router, depois `scripts/prepare-static-output.mjs` achata para `build/client/...` e também copia a página `/404` pré-renderizada para `build/client/404.html`. Links/assets internos carregam corretamente o prefixo `/puriki-site/`.
 
-Create typed content data rather than deeply embedding text in presentational components.
+## Testes
 
-Suggested top-level structure:
+Cobertura: cada objeto de conteúdo de locale validado contra o tipo compartilhado; mapeamento de rotas por locale; troca de locale para a rota equivalente; presença de todas as entradas de rota pública exigidas; modelo de metadados com title/description para todas as páginas/locales. Ver `tests/i18n/{locale-content,routes,language-switcher,metadata,pages}.test.ts` e `tests/shell.test.tsx` — 34 testes passando ao final desta fase.
 
-```text
-seo
-navigation
-hero
-providers
-benefits
-showcases
-privacySummary
-openSource
-roadmap
-download
-faq
-footer
-privacyPage
-termsPage
-```
+## Critérios de aceite
 
-- [x] all locale objects satisfy the same schema;
-- [x] TypeScript detects missing keys;
-- [x] UI components accept content props;
-- [x] URLs/actions are configured separately from translatable copy where useful.
+As nove páginas localizadas primárias pré-renderizam, a estrutura de rota aninhada direta é válida, o conteúdo é tipado centralmente, a lógica de troca de locale está correta, e nenhuma implementação de seção precisa saber como os prefixos de URL são construídos manualmente.
 
-Implemented in `app/content/{types,pt-BR,en,es,index}.ts`. Each locale file
-uses `satisfies SiteContent`. Footer/nav link targets are typed as
-`{kind:"anchor"|"external", ...}` and resolved to real hrefs by the shell —
-content never stores a URL string itself except literal external GitHub URLs.
-
-Do not create a runtime translation dictionary with magic string keys if typed content objects are simpler.
-
-Satisfied — no `t("...")` runtime dictionary; components receive typed content.
-
-## 4. PT-BR source copy
-
-Use `CONTENT_SPEC.md` as the basis.
-
-- [x] Implement approved PT-BR copy.
-- [x] Clearly mark statements that still require verification against final app behavior.
-- [x] Do not invent Play Store availability.
-- [x] Do not claim 1.0 List Sync.
-- [x] Do not claim iOS availability.
-- [x] Do not make absolute privacy/security claims.
-
-PT-BR copy in `app/content/pt-BR.ts` follows `CONTENT_SPEC.md`. Benefit #4 and
-Showcase #3 deliberately avoid asserting the on-device translation feature
-(kept generic — "recursos locais" / no translation claim) instead of stating
-it as confirmed, since it still needs verification against the production app.
-
-## 5. English and Spanish
-
-- [x] Add complete English content.
-- [x] Add complete Spanish content.
-- [x] Preserve product terms such as `List Sync` where intentionally branded.
-- [x] Keep provider names unchanged.
-- [x] Ensure copy fits without layout-specific manual line breaks.
-- [ ] Flag translations for human review before launch.
-  - Tracked in `CHECKLIST-PT-BR.md`/`CHECKLIST-EN.md` as an explicit
-    pre-launch item; intentionally left unchecked (first-pass editorial
-    translation, not yet human-reviewed).
-
-No runtime machine translation.
-
-Satisfied — `app/content/en.ts` and `app/content/es.ts` are static editorial
-translations written for this phase, no translation API/service involved.
-
-## 6. Locale switcher
-
-- [x] accessible label;
-- [x] displays human-readable language names;
-- [x] maps equivalent page routes between locales;
-- [x] switching from `/privacy/` to English goes to `/en/privacy/`, not `/en/`;
-- [x] switching from `/en/terms/` to Spanish goes to `/es/terms/`;
-- [x] no forced redirect on page load;
-- [x] optional localStorage preference must not override a directly requested URL.
-
-Implemented in `app/components/layout/language-switcher.tsx`, used in both the
-desktop header and the mobile Sheet. It renders real `<a>` links (`pageHref`)
-for all three locales with `aria-current="page"` on the active one. No
-localStorage-based locale preference was implemented in this phase (it is
-optional); since none exists, there is no override risk.
-
-## 7. Metadata model
-
-Prepare per-locale/per-page metadata data:
-
-- [x] title;
-- [x] description;
-- [x] canonical path;
-- [x] Open Graph locale/title/description;
-- [x] optional social image reference.
-
-Implemented as `PageMetadataModel` / `getPageMetadataModel()` in
-`app/lib/i18n/metadata.ts`. Canonical path and OG locale are derived from the
-same locale+page source of truth as routing (`getPagePath`, `localeConfig`)
-rather than duplicated as content strings. `socialImage` is an optional,
-currently-unset field reserved for Phase 05.
-
-Do not yet over-optimize every SEO detail; Phase 05 completes SEO.
-
-Only `title`/`description` are actually rendered into the HTML this phase,
-via each route's `meta()` export and React Router's `<Meta />` — verified in
-the prerendered output (`<title>`/`<meta name="description">` differ
-correctly per locale/page). Canonical/OG tags are **not** emitted yet.
-
-## 8. Route architecture
-
-Keep route modules small.
-
-Recommended concept:
-
-- common Home component receives locale content;
-- common Privacy component receives locale legal copy;
-- common Terms component receives locale legal copy;
-- route mapping supplies locale/page context.
-
-Implemented: `app/pages/{home-page,privacy-page,terms-page}.tsx` are the three
-shared components (`{ locale }` prop only). Nine thin wrapper files under
-`app/routes/pages/<locale>/<page>.tsx` each call
-`createLocalePageRoute(locale, page)` (`app/lib/i18n/route-factory.tsx`) and
-re-export `{ default, handle, meta }` — no JSX is duplicated per locale.
-
-Avoid copying entire JSX pages three times.
-
-Satisfied.
-
-## 9. Static prerender verification
-
-Build and verify that all required routes produce static output.
-
-Test direct file/route mapping under the GitHub Pages project base.
-
-Do not rely on SPA fallback hacks.
-
-- [x] Verified with a plain `pnpm build` (basename `/`) — all nine pages,
-      `/foundation`, and `/404` produced correct nested `index.html` files
-      with locale-correct `<html lang>` and `<title>`.
-- [x] Verified with `BASE_PATH=/puriki-site/ SITE_URL=... pnpm build` —
-      output correctly nests under `build/client/puriki-site/...` during
-      the React Router build, then `scripts/prepare-static-output.mjs`
-      flattens it to `build/client/...` and additionally copies the
-      prerendered `/404` page to `build/client/404.html` for GitHub Pages.
-      Internal links/assets correctly carry the `/puriki-site/` prefix.
-
-## Tests
-
-- [x] every locale content object validates against the shared type;
-- [x] locale route mapping tests;
-- [x] locale switch equivalent-route tests;
-- [x] all required public route entries are present;
-- [x] metadata model has title/description for all pages/locales.
-
-See `tests/i18n/{locale-content,routes,language-switcher,metadata,pages}.test.ts`
-and `tests/shell.test.tsx`. 34 tests passing as of this phase.
-
-## Acceptance criteria
-
-Phase complete when:
-
-- [x] all nine primary localized pages prerender;
-- [x] direct nested route structure is valid;
-- [x] content is centrally typed;
-- [x] locale switch logic is correct;
-- [x] no section implementation needs to know how URL prefixes are constructed manually.
-
-Phase 02 is complete. The landing sections implemented here are a
-content/routing scaffold (Phase 03 owns the final visual design) — see the
-implementation report in the PR/commit description for the full breakdown.
+A Fase 02 entregou um scaffold de conteúdo/rotas — o design visual final da landing ficou por conta da Fase 03.
