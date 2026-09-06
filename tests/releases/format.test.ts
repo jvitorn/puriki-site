@@ -1,5 +1,8 @@
 import { describe, expect, it } from "vitest";
-import { formatFileSize, formatReleaseDate } from "../../app/lib/releases/format";
+import {
+  formatFileSize,
+  formatReleaseDate,
+} from "../../app/lib/releases/format";
 
 describe("formatFileSize", () => {
   it("formats megabyte-scale sizes with one decimal", () => {

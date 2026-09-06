@@ -13,12 +13,13 @@
     "PHASE_02_ROUTING_I18N_CONTENT.md",
     "PHASE_03_LANDING_SECTIONS.md",
     "PHASE_04_DOWNLOAD_RELEASES.md",
+    "PHASE_04R_MULTI_ABI_RELEASES.md",
     "PHASE_05_ACCESSIBILITY_SEO_LEGAL.md",
     "PHASE_06_TESTING_CI_DEPLOY.md",
     "PHASE_07_LAUNCH_HARDENING.md",
     "README.md"
   ],
-  "phase_count": 8,
+  "phase_count": 9,
   "checklists": [
     "CHECKLIST-PT-BR.md",
     "CHECKLIST-EN.md"

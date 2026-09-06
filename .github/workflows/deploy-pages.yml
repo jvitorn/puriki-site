@@ -5,8 +5,8 @@ on:
     branches:
       - main
   workflow_dispatch:
-  # Reserved for a future purikuki workflow to trigger a rebuild after a
-  # stable release is published. No sender exists yet in purikuki (see
+  # Reserved for a future puriki workflow to trigger a rebuild after a
+  # stable release is published. No sender exists yet in puriki (see
   # docs/planos/PHASE_04_DOWNLOAD_RELEASES.md) — this only declares the
   # event type the site is prepared to accept; it changes no current
   # behavior. The site always re-fetches release data itself below rather
@@ -40,13 +40,26 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Quality gate (format, lint, typecheck, tests)
+        # Same gate the Quality workflow (.github/workflows/quality.yml)
+        # runs on every PR to main — a broken quality gate must never
+        # publish. Consolidated as `pnpm verify` to avoid duplicating four
+        # steps' worth of YAML across both workflows for a project this
+        # size (see docs/planos/PHASE_06_TESTING_CI_DEPLOY.md).
+        run: pnpm verify
+
       - name: Fetch latest stable release metadata
-        # jvitorn/purikuki is public; this is a single unauthenticated GET
+        # jvitorn/puriki is public; this is a single unauthenticated GET
         # per deploy, well under GitHub's unauthenticated rate limit, so
         # the repository-scoped GITHUB_TOKEN isn't needed here. An
         # optional RELEASE_FETCH_TOKEN (non-VITE_*, never exposed to the
         # browser) remains supported by the script for local development
-        # or a future explicit need — see scripts/fetch-release.ts.
+        # or a future explicit need — see scripts/fetch-release.ts. A
+        # stable release missing a required Android artifact (arm64-v8a/
+        # universal) makes this step fail loudly instead of publishing an
+        # incomplete Download section — see ReleaseParseError in
+        # app/lib/releases/parse-github-release.ts. If this step fails,
+        # the previously published site remains live untouched.
         run: pnpm release:fetch
 
       - name: Build static site
@@ -54,6 +67,12 @@ jobs:
           BASE_PATH: /puriki-site/
           SITE_URL: https://jvitorn.github.io/puriki-site/
         run: pnpm build
+
+      - name: Validate static output
+        env:
+          BASE_PATH: /puriki-site/
+          SITE_URL: https://jvitorn.github.io/puriki-site/
+        run: pnpm validate:static
 
       - name: Upload static site
         uses: actions/upload-pages-artifact@v4

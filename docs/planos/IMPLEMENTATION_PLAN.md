@@ -2,7 +2,7 @@
 
 ## Objective
 
-Implement the official Puriki landing page as a fast, accessible, static, multilingual React site deployed to GitHub Pages and connected to the stable GitHub Releases of `jvitorn/purikuki`.
+Implement the official Puriki landing page as a fast, accessible, static, multilingual React site deployed to GitHub Pages and connected to the stable GitHub Releases of `jvitorn/puriki`.
 
 The work is intentionally divided into phases so each phase can be independently reviewed and validated.
 
@@ -173,7 +173,7 @@ Detailed file:
 
 Target:
 
-The download section shows trustworthy metadata for the latest stable `purikuki` release without making runtime GitHub API calls.
+The download section shows trustworthy metadata for the latest stable `puriki` release without making runtime GitHub API calls.
 
 Must include:
 

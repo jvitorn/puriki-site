@@ -24,14 +24,14 @@ export const ptBR = {
     terms: {
       title: "Termos de Uso — Puriki",
       description:
-        "Condições de uso do Puriki, um projeto independente e de código aberto que se conecta a provedores de terceiros.",
+        "Condições de uso do Puriki, um projeto independente cujo código-fonte está disponível publicamente.",
     },
   },
   navigation: {
     items: [
       { label: "Recursos", anchor: "benefits" },
       { label: "Como funciona", anchor: "providers" },
-      { label: "Open Source", anchor: "open-source" },
+      { label: "Código-fonte", anchor: "open-source" },
       { label: "Roadmap", anchor: "roadmap" },
     ],
     primaryNavLabel: "Navegação principal",
@@ -50,7 +50,7 @@ export const ptBR = {
       "Conecte AniList ou MyAnimeList e acompanhe seus animes em uma experiência simples, rápida e feita para Android.",
     primaryCta: "Baixar para Android",
     secondaryCta: "Ver no GitHub",
-    trustLine: "AniList · MyAnimeList · Open Source · Sem anúncios",
+    trustLine: "AniList · MyAnimeList · Código no GitHub · Sem anúncios",
     mockupAlt: "Prévia da tela de lista do Puriki, com progresso de episódios",
   },
   providers: {
@@ -103,8 +103,9 @@ export const ptBR = {
       {
         id: "details",
         title: "Informações quando você precisa",
-        body: "Veja sinopse e detalhes de cada título direto na tela de informações. No Android, sinopses em inglês são traduzidas automaticamente no dispositivo com Google ML Kit para PT-BR e ES.",
-        imageAlt: "Tela de detalhes de um anime no Puriki, com sinopse traduzida",
+        body: "Veja sinopse e detalhes de cada título direto na tela de informações. No Android, leitores em PT-BR e ES podem traduzir sinopses em inglês sob demanda com Google ML Kit no dispositivo.",
+        imageAlt:
+          "Tela de detalhes de um anime no Puriki, com sinopse traduzida",
       },
     ],
   },
@@ -131,9 +132,9 @@ export const ptBR = {
     cta: "Saiba mais sobre privacidade",
   },
   openSource: {
-    eyebrow: "Open Source",
-    title: "Aberto por natureza",
-    body: "O Puriki é gratuito, sem anúncios e possui seu código aberto no GitHub. Você pode acompanhar o desenvolvimento, reportar problemas e contribuir com o projeto.",
+    eyebrow: "Código-fonte",
+    title: "Desenvolvido em público",
+    body: "O Puriki é gratuito, sem anúncios e possui código-fonte disponível no GitHub. Você pode acompanhar o desenvolvimento, reportar problemas e revisar o projeto.",
     cta: "Ver projeto no GitHub",
   },
   roadmap: {
@@ -146,7 +147,8 @@ export const ptBR = {
         version: "1.0",
         title: "Foundation",
         status: "Em preparação",
-        description: "A experiência principal do Puriki com AniList e MyAnimeList.",
+        description:
+          "A experiência principal do Puriki com AniList e MyAnimeList.",
       },
       {
         version: "2.0",
@@ -173,9 +175,65 @@ export const ptBR = {
   download: {
     eyebrow: "Download",
     title: "Baixe o Puriki para Android",
-    supportCopy: "Gratuito, open source e sem anúncios.",
+    supportCopy: "Gratuito, com código-fonte disponível e sem anúncios.",
     primaryCta: "Baixar para Android",
     originLine: "Download oficial através do GitHub Releases.",
+    current: {
+      title: "Android atual",
+      badge: "Recomendado",
+      note: "ARM64",
+      description:
+        "Recomendado para a maioria dos celulares e tablets Android atuais.",
+    },
+    universal: {
+      title: "Versão Universal",
+      subtitle: "Não sabe qual escolher?",
+      description:
+        "Compatível com múltiplas arquiteturas. O arquivo é maior, mas é a opção mais simples quando você não sabe qual versão usar.",
+      cta: "Baixar Universal",
+    },
+    otherVersions: {
+      title: "Outras versões",
+      armeabi_v7a: {
+        title: "Android antigo",
+        note: "ARM 32-bit",
+        description: "Para alguns celulares e tablets Android mais antigos.",
+        cta: "Baixar ARM 32-bit",
+      },
+      x86_64: {
+        title: "Emuladores",
+        note: "x86 64-bit",
+        description:
+          "Principalmente para emuladores e ambientes compatíveis com x86 de 64 bits.",
+        cta: "Baixar x86_64",
+      },
+      x86: {
+        title: "Emuladores",
+        note: "x86 32-bit",
+        description:
+          "Para emuladores e ambientes x86 de 32 bits que ainda utilizam essa arquitetura.",
+        cta: "Baixar x86",
+      },
+    },
+    chooser: {
+      title: "Qual versão devo baixar?",
+      current: {
+        title: "Android atual (ARM64)",
+        body: "Escolha esta na maioria dos celulares e tablets Android modernos.",
+      },
+      universal: {
+        title: "Universal",
+        body: "Escolha esta se você não souber qual versão usar. O arquivo é maior, mas inclui suporte a múltiplas arquiteturas.",
+      },
+      arm32: {
+        title: "Android antigo (ARM 32-bit)",
+        body: "Voltada para alguns aparelhos Android mais antigos.",
+      },
+      x86: {
+        title: "x86 / x86_64",
+        body: "Principalmente para emuladores e ambientes específicos.",
+      },
+    },
     noRelease: {
       statusLabel: "Status do lançamento",
       message: "A primeira versão pública do Puriki ainda está em preparação.",
@@ -185,7 +243,7 @@ export const ptBR = {
       title: "Como instalar",
       steps: [
         "Baixe o arquivo oficial do Puriki.",
-        "Abra o APK no Android.",
+        "Abra a versão do APK escolhida no Android.",
         "Caso solicitado, permita a instalação a partir do navegador ou gerenciador de arquivos utilizado.",
         "Confirme a instalação.",
       ],
@@ -193,14 +251,10 @@ export const ptBR = {
         "O Android pode exibir um aviso porque o aplicativo foi baixado fora da Google Play. Verifique sempre se o download veio deste site ou do repositório oficial do Puriki no GitHub.",
     },
     releaseLabels: {
-      versionLabel: "Versão",
       platformLabel: "Android · APK",
       publishedLabel: "Publicado em",
+      latestLabel: "Última versão estável",
       releaseLinkLabel: "Ver notas da versão no GitHub",
-      shaLabel: "SHA-256",
-      copyLabel: "Copiar",
-      copiedLabel: "Copiado",
-      copyFailedLabel: "Não foi possível copiar o SHA-256.",
     },
   },
   faq: {
@@ -223,7 +277,8 @@ export const ptBR = {
           "Não. O Puriki é uma experiência que se conecta a esses provedores; sua lista continua sendo administrada por eles.",
       },
       {
-        question: "O Puriki sincroniza minha lista entre AniList e MyAnimeList?",
+        question:
+          "O Puriki sincroniza minha lista entre AniList e MyAnimeList?",
         answer:
           "Ainda não. Na versão 1.0 não há sincronização automática entre provedores; esse recurso está planejado para versões futuras.",
       },
@@ -235,12 +290,12 @@ export const ptBR = {
       {
         question: "Como verifico se o APK é oficial?",
         answer:
-          "Baixe sempre a partir deste site ou do repositório oficial do Puriki no GitHub, nunca de fontes de terceiros.",
+          "Baixe sempre através deste site ou da release oficial do Puriki no GitHub, nunca de fontes de terceiros. Detalhes técnicos de integridade dos arquivos ficam disponíveis diretamente na release do GitHub.",
       },
       {
         question: "Como atualizo o Puriki?",
         answer:
-          "Baixe a versão mais recente disponível nas releases oficiais e instale sobre a versão atual.",
+          "Baixe a versão estável mais recente pela landing ou pelo GitHub Releases e instale o APK correspondente sobre a instalação atual.",
       },
       {
         question: "Existe versão para iOS?",
@@ -255,12 +310,16 @@ export const ptBR = {
     disclaimer:
       "Puriki é um projeto independente e não oficial. Não possui afiliação com AniList ou MyAnimeList.",
     copyright: "© 2026 Puriki",
+    licenseLabel: "Licenciado sob MIT",
     columns: [
       {
         title: "Produto",
         links: [
           { label: "Recursos", target: { kind: "anchor", anchor: "benefits" } },
-          { label: "Como funciona", target: { kind: "anchor", anchor: "providers" } },
+          {
+            label: "Como funciona",
+            target: { kind: "anchor", anchor: "providers" },
+          },
           { label: "Roadmap", target: { kind: "anchor", anchor: "roadmap" } },
           { label: "Baixar", target: { kind: "anchor", anchor: "download" } },
         ],
@@ -353,13 +412,13 @@ export const ptBR = {
         body: "Dúvidas sobre privacidade podem ser abertas como issue no repositório oficial do Puriki no GitHub. Issues são públicas — nunca inclua tokens de acesso, senhas ou outras informações sensíveis nelas.",
       },
     ],
-    lastUpdated: "2026-09-02",
+    lastUpdated: "2026-09-05",
     lastUpdatedLabel: "Última atualização",
   },
   termsPage: {
     title: "Termos de Uso",
     intro:
-      "Estes termos definem as condições de uso do Puriki, um projeto independente e de código aberto.",
+      "Estes termos definem as condições de uso do Puriki, um projeto independente cujo código-fonte está disponível publicamente.",
     sections: [
       {
         heading: "Projeto independente e não oficial",
@@ -378,12 +437,12 @@ export const ptBR = {
         body: "Você é responsável por manter suas credenciais seguras e por usar o Puriki em conformidade com os termos de uso do AniList e do MyAnimeList.",
       },
       {
-        heading: "Natureza de código aberto",
-        body: "O Puriki é um projeto de código aberto, disponível para consulta e contribuição no GitHub.",
+        heading: "Disponibilidade do código-fonte",
+        body: "O código-fonte do Puriki está disponível para consulta no GitHub. O repositório ainda não declara uma licença para o projeto como um todo, portanto a disponibilidade do código não concede por si só direitos de reutilização ou redistribuição.",
       },
       {
         heading: "Disponibilidade do software",
-        body: "O aplicativo é fornecido no estado em que se encontra (\"as is\"), sem garantias formais de disponibilidade contínua ou de ausência de erros.",
+        body: 'O aplicativo é fornecido no estado em que se encontra ("as is"), sem garantias formais de disponibilidade contínua ou de ausência de erros.',
       },
       {
         heading: "Mudanças futuras",
@@ -391,10 +450,10 @@ export const ptBR = {
       },
       {
         heading: "Limitações de um projeto não comercial",
-        body: "Por se tratar de um projeto de código aberto, gratuito e não comercial, o suporte, a manutenção e as garantias oferecidas são proporcionalmente limitados.",
+        body: "Por se tratar de um projeto gratuito e não comercial, o suporte, a manutenção e as garantias oferecidas são proporcionalmente limitados.",
       },
     ],
-    lastUpdated: "2026-09-02",
+    lastUpdated: "2026-09-05",
     lastUpdatedLabel: "Última atualização",
   },
 } satisfies SiteContent;

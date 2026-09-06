@@ -24,14 +24,14 @@ export const en = {
     terms: {
       title: "Terms of Use — Puriki",
       description:
-        "Terms for using Puriki, an independent, open-source project that connects to third-party providers.",
+        "Terms for using Puriki, an independent project whose source is publicly available.",
     },
   },
   navigation: {
     items: [
       { label: "Features", anchor: "benefits" },
       { label: "How it works", anchor: "providers" },
-      { label: "Open Source", anchor: "open-source" },
+      { label: "Source Code", anchor: "open-source" },
       { label: "Roadmap", anchor: "roadmap" },
     ],
     primaryNavLabel: "Main navigation",
@@ -50,7 +50,7 @@ export const en = {
       "Connect AniList or MyAnimeList and manage your anime list through a simple, fast experience built for Android.",
     primaryCta: "Download for Android",
     secondaryCta: "View on GitHub",
-    trustLine: "AniList · MyAnimeList · Open Source · No ads",
+    trustLine: "AniList · MyAnimeList · Source on GitHub · No ads",
     mockupAlt: "Preview of Puriki's list screen, showing episode progress",
   },
   providers: {
@@ -103,8 +103,9 @@ export const en = {
       {
         id: "details",
         title: "Details when you need them",
-        body: "See synopsis and details for each title right on the info screen. On Android, synopses are automatically translated on-device using Google ML Kit for Portuguese and Spanish readers.",
-        imageAlt: "An anime's details screen in Puriki, with translated synopsis",
+        body: "See synopsis and details for each title right on the info screen. On Android, Portuguese and Spanish readers can translate English synopses on demand using Google ML Kit on the device.",
+        imageAlt:
+          "An anime's details screen in Puriki, with translated synopsis",
       },
     ],
   },
@@ -131,9 +132,9 @@ export const en = {
     cta: "Learn more about privacy",
   },
   openSource: {
-    eyebrow: "Open Source",
-    title: "Open by nature",
-    body: "Puriki is free, ad-free, and has its source code open on GitHub. You can follow development, report issues, and contribute to the project.",
+    eyebrow: "Source Code",
+    title: "Built in public",
+    body: "Puriki is free, ad-free, and has its source code available on GitHub. You can follow development, report issues, and review the project.",
     cta: "View project on GitHub",
   },
   roadmap: {
@@ -173,9 +174,64 @@ export const en = {
   download: {
     eyebrow: "Download",
     title: "Download Puriki for Android",
-    supportCopy: "Free, open source, and ad-free.",
+    supportCopy: "Free, source available, and ad-free.",
     primaryCta: "Download for Android",
     originLine: "Official download through GitHub Releases.",
+    current: {
+      title: "Current Android",
+      badge: "Recommended",
+      note: "ARM64",
+      description: "Recommended for most current Android phones and tablets.",
+    },
+    universal: {
+      title: "Universal version",
+      subtitle: "Not sure which one to pick?",
+      description:
+        "Compatible with multiple architectures. The file is larger, but it's the simplest option when you're not sure which version to use.",
+      cta: "Download Universal",
+    },
+    otherVersions: {
+      title: "Other versions",
+      armeabi_v7a: {
+        title: "Older Android",
+        note: "ARM 32-bit",
+        description: "For some older Android phones and tablets.",
+        cta: "Download ARM 32-bit",
+      },
+      x86_64: {
+        title: "Emulators",
+        note: "x86 64-bit",
+        description:
+          "Mainly for emulators and 64-bit x86-compatible environments.",
+        cta: "Download x86_64",
+      },
+      x86: {
+        title: "Emulators",
+        note: "x86 32-bit",
+        description:
+          "For emulators and 32-bit x86 environments that still use this architecture.",
+        cta: "Download x86",
+      },
+    },
+    chooser: {
+      title: "Which version should I download?",
+      current: {
+        title: "Current Android (ARM64)",
+        body: "Choose this on most modern Android phones and tablets.",
+      },
+      universal: {
+        title: "Universal",
+        body: "Choose this if you're not sure which version to use. The file is larger, but it includes support for multiple architectures.",
+      },
+      arm32: {
+        title: "Older Android (ARM 32-bit)",
+        body: "Aimed at some older Android devices.",
+      },
+      x86: {
+        title: "x86 / x86_64",
+        body: "Mainly for emulators and specific environments.",
+      },
+    },
     noRelease: {
       statusLabel: "Release status",
       message: "Puriki's first public version is still in preparation.",
@@ -185,7 +241,7 @@ export const en = {
       title: "How to install",
       steps: [
         "Download the official Puriki file.",
-        "Open the APK on your Android device.",
+        "Open the chosen APK version on your Android device.",
         "If prompted, allow installs from the browser or file manager you used.",
         "Confirm the installation.",
       ],
@@ -193,14 +249,10 @@ export const en = {
         "Android may show a warning because the app was downloaded outside Google Play. Always make sure the download came from this site or Puriki's official GitHub repository.",
     },
     releaseLabels: {
-      versionLabel: "Version",
       platformLabel: "Android · APK",
       publishedLabel: "Published",
+      latestLabel: "Latest stable version",
       releaseLinkLabel: "View release notes on GitHub",
-      shaLabel: "SHA-256",
-      copyLabel: "Copy",
-      copiedLabel: "Copied",
-      copyFailedLabel: "Could not copy the SHA-256.",
     },
   },
   faq: {
@@ -213,7 +265,8 @@ export const en = {
           "No. Puriki uses your AniList or MyAnimeList account — there is no separate Puriki account or sign-up.",
       },
       {
-        question: "Do I need to connect AniList and MyAnimeList at the same time?",
+        question:
+          "Do I need to connect AniList and MyAnimeList at the same time?",
         answer:
           "No. Connecting one provider is enough. If you connect both, you choose which list to manage at any given moment.",
       },
@@ -235,12 +288,12 @@ export const en = {
       {
         question: "How do I verify the APK is official?",
         answer:
-          "Always download it from this site or Puriki's official GitHub repository, never from third-party sources.",
+          "Always download it through this site or Puriki's official GitHub release, never from third-party sources. Technical integrity details for each file are available directly on the GitHub release.",
       },
       {
         question: "How do I update Puriki?",
         answer:
-          "Download the latest version from the official releases and install it over your current version.",
+          "Download the latest stable version from the landing page or GitHub Releases and install the matching APK over your current installation.",
       },
       {
         question: "Is there an iOS version?",
@@ -250,16 +303,21 @@ export const en = {
     ],
   },
   footer: {
-    tagline: "An independent Android experience for keeping up with your anime list.",
+    tagline:
+      "An independent Android experience for keeping up with your anime list.",
     disclaimer:
       "Puriki is an independent, unofficial project. It is not affiliated with AniList or MyAnimeList.",
     copyright: "© 2026 Puriki",
+    licenseLabel: "Licensed under MIT",
     columns: [
       {
         title: "Product",
         links: [
           { label: "Features", target: { kind: "anchor", anchor: "benefits" } },
-          { label: "How it works", target: { kind: "anchor", anchor: "providers" } },
+          {
+            label: "How it works",
+            target: { kind: "anchor", anchor: "providers" },
+          },
           { label: "Roadmap", target: { kind: "anchor", anchor: "roadmap" } },
           { label: "Download", target: { kind: "anchor", anchor: "download" } },
         ],
@@ -352,13 +410,13 @@ export const en = {
         body: "Privacy questions can be opened as an issue on Puriki's official GitHub repository. Issues are public — never include access tokens, passwords, or other sensitive information in them.",
       },
     ],
-    lastUpdated: "2026-09-02",
+    lastUpdated: "2026-09-05",
     lastUpdatedLabel: "Last updated",
   },
   termsPage: {
     title: "Terms of Use",
     intro:
-      "These terms set out the conditions for using Puriki, an independent, open-source project.",
+      "These terms set out the conditions for using Puriki, an independent project whose source is publicly available.",
     sections: [
       {
         heading: "Independent, unofficial project",
@@ -377,12 +435,12 @@ export const en = {
         body: "You are responsible for keeping your credentials secure and for using Puriki in accordance with AniList's and MyAnimeList's own terms of use.",
       },
       {
-        heading: "Open-source nature",
-        body: "Puriki is an open-source project, available for review and contribution on GitHub.",
+        heading: "Source availability",
+        body: "Puriki's source is available for review on GitHub. The repository does not currently declare a project-wide license, so source availability alone does not grant reuse or redistribution rights.",
       },
       {
         heading: "Software availability",
-        body: "The app is provided \"as is,\" without formal guarantees of continuous availability or freedom from errors.",
+        body: 'The app is provided "as is," without formal guarantees of continuous availability or freedom from errors.',
       },
       {
         heading: "Future changes",
@@ -390,10 +448,10 @@ export const en = {
       },
       {
         heading: "Limitations of a non-commercial project",
-        body: "As a free, open-source, non-commercial project, the support, maintenance, and guarantees offered are proportionally limited.",
+        body: "As a free, non-commercial project, the support, maintenance, and guarantees offered are proportionally limited.",
       },
     ],
-    lastUpdated: "2026-09-02",
+    lastUpdated: "2026-09-05",
     lastUpdatedLabel: "Last updated",
   },
 } satisfies SiteContent;

@@ -19,8 +19,13 @@ describe("HomePage composition", () => {
     render(<HomePage locale="pt-BR" />);
     const content = getContent("pt-BR");
 
-    const primaryCta = screen.getByRole("link", { name: content.hero.primaryCta });
-    expect(primaryCta).toHaveAttribute("href", expect.stringContaining("#download"));
+    const primaryCta = screen.getByRole("link", {
+      name: content.hero.primaryCta,
+    });
+    expect(primaryCta).toHaveAttribute(
+      "href",
+      expect.stringContaining("#download"),
+    );
   });
 
   it("provider relationship never links AniList directly to MyAnimeList", () => {
@@ -28,7 +33,9 @@ describe("HomePage composition", () => {
     const providersSection = container.querySelector("#providers");
     expect(providersSection).not.toBeNull();
 
-    const links = within(providersSection as HTMLElement).queryAllByRole("link");
+    const links = within(providersSection as HTMLElement).queryAllByRole(
+      "link",
+    );
     for (const link of links) {
       const href = link.getAttribute("href") ?? "";
       expect(href).not.toMatch(/anilist.*mal|mal.*anilist/i);
@@ -58,7 +65,9 @@ describe("HomePage composition", () => {
     render(<HomePage locale="pt-BR" />);
     const content = getContent("pt-BR");
 
-    expect(screen.getByText(content.download.noRelease.message)).toBeInTheDocument();
+    expect(
+      screen.getByText(content.download.noRelease.message),
+    ).toBeInTheDocument();
     expect(screen.queryByText(/sha-?256/i)).not.toBeInTheDocument();
     expect(screen.queryByText(/^v?\d+\.\d+\.\d+$/)).not.toBeInTheDocument();
   });
@@ -68,7 +77,10 @@ describe("PrivacySection", () => {
   it("CTA keeps the current locale's Privacy page", () => {
     for (const locale of LOCALES) {
       const { unmount } = render(
-        <PrivacySection content={getContent(locale).privacySummary} locale={locale} />,
+        <PrivacySection
+          content={getContent(locale).privacySummary}
+          locale={locale}
+        />,
       );
 
       const cta = screen.getByRole("link", {

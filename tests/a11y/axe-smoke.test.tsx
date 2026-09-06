@@ -36,11 +36,39 @@ const AVAILABLE_RELEASE: ReleaseMetadata = {
   available: true,
   version: "1.0.0",
   publishedAt: "2026-08-15T10:00:00Z",
-  fileName: "puriki-1.0.0-android.apk",
-  sizeBytes: 24_300_000,
-  downloadUrl: "https://example.invalid/puriki-1.0.0-android.apk",
   releaseUrl: "https://example.invalid/releases/tag/v1.0.0",
-  sha256: "1f3870be274f6c49b3e31a0c6728957f795ad0ffe3ffed4a1b2c9d9a2c3f5e0e",
+  artifacts: [
+    {
+      variant: "arm64-v8a",
+      fileName: "puriki-v1.0.0-arm64-v8a.apk",
+      sizeBytes: 24_300_000,
+      downloadUrl: "https://example.invalid/puriki-v1.0.0-arm64-v8a.apk",
+    },
+    {
+      variant: "universal",
+      fileName: "puriki-v1.0.0-universal.apk",
+      sizeBytes: 41_800_000,
+      downloadUrl: "https://example.invalid/puriki-v1.0.0-universal.apk",
+    },
+    {
+      variant: "armeabi-v7a",
+      fileName: "puriki-v1.0.0-armeabi-v7a.apk",
+      sizeBytes: 22_900_000,
+      downloadUrl: "https://example.invalid/puriki-v1.0.0-armeabi-v7a.apk",
+    },
+    {
+      variant: "x86_64",
+      fileName: "puriki-v1.0.0-x86_64.apk",
+      sizeBytes: 25_600_000,
+      downloadUrl: "https://example.invalid/puriki-v1.0.0-x86_64.apk",
+    },
+    {
+      variant: "x86",
+      fileName: "puriki-v1.0.0-x86.apk",
+      sizeBytes: 24_100_000,
+      downloadUrl: "https://example.invalid/puriki-v1.0.0-x86.apk",
+    },
+  ],
 };
 
 describe("axe smoke — full page composition", () => {
@@ -53,7 +81,10 @@ describe("axe smoke — full page composition", () => {
     );
 
     const results = await axe(container, AXE_OPTIONS);
-    expect(results.violations, formatViolations(results.violations)).toHaveLength(0);
+    expect(
+      results.violations,
+      formatViolations(results.violations),
+    ).toHaveLength(0);
   });
 
   it("Privacy (en) has no detectable accessibility violations", async () => {
@@ -65,7 +96,10 @@ describe("axe smoke — full page composition", () => {
     );
 
     const results = await axe(container, AXE_OPTIONS);
-    expect(results.violations, formatViolations(results.violations)).toHaveLength(0);
+    expect(
+      results.violations,
+      formatViolations(results.violations),
+    ).toHaveLength(0);
   });
 
   it("Terms (es) has no detectable accessibility violations", async () => {
@@ -77,7 +111,10 @@ describe("axe smoke — full page composition", () => {
     );
 
     const results = await axe(container, AXE_OPTIONS);
-    expect(results.violations, formatViolations(results.violations)).toHaveLength(0);
+    expect(
+      results.violations,
+      formatViolations(results.violations),
+    ).toHaveLength(0);
   });
 });
 
@@ -93,16 +130,26 @@ describe("axe smoke — Download states", () => {
     );
 
     const results = await axe(container, AXE_OPTIONS);
-    expect(results.violations, formatViolations(results.violations)).toHaveLength(0);
+    expect(
+      results.violations,
+      formatViolations(results.violations),
+    ).toHaveLength(0);
   });
 
-  it("available-release state (with SHA disclosure) has no detectable accessibility violations", async () => {
+  it("available-release state (multi-ABI artifacts) has no detectable accessibility violations", async () => {
     const content = getContent("en");
     const { container } = render(
-      <DownloadSection content={content.download} locale="en" release={AVAILABLE_RELEASE} />,
+      <DownloadSection
+        content={content.download}
+        locale="en"
+        release={AVAILABLE_RELEASE}
+      />,
     );
 
     const results = await axe(container, AXE_OPTIONS);
-    expect(results.violations, formatViolations(results.violations)).toHaveLength(0);
+    expect(
+      results.violations,
+      formatViolations(results.violations),
+    ).toHaveLength(0);
   });
 });

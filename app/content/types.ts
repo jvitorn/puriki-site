@@ -14,7 +14,7 @@ export interface NavItem {
 }
 
 export interface NavigationContent {
-  /** Desktop/mobile primary nav, in display order (Resources, How it works, Open Source, Roadmap). */
+  /** Desktop/mobile primary nav, in display order (Resources, How it works, Source Code, Roadmap). */
   items: [NavItem, NavItem, NavItem, NavItem];
   primaryNavLabel: string;
   mobileNavLabel: string;
@@ -128,22 +128,68 @@ export interface DownloadInstallHelpContent {
 }
 
 export interface DownloadReleaseLabelsContent {
-  versionLabel: string;
   platformLabel: string;
   publishedLabel: string;
+  latestLabel: string;
   releaseLinkLabel: string;
-  shaLabel: string;
-  copyLabel: string;
-  copiedLabel: string;
-  copyFailedLabel: string;
+}
+
+/** The primary, recommended card (`arm64-v8a`) — non-technical copy first, architecture as secondary info via `note`. */
+export interface DownloadCurrentContent {
+  title: string;
+  badge: string;
+  note: string;
+  description: string;
+}
+
+/** The `universal` card — always shown, ranked below ARM64. */
+export interface DownloadUniversalContent {
+  title: string;
+  subtitle: string;
+  description: string;
+  cta: string;
+}
+
+/** One optional-architecture entry inside "Other versions" — rendered only when that artifact exists on the release. */
+export interface DownloadOptionalArtifactContent {
+  title: string;
+  note: string;
+  description: string;
+  cta: string;
+}
+
+export interface DownloadOtherVersionsContent {
+  title: string;
+  armeabi_v7a: DownloadOptionalArtifactContent;
+  x86_64: DownloadOptionalArtifactContent;
+  x86: DownloadOptionalArtifactContent;
+}
+
+export interface DownloadChooserEntry {
+  title: string;
+  body: string;
+}
+
+/** "Qual versão devo baixar?" — deliberately non-technical; x86/x86_64 share one explanation. */
+export interface DownloadChooserContent {
+  title: string;
+  current: DownloadChooserEntry;
+  universal: DownloadChooserEntry;
+  arm32: DownloadChooserEntry;
+  x86: DownloadChooserEntry;
 }
 
 export interface DownloadContent {
   eyebrow: string;
   title: string;
   supportCopy: string;
+  /** CTA for the primary ARM64 card. */
   primaryCta: string;
   originLine: string;
+  current: DownloadCurrentContent;
+  universal: DownloadUniversalContent;
+  otherVersions: DownloadOtherVersionsContent;
+  chooser: DownloadChooserContent;
   noRelease: DownloadNoReleaseContent;
   installHelp: DownloadInstallHelpContent;
   releaseLabels: DownloadReleaseLabelsContent;
@@ -170,8 +216,7 @@ export interface FaqContent {
 }
 
 export type FooterLinkTarget =
-  | { kind: "anchor"; anchor: HomeAnchor }
-  | { kind: "external"; href: string };
+  { kind: "anchor"; anchor: HomeAnchor } | { kind: "external"; href: string };
 
 export interface FooterLink {
   label: string;
@@ -187,6 +232,8 @@ export interface FooterContent {
   tagline: string;
   disclaimer: string;
   copyright: string;
+  /** Discreet MIT mention, linked to the LICENSE file on GitHub. */
+  licenseLabel: string;
   /** Product, Project — Legal is handled separately since it links to typed pages. */
   columns: [FooterColumn, FooterColumn];
   legal: {

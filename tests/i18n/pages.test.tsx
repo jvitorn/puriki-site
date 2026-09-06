@@ -33,7 +33,10 @@ describe("PrivacyPage", () => {
       const content = getContent(locale);
 
       expect(
-        screen.getByRole("heading", { level: 1, name: content.privacyPage.title }),
+        screen.getByRole("heading", {
+          level: 1,
+          name: content.privacyPage.title,
+        }),
       ).toBeInTheDocument();
 
       for (const section of content.privacyPage.sections) {
@@ -58,7 +61,10 @@ describe("TermsPage", () => {
       const content = getContent(locale);
 
       expect(
-        screen.getByRole("heading", { level: 1, name: content.termsPage.title }),
+        screen.getByRole("heading", {
+          level: 1,
+          name: content.termsPage.title,
+        }),
       ).toBeInTheDocument();
 
       for (const section of content.termsPage.sections) {

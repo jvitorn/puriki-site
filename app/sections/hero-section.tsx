@@ -17,7 +17,7 @@ interface HeroSectionProps {
 // This is the intentional visual solution for the landing (not a
 // placeholder for a future screenshot) — purely visual (bars/blocks, no
 // literal words) so it never leaks Portuguese copy onto the EN/ES pages.
-// A future polish pass may refine the shapes by referencing purikuki's
+// A future polish pass may refine the shapes by referencing Puriki's
 // real components (My List, AnimeListItem), but that's UI polish, not a
 // blocking asset.
 function HeroMockupPreview() {
@@ -57,7 +57,10 @@ function HeroMockupPreview() {
               <div className="h-2 w-[72%] rounded-full bg-foreground/80" />
               <div className="mt-2 h-1.5 w-[44%] rounded-full bg-foreground-subtle/50" />
               <div className="mt-4 h-1 overflow-hidden rounded-full bg-border">
-                <div className="h-full rounded-full bg-brand" style={{ width: progress }} />
+                <div
+                  className="h-full rounded-full bg-brand"
+                  style={{ width: progress }}
+                />
               </div>
             </div>
           </div>
@@ -91,7 +94,10 @@ export function HeroSection({ locale, content }: HeroSectionProps) {
           <p className="mb-5 inline-flex items-center rounded-full border border-border-strong bg-surface px-3 py-1.5 text-xs font-bold uppercase tracking-[0.13em] text-foreground-muted">
             {content.eyebrow}
           </p>
-          <h1 className="max-w-3xl text-[clamp(2.5rem,6vw,4rem)]" id="hero-heading">
+          <h1
+            className="max-w-3xl text-[clamp(2.5rem,6vw,4rem)]"
+            id="hero-heading"
+          >
             {content.headline}
           </h1>
           <p className="mt-6 max-w-2xl text-lg leading-8 text-foreground-muted sm:text-xl">
@@ -111,7 +117,9 @@ export function HeroSection({ locale, content }: HeroSectionProps) {
               </a>
             </Button>
           </div>
-          <p className="mt-6 text-sm text-foreground-subtle">{content.trustLine}</p>
+          <p className="mt-6 text-sm text-foreground-subtle">
+            {content.trustLine}
+          </p>
         </Reveal>
 
         <Reveal className="relative" delay={100}>

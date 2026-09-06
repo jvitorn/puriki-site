@@ -23,7 +23,13 @@ interface SiteHeaderProps {
   page: PageKey;
 }
 
-function Wordmark({ locale, brandName }: { locale: Locale; brandName: string }) {
+function Wordmark({
+  locale,
+  brandName,
+}: {
+  locale: Locale;
+  brandName: string;
+}) {
   return (
     <a
       aria-label={`${brandName} — página inicial`}
@@ -45,7 +51,10 @@ export function SiteHeader({ locale, page }: SiteHeaderProps) {
       <Container className="flex h-[var(--header-height)] items-center justify-between gap-5">
         <Wordmark brandName={common.brandName} locale={locale} />
 
-        <nav aria-label={navigation.primaryNavLabel} className="hidden items-center gap-1 lg:flex">
+        <nav
+          aria-label={navigation.primaryNavLabel}
+          className="hidden items-center gap-1 lg:flex"
+        >
           {navigation.items.map((item) => (
             <a
               className="inline-flex min-h-11 items-center rounded-button px-3 text-sm font-medium text-foreground-muted no-underline transition-colors hover:bg-surface-hover hover:text-foreground"
@@ -58,7 +67,11 @@ export function SiteHeader({ locale, page }: SiteHeaderProps) {
         </nav>
 
         <div className="hidden items-center gap-2 lg:flex">
-          <LanguageSwitcher label={navigation.languageLabel} locale={locale} page={page} />
+          <LanguageSwitcher
+            label={navigation.languageLabel}
+            locale={locale}
+            page={page}
+          />
           <Button asChild variant="secondary">
             <a href={PURIKUKI_REPO_URL} rel="noreferrer" target="_blank">
               <CodeXml aria-hidden="true" className="size-4" />
@@ -76,17 +89,26 @@ export function SiteHeader({ locale, page }: SiteHeaderProps) {
         <div className="lg:hidden">
           <Sheet onOpenChange={setIsOpen} open={isOpen}>
             <SheetTrigger asChild>
-              <Button aria-label={navigation.menuButtonLabel} size="icon" variant="ghost">
+              <Button
+                aria-label={navigation.menuButtonLabel}
+                size="icon"
+                variant="ghost"
+              >
                 <Menu aria-hidden="true" className="size-5" />
               </Button>
             </SheetTrigger>
             <SheetContent>
               <SheetHeader>
                 <SheetTitle>{navigation.menuTitle}</SheetTitle>
-                <SheetDescription>{navigation.menuDescription}</SheetDescription>
+                <SheetDescription>
+                  {navigation.menuDescription}
+                </SheetDescription>
               </SheetHeader>
 
-              <nav aria-label={navigation.mobileNavLabel} className="mt-8 flex flex-col gap-1">
+              <nav
+                aria-label={navigation.mobileNavLabel}
+                className="mt-8 flex flex-col gap-1"
+              >
                 {navigation.items.map((item) => (
                   <a
                     className="flex min-h-12 items-center rounded-button px-3 font-semibold text-foreground-muted no-underline transition-colors hover:bg-surface-hover hover:text-foreground"

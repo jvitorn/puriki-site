@@ -24,7 +24,9 @@ describe("locale + page -> URL mapping", () => {
   it("produces the exact nine required public paths", () => {
     for (const locale of LOCALES) {
       for (const page of PAGES) {
-        expect(getPagePath(locale, page)).toBe(REQUIRED_PAGE_PATHS[locale][page]);
+        expect(getPagePath(locale, page)).toBe(
+          REQUIRED_PAGE_PATHS[locale][page],
+        );
       }
     }
   });
@@ -61,9 +63,10 @@ describe("locale + page -> URL mapping", () => {
 
 describe("prerender path list", () => {
   it("includes every required public path plus /foundation and /404", async () => {
-    const { default: prerenderConfig } = (await import(
-      "../../react-router.config.ts"
-    )) as { default: { prerender: string[] } };
+    const { default: prerenderConfig } =
+      (await import("../../react-router.config.ts")) as {
+        default: { prerender: string[] };
+      };
 
     const requiredPaths = LOCALES.flatMap((locale) =>
       PAGES.map((page) => {

@@ -67,7 +67,9 @@ export function RoadmapSection({ content, release }: RoadmapSectionProps) {
           );
         })}
       </ol>
-      <p className="mt-8 text-sm text-foreground-subtle">{content.disclaimer}</p>
+      <p className="mt-8 text-sm text-foreground-subtle">
+        {content.disclaimer}
+      </p>
       <div className="mt-4">
         <Button asChild variant="secondary">
           <a href={PURIKUKI_ROADMAP_DOC_URL} rel="noreferrer" target="_blank">
