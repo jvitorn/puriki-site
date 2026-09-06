@@ -7,7 +7,7 @@ The purpose of these documents is to let a developer or coding agent implement t
 ## Repository
 
 - Site repository: `jvitorn/puriki-site`
-- App repository: `jvitorn/purikuki`
+- App repository: `jvitorn/puriki`
 - Site repository default branch: `main`
 - App repository default branch: `master`
 - Initial hosting: GitHub Pages

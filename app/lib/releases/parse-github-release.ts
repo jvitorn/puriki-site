@@ -60,7 +60,7 @@ function isApkAsset(asset: unknown): asset is RawGitHubAsset & { name: string } 
  * `raw === null` is the documented "no stable release published" state and
  * is the *only* input that produces `{ available: false }`. The caller
  * (`scripts/fetch-release.ts`) maps that state from a 404 response for the
- * specific, known-public repository this site targets (`jvitorn/purikuki`)
+ * specific, known-public repository this site targets (`jvitorn/puriki`)
  * — for that endpoint, a 404 means "this repo has no release that is
  * neither a draft nor a prerelease," which is exactly our no-release state.
  * A 404 is never treated as "no release" for any other reason (e.g. it is
@@ -116,7 +116,7 @@ export function parseGitHubRelease(raw: unknown): ReleaseMetadata {
   }
 
   const version = normalizeVersion(release.tag_name);
-  const expectedFileName = `puriki-${version}-android.apk`;
+  const expectedFileName = `puriki-v${version}.apk`;
 
   const apkAssets = release.assets.filter(isApkAsset);
   const matches = apkAssets.filter((asset) => asset.name === expectedFileName);

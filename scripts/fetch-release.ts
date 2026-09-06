@@ -6,7 +6,7 @@ import { parseGitHubRelease } from "../app/lib/releases/parse-github-release";
 import type { ReleaseMetadata } from "../app/lib/releases/types";
 
 const REPO_OWNER = "jvitorn";
-const REPO_NAME = "purikuki";
+const REPO_NAME = "puriki";
 const LATEST_RELEASE_API_URL = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/releases/latest`;
 const REQUEST_TIMEOUT_MS = 15_000;
 

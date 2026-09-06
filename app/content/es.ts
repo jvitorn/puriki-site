@@ -24,14 +24,14 @@ export const es = {
     terms: {
       title: "Términos de Uso — Puriki",
       description:
-        "Condiciones de uso de Puriki, un proyecto independiente y de código abierto que se conecta a proveedores externos.",
+        "Condiciones de uso de Puriki, un proyecto independiente cuyo código fuente está disponible públicamente.",
     },
   },
   navigation: {
     items: [
       { label: "Funciones", anchor: "benefits" },
       { label: "Cómo funciona", anchor: "providers" },
-      { label: "Open Source", anchor: "open-source" },
+      { label: "Código fuente", anchor: "open-source" },
       { label: "Roadmap", anchor: "roadmap" },
     ],
     primaryNavLabel: "Navegación principal",
@@ -50,7 +50,7 @@ export const es = {
       "Conecta AniList o MyAnimeList y gestiona tu lista de anime con una experiencia simple, rápida y pensada para Android.",
     primaryCta: "Descargar para Android",
     secondaryCta: "Ver en GitHub",
-    trustLine: "AniList · MyAnimeList · Open Source · Sin anuncios",
+    trustLine: "AniList · MyAnimeList · Código en GitHub · Sin anuncios",
     mockupAlt: "Vista previa de la pantalla de lista de Puriki, con progreso de episodios",
   },
   providers: {
@@ -103,7 +103,7 @@ export const es = {
       {
         id: "details",
         title: "Información cuando la necesitas",
-        body: "Consulta la sinopsis y los detalles de cada título en la pantalla de información. En Android, las sinopsis se traducen automáticamente en el dispositivo con Google ML Kit para lectores en portugués y español.",
+        body: "Consulta la sinopsis y los detalles de cada título en la pantalla de información. En Android, los lectores en portugués y español pueden traducir sinopsis en inglés bajo demanda con Google ML Kit en el dispositivo.",
         imageAlt: "Pantalla de detalles de un anime en Puriki, con sinopsis traducida",
       },
     ],
@@ -131,9 +131,9 @@ export const es = {
     cta: "Conoce más sobre privacidad",
   },
   openSource: {
-    eyebrow: "Open Source",
-    title: "Abierto por naturaleza",
-    body: "Puriki es gratuito, sin anuncios y tiene su código abierto en GitHub. Puedes seguir el desarrollo, reportar problemas y contribuir al proyecto.",
+    eyebrow: "Código fuente",
+    title: "Desarrollado en público",
+    body: "Puriki es gratuito, no tiene anuncios y su código fuente está disponible en GitHub. Puedes seguir el desarrollo, reportar problemas y revisar el proyecto.",
     cta: "Ver proyecto en GitHub",
   },
   roadmap: {
@@ -173,7 +173,7 @@ export const es = {
   download: {
     eyebrow: "Descarga",
     title: "Descarga Puriki para Android",
-    supportCopy: "Gratuito, de código abierto y sin anuncios.",
+    supportCopy: "Gratuito, con código fuente disponible y sin anuncios.",
     primaryCta: "Descargar para Android",
     originLine: "Descarga oficial a través de GitHub Releases.",
     noRelease: {
@@ -353,13 +353,13 @@ export const es = {
         body: "Las dudas sobre privacidad pueden reportarse como issue en el repositorio oficial de Puriki en GitHub. Las issues son públicas — nunca incluyas tokens de acceso, contraseñas u otra información sensible en ellas.",
       },
     ],
-    lastUpdated: "2026-09-02",
+    lastUpdated: "2026-09-05",
     lastUpdatedLabel: "Última actualización",
   },
   termsPage: {
     title: "Términos de Uso",
     intro:
-      "Estos términos establecen las condiciones de uso de Puriki, un proyecto independiente y de código abierto.",
+      "Estos términos establecen las condiciones de uso de Puriki, un proyecto independiente cuyo código fuente está disponible públicamente.",
     sections: [
       {
         heading: "Proyecto independiente y no oficial",
@@ -378,8 +378,8 @@ export const es = {
         body: "Eres responsable de mantener tus credenciales seguras y de usar Puriki conforme a los propios términos de uso de AniList y MyAnimeList.",
       },
       {
-        heading: "Naturaleza de código abierto",
-        body: "Puriki es un proyecto de código abierto, disponible para revisión y contribución en GitHub.",
+        heading: "Disponibilidad del código fuente",
+        body: "El código fuente de Puriki está disponible para revisión en GitHub. El repositorio todavía no declara una licencia para el proyecto completo, por lo que la disponibilidad del código no concede por sí sola derechos de reutilización o redistribución.",
       },
       {
         heading: "Disponibilidad del software",
@@ -391,10 +391,10 @@ export const es = {
       },
       {
         heading: "Limitaciones de un proyecto no comercial",
-        body: "Al ser un proyecto de código abierto, gratuito y no comercial, el soporte, el mantenimiento y las garantías ofrecidas son proporcionalmente limitados.",
+        body: "Al ser un proyecto gratuito y no comercial, el soporte, el mantenimiento y las garantías ofrecidas son proporcionalmente limitados.",
       },
     ],
-    lastUpdated: "2026-09-02",
+    lastUpdated: "2026-09-05",
     lastUpdatedLabel: "Última actualización",
   },
 } satisfies SiteContent;

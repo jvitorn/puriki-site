@@ -121,7 +121,7 @@ Secondary CTA:
 
 Official binary flow:
 
-`purikuki -> stable GitHub Release -> APK asset -> puriki-site download UI`
+`puriki -> stable GitHub Release -> APK asset -> puriki-site download UI`
 
 Rules:
 
@@ -134,12 +134,12 @@ Rules:
 
 Expected APK naming convention:
 
-`puriki-{version}-android.apk`
+`puriki-v{version}.apk`
 
 Examples:
 
-- `puriki-1.0.0-android.apk`
-- `puriki-1.1.0-android.apk`
+- `puriki-v1.0.0.apk`
+- `puriki-v1.1.0.apk`
 
 ## Stack
 

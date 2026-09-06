@@ -1,6 +1,6 @@
 # Puriki Site
 
-Official static website for the Puriki Android application. The site explains the product, links to the open-source project, and will provide the official release download when available.
+Official static website for the Puriki Android application. The site explains the product, links to its public source repository, and will provide the official release download when available.
 
 ## Prerequisites
 
@@ -29,7 +29,7 @@ The build uses React Router Framework Mode with `ssr: false` and static prerende
 
 ## Release metadata
 
-The Download section renders the latest stable `jvitorn/purikuki` GitHub
+The Download section renders the latest stable `jvitorn/puriki` GitHub
 Release from a build-time generated file, `app/generated/release.json` —
 the browser never calls the GitHub API. The committed baseline is
 `{ "available": false }`, which is the app repository's real current state
@@ -41,12 +41,12 @@ To refresh it from the live GitHub API:
 pnpm release:fetch
 ```
 
-This queries `GET /repos/jvitorn/purikuki/releases/latest`, which already
+This queries `GET /repos/jvitorn/puriki/releases/latest`, which already
 excludes drafts and prereleases and 404s when there is no stable release
 (mapped to `{ "available": false }` — a valid state, not an error). Any
 other failure (timeout, unexpected status, invalid JSON, a release whose
 APK asset is missing/ambiguous) makes the script exit non-zero instead of
-silently writing "no release". `jvitorn/purikuki` is public, so the CI
+silently writing "no release". `jvitorn/puriki` is public, so the CI
 workflow calls this unauthenticated — one request per deploy is well
 under GitHub's unauthenticated rate limit. An optional local-only
 `RELEASE_FETCH_TOKEN` environment variable can raise that limit for
@@ -91,7 +91,7 @@ Before the first deployment, select `Settings → Pages → Build and deployment
 
 ## Repository boundaries
 
-APK files are not hosted in this repository. Official Android binaries belong to the `jvitorn/purikuki` GitHub Releases page.
+APK files are not hosted in this repository. Official Android binaries belong to the `jvitorn/puriki` GitHub Releases page and use the `puriki-v<version>.apk` naming convention.
 
-- App repository: https://github.com/jvitorn/purikuki
+- App repository: https://github.com/jvitorn/puriki
 - Planning documents: `docs/planos/`

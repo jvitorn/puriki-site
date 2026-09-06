@@ -4,10 +4,10 @@
 // which the parser must handle defensively.
 
 const stableApkAsset = {
-  name: "puriki-1.0.0-android.apk",
+  name: "puriki-v1.0.0.apk",
   size: 24_300_000,
   browser_download_url:
-    "https://github.com/jvitorn/purikuki/releases/download/v1.0.0/puriki-1.0.0-android.apk",
+    "https://github.com/jvitorn/puriki/releases/download/v1.0.0/puriki-v1.0.0.apk",
   digest:
     "sha256:1f3870be274f6c49b3e31a0c6728957f795ad0ffe3ffed4a1b2c9d9a2c3f5e0e",
 };
@@ -18,7 +18,7 @@ export const stableReleaseWithDigest = {
   draft: false,
   prerelease: false,
   published_at: "2026-08-15T10:00:00Z",
-  html_url: "https://github.com/jvitorn/purikuki/releases/tag/v1.0.0",
+  html_url: "https://github.com/jvitorn/puriki/releases/tag/v1.0.0",
   assets: [stableApkAsset],
 };
 
@@ -27,7 +27,7 @@ export const stableReleaseWithoutDigest = {
   draft: false,
   prerelease: false,
   published_at: "2026-08-15T10:00:00Z",
-  html_url: "https://github.com/jvitorn/purikuki/releases/tag/v1.0.0",
+  html_url: "https://github.com/jvitorn/puriki/releases/tag/v1.0.0",
   assets: [{ ...stableApkAsset, digest: undefined }],
 };
 
@@ -36,13 +36,13 @@ export const stableReleaseTagWithoutV = {
   draft: false,
   prerelease: false,
   published_at: "2026-09-01T08:30:00Z",
-  html_url: "https://github.com/jvitorn/purikuki/releases/tag/1.2.3",
+  html_url: "https://github.com/jvitorn/puriki/releases/tag/1.2.3",
   assets: [
     {
-      name: "puriki-1.2.3-android.apk",
+      name: "puriki-v1.2.3.apk",
       size: 25_100_000,
       browser_download_url:
-        "https://github.com/jvitorn/purikuki/releases/download/1.2.3/puriki-1.2.3-android.apk",
+        "https://github.com/jvitorn/puriki/releases/download/1.2.3/puriki-v1.2.3.apk",
       digest: null,
     },
   ],
@@ -68,7 +68,7 @@ export const releaseMissingApk = {
   draft: false,
   prerelease: false,
   published_at: "2026-08-15T10:00:00Z",
-  html_url: "https://github.com/jvitorn/purikuki/releases/tag/v1.0.0",
+  html_url: "https://github.com/jvitorn/puriki/releases/tag/v1.0.0",
   assets: [
     { name: "source.zip", size: 1000, browser_download_url: "https://example.invalid/source.zip" },
   ],
@@ -79,7 +79,7 @@ export const releaseWithWrongApkName = {
   draft: false,
   prerelease: false,
   published_at: "2026-08-15T10:00:00Z",
-  html_url: "https://github.com/jvitorn/purikuki/releases/tag/v1.0.0",
+  html_url: "https://github.com/jvitorn/puriki/releases/tag/v1.0.0",
   assets: [
     {
       name: "puriki-android.apk",
@@ -97,7 +97,7 @@ export const releaseWithTwoApkCandidates = {
   draft: false,
   prerelease: false,
   published_at: "2026-08-15T10:00:00Z",
-  html_url: "https://github.com/jvitorn/purikuki/releases/tag/v1.0.0",
+  html_url: "https://github.com/jvitorn/puriki/releases/tag/v1.0.0",
   assets: [
     {
       name: "puriki-android-1.0.0.apk",
@@ -120,15 +120,15 @@ export const releaseWithDuplicateExactMatches = {
   draft: false,
   prerelease: false,
   published_at: "2026-08-15T10:00:00Z",
-  html_url: "https://github.com/jvitorn/purikuki/releases/tag/v1.0.0",
+  html_url: "https://github.com/jvitorn/puriki/releases/tag/v1.0.0",
   assets: [
     {
-      name: "puriki-1.0.0-android.apk",
+      name: "puriki-v1.0.0.apk",
       size: 24_300_000,
       browser_download_url: "https://example.invalid/a.apk",
     },
     {
-      name: "puriki-1.0.0-android.apk",
+      name: "puriki-v1.0.0.apk",
       size: 24_100_000,
       browser_download_url: "https://example.invalid/b.apk",
     },

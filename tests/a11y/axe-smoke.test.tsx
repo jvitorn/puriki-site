@@ -36,9 +36,9 @@ const AVAILABLE_RELEASE: ReleaseMetadata = {
   available: true,
   version: "1.0.0",
   publishedAt: "2026-08-15T10:00:00Z",
-  fileName: "puriki-1.0.0-android.apk",
+  fileName: "puriki-v1.0.0.apk",
   sizeBytes: 24_300_000,
-  downloadUrl: "https://example.invalid/puriki-1.0.0-android.apk",
+  downloadUrl: "https://example.invalid/puriki-v1.0.0.apk",
   releaseUrl: "https://example.invalid/releases/tag/v1.0.0",
   sha256: "1f3870be274f6c49b3e31a0c6728957f795ad0ffe3ffed4a1b2c9d9a2c3f5e0e",
 };

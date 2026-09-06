@@ -324,7 +324,7 @@ export default function FoundationRoute() {
             </div>
             <Button asChild size="large" variant="secondary">
               <a
-                href="https://github.com/jvitorn/purikuki"
+                href="https://github.com/jvitorn/puriki"
                 rel="noreferrer"
                 target="_blank"
               >
