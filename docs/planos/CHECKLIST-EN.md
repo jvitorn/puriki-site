@@ -249,32 +249,51 @@ Full detail in `PHASE_03_LANDING_SECTIONS.md`.
 
 ## Phase 06 — Tests, CI and Deploy
 
-- [ ] Locale tests.
-- [ ] Route tests.
-- [ ] Release parser tests.
-- [ ] Download tests.
-- [ ] Mobile menu tests.
-- [ ] FAQ tests.
-- [ ] Canonical/hreflang tests.
-- [ ] PR CI.
-- [ ] `main` CI.
+- [x] Locale tests (already existed — `tests/i18n/locale-content.test.ts`, `language-switcher.test.tsx`).
+- [x] Route tests (already existed — `tests/i18n/routes.test.ts`; canonical/hreflang were only manually verified in Phase 05).
+- [x] Release parser tests (already existed, Phase 04R — `tests/releases/parse-github-release.test.ts`).
+- [x] Download tests (already existed, Phase 04R — `tests/sections/download-section.test.tsx`).
+- [x] Mobile menu tests (already existed — `tests/shell.test.tsx`, Sheet open/close/Escape).
+- [x] FAQ tests (already existed — `tests/sections.test.tsx`, `locale-content.test.ts`).
+- [x] Canonical/hreflang tests (real gap — added to `tests/i18n/metadata.test.ts` for `buildPageLinks`).
+- [x] Strong validation of the generated `ReleaseMetadata` (new — `app/lib/releases/validate-release-metadata.ts` + `tests/releases/validate-release-metadata.test.ts`).
+- [x] `getRequiredReleaseArtifact` replaces the silent `return null` in `download-section.tsx` (`tests/releases/get-required-release-artifact.test.ts`).
+- [x] Stale baseline comment (`get-release-metadata.test.ts`) fixed.
+- [x] Static output validator (new — `scripts/validate-static-output.ts` + `tests/scripts/validate-static-output.test.ts`).
+- [x] `pnpm verify` (format:check + lint + typecheck + test) and `pnpm validate:static` added to `package.json`.
+- [x] PR CI (`.github/workflows/quality.yml`, triggered on `pull_request`/`push` to `main`).
+- [x] `main` CI (same workflow, plus the quality gates inside `deploy-pages.yml`).
 - [x] `pnpm install --frozen-lockfile`.
-- [ ] Lint in CI.
-- [ ] Typecheck in CI.
-- [ ] Tests in CI.
-- [x] Build in CI.
-- [ ] Static route validation.
+- [x] Lint in CI.
+- [x] Typecheck in CI.
+- [x] Tests in CI.
+- [x] Build in CI (production-style, `BASE_PATH=/puriki-site/`).
+- [x] Static route validation (`pnpm validate:static` in both PR CI and deploy).
+- [x] PR CI does not depend on `pnpm release:fetch`/the GitHub API (uses the committed `available: false` baseline).
 - [x] GitHub Pages workflow.
-- [ ] Pages source set to GitHub Actions.
-- [x] Manual deploy available.
+- [x] Deploy runs quality gates (`pnpm verify`) before `release:fetch`/build/deploy.
+- [x] Deploy runs `pnpm validate:static` before publishing.
+- [!] Pages source set to GitHub Actions.
+  - Not verifiable from the repository — requires manual maintainer
+    confirmation at Settings → Pages → Build and deployment → Source →
+    GitHub Actions. See `PHASE_06_TESTING_CI_DEPLOY.md`.
+- [!] Branch protection/ruleset requiring the `quality` check on `main`.
+  - Not verifiable from the repository — requires manual maintainer
+    configuration at Settings → Branches (or Rules → Rulesets). Exact
+    check name: `quality` (job inside the `Quality` workflow).
+- [x] Manual deploy available (`workflow_dispatch`).
 - [x] Deploy concurrency controlled.
-- [x] `/puriki-site/` base validated.
-- [x] Project-site assets work.
-- [x] No secret in published artifact.
+- [x] `/puriki-site/` base validated (now automated, via `validate:static`).
+- [x] Project-site assets work (validated automatically).
+- [x] No secret in published artifact (validated automatically — secret-pattern scan + absence of APK/keystore/SHA256SUMS).
+- [x] Dependabot configured (`npm` + `github-actions`, weekly, no auto-merge).
+- [x] Build performance review documented (no arbitrary budgets).
 
-> Minimal GitHub Pages deployment infrastructure was intentionally implemented during Phase 01 to allow visual validation of each subsequent phase. Full CI/deployment hardening remains part of Phase 06.
+> Minimal GitHub Pages deployment infrastructure was intentionally implemented during Phase 01 to allow visual validation of each subsequent phase. Full CI/deployment hardening was completed in Phase 06 (see `PHASE_06_TESTING_CI_DEPLOY.md` for the full report).
 
-The Pages source still needs to be selected manually as GitHub Actions in the repository settings. Full CI gates and the remaining Phase 06 automations are still pending.
+The only items still pending from this phase are manual GitHub
+configuration (Pages Source and branch protection), marked `[!]` above —
+neither can be verified nor applied from the code.
 
 ## Phase 07 — Launch
 

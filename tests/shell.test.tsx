@@ -1,4 +1,10 @@
-import { fireEvent, render, screen, waitFor, within } from "@testing-library/react";
+import {
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+  within,
+} from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { getContent } from "../app/content";
 import { SiteFooter } from "../app/components/layout/site-footer";
@@ -27,10 +33,13 @@ describe("SiteHeader", () => {
     render(<SiteHeader locale="en" page="home" />);
 
     for (const item of content.navigation.items) {
-      expect(screen.getByRole("link", { name: item.label })).toBeInTheDocument();
+      expect(
+        screen.getByRole("link", { name: item.label }),
+      ).toBeInTheDocument();
     }
     expect(
-      screen.getAllByRole("link", { name: content.navigation.downloadLabel }).length,
+      screen.getAllByRole("link", { name: content.navigation.downloadLabel })
+        .length,
     ).toBeGreaterThan(0);
   });
 
@@ -41,11 +50,15 @@ describe("SiteHeader", () => {
     fireEvent.click(
       screen.getByRole("button", { name: content.navigation.menuButtonLabel }),
     );
-    const dialog = screen.getByRole("dialog", { name: content.navigation.menuTitle });
+    const dialog = screen.getByRole("dialog", {
+      name: content.navigation.menuTitle,
+    });
     expect(dialog).toBeInTheDocument();
 
     fireEvent.click(
-      within(dialog).getByRole("link", { name: content.navigation.items[0].label }),
+      within(dialog).getByRole("link", {
+        name: content.navigation.items[0].label,
+      }),
     );
 
     await waitFor(() =>
@@ -78,7 +91,9 @@ describe("SiteHeader", () => {
     fireEvent.click(
       screen.getByRole("button", { name: content.navigation.menuButtonLabel }),
     );
-    const dialog = screen.getByRole("dialog", { name: content.navigation.menuTitle });
+    const dialog = screen.getByRole("dialog", {
+      name: content.navigation.menuTitle,
+    });
 
     fireEvent.keyDown(dialog, { key: "Escape" });
 

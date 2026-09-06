@@ -1,0 +1,68 @@
+name: Quality
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+concurrency:
+  group: quality-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  quality:
+    name: quality
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    env:
+      # Simulates the real GitHub Pages project-site deployment so this
+      # gate catches base-path/canonical/localhost regressions before they
+      # reach main — the same values deploy-pages.yml uses for its
+      # production build. This workflow never runs `pnpm release:fetch`:
+      # it always validates the committed `{ "available": false }`
+      # baseline (see app/generated/release.json), so PR CI stays
+      # deterministic and independent of the GitHub API. The real,
+      # currently-published release is validated separately, by the
+      # deploy workflow, right before publishing.
+      BASE_PATH: /puriki-site/
+      SITE_URL: https://jvitorn.github.io/puriki-site/
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v6
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Check formatting
+        run: pnpm format:check
+
+      - name: Lint
+        run: pnpm lint
+
+      - name: Typecheck
+        run: pnpm typecheck
+
+      - name: Test
+        run: pnpm test
+
+      - name: Build (production-style static output)
+        run: pnpm build
+
+      - name: Validate static output
+        run: pnpm validate:static

@@ -5,9 +5,7 @@ import { pageHref } from "../../app/lib/i18n/links";
 
 describe("LanguageSwitcher", () => {
   it("has an accessible name and marks the current locale", () => {
-    render(
-      <LanguageSwitcher label="Idioma" locale="pt-BR" page="privacy" />,
-    );
+    render(<LanguageSwitcher label="Idioma" locale="pt-BR" page="privacy" />);
 
     const nav = screen.getByRole("navigation", { name: "Idioma" });
     const currentLink = within(nav).getByRole("link", { name: "Português" });

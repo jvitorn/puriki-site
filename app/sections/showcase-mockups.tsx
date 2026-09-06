@@ -31,7 +31,10 @@ function ListShowcasePreview() {
               <div className="h-2 w-[70%] rounded-full bg-foreground/80" />
               <div className={`mt-2 h-1.5 w-10 rounded-full ${row.accent}`} />
               <div className="mt-2 h-1 overflow-hidden rounded-full bg-border">
-                <div className="h-full rounded-full bg-brand" style={{ width: row.progress }} />
+                <div
+                  className="h-full rounded-full bg-brand"
+                  style={{ width: row.progress }}
+                />
               </div>
             </div>
           </div>

@@ -42,7 +42,9 @@ describe("buildAbsoluteUrl — GitHub Pages project site", () => {
     // relativePath silently drops the /puriki-site/ segment. This helper
     // must not do that.
     const result = buildAbsoluteUrl(siteUrl, "/en/privacy/");
-    expect(result.startsWith("https://jvitorn.github.io/puriki-site/")).toBe(true);
+    expect(result.startsWith("https://jvitorn.github.io/puriki-site/")).toBe(
+      true,
+    );
     expect(result).not.toBe("https://jvitorn.github.io/en/privacy/");
   });
 });

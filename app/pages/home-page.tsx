@@ -28,7 +28,11 @@ export function HomePage({ locale }: LocalePageProps) {
       <PrivacySection content={content.privacySummary} locale={locale} />
       <OpenSourceSection content={content.openSource} />
       <RoadmapSection content={content.roadmap} release={release} />
-      <DownloadSection content={content.download} locale={locale} release={release} />
+      <DownloadSection
+        content={content.download}
+        locale={locale}
+        release={release}
+      />
       <FaqSection content={content.faq} />
     </>
   );

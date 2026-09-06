@@ -10,6 +10,7 @@
   "scripts": {
     "dev": "react-router dev",
     "build": "react-router build && tsx scripts/generate-seo-files.ts && node scripts/prepare-static-output.mjs",
+    "validate:static": "tsx scripts/validate-static-output.ts",
     "release:fetch": "tsx scripts/fetch-release.ts",
     "start": "react-router-serve ./build/server/index.js",
     "test": "vitest run",
@@ -17,7 +18,8 @@
     "lint": "eslint .",
     "typecheck": "react-router typegen && tsc -b",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "verify": "pnpm format:check && pnpm lint && pnpm typecheck && pnpm test"
   },
   "dependencies": {
     "@fontsource-variable/geist": "^5.3.0",
