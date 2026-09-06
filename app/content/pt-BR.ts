@@ -104,7 +104,8 @@ export const ptBR = {
         id: "details",
         title: "Informações quando você precisa",
         body: "Veja sinopse e detalhes de cada título direto na tela de informações. No Android, leitores em PT-BR e ES podem traduzir sinopses em inglês sob demanda com Google ML Kit no dispositivo.",
-        imageAlt: "Tela de detalhes de um anime no Puriki, com sinopse traduzida",
+        imageAlt:
+          "Tela de detalhes de um anime no Puriki, com sinopse traduzida",
       },
     ],
   },
@@ -146,7 +147,8 @@ export const ptBR = {
         version: "1.0",
         title: "Foundation",
         status: "Em preparação",
-        description: "A experiência principal do Puriki com AniList e MyAnimeList.",
+        description:
+          "A experiência principal do Puriki com AniList e MyAnimeList.",
       },
       {
         version: "2.0",
@@ -176,6 +178,62 @@ export const ptBR = {
     supportCopy: "Gratuito, com código-fonte disponível e sem anúncios.",
     primaryCta: "Baixar para Android",
     originLine: "Download oficial através do GitHub Releases.",
+    current: {
+      title: "Android atual",
+      badge: "Recomendado",
+      note: "ARM64",
+      description:
+        "Recomendado para a maioria dos celulares e tablets Android atuais.",
+    },
+    universal: {
+      title: "Versão Universal",
+      subtitle: "Não sabe qual escolher?",
+      description:
+        "Compatível com múltiplas arquiteturas. O arquivo é maior, mas é a opção mais simples quando você não sabe qual versão usar.",
+      cta: "Baixar Universal",
+    },
+    otherVersions: {
+      title: "Outras versões",
+      armeabi_v7a: {
+        title: "Android antigo",
+        note: "ARM 32-bit",
+        description: "Para alguns celulares e tablets Android mais antigos.",
+        cta: "Baixar ARM 32-bit",
+      },
+      x86_64: {
+        title: "Emuladores",
+        note: "x86 64-bit",
+        description:
+          "Principalmente para emuladores e ambientes compatíveis com x86 de 64 bits.",
+        cta: "Baixar x86_64",
+      },
+      x86: {
+        title: "Emuladores",
+        note: "x86 32-bit",
+        description:
+          "Para emuladores e ambientes x86 de 32 bits que ainda utilizam essa arquitetura.",
+        cta: "Baixar x86",
+      },
+    },
+    chooser: {
+      title: "Qual versão devo baixar?",
+      current: {
+        title: "Android atual (ARM64)",
+        body: "Escolha esta na maioria dos celulares e tablets Android modernos.",
+      },
+      universal: {
+        title: "Universal",
+        body: "Escolha esta se você não souber qual versão usar. O arquivo é maior, mas inclui suporte a múltiplas arquiteturas.",
+      },
+      arm32: {
+        title: "Android antigo (ARM 32-bit)",
+        body: "Voltada para alguns aparelhos Android mais antigos.",
+      },
+      x86: {
+        title: "x86 / x86_64",
+        body: "Principalmente para emuladores e ambientes específicos.",
+      },
+    },
     noRelease: {
       statusLabel: "Status do lançamento",
       message: "A primeira versão pública do Puriki ainda está em preparação.",
@@ -185,7 +243,7 @@ export const ptBR = {
       title: "Como instalar",
       steps: [
         "Baixe o arquivo oficial do Puriki.",
-        "Abra o APK no Android.",
+        "Abra a versão do APK escolhida no Android.",
         "Caso solicitado, permita a instalação a partir do navegador ou gerenciador de arquivos utilizado.",
         "Confirme a instalação.",
       ],
@@ -193,14 +251,10 @@ export const ptBR = {
         "O Android pode exibir um aviso porque o aplicativo foi baixado fora da Google Play. Verifique sempre se o download veio deste site ou do repositório oficial do Puriki no GitHub.",
     },
     releaseLabels: {
-      versionLabel: "Versão",
       platformLabel: "Android · APK",
       publishedLabel: "Publicado em",
+      latestLabel: "Última versão estável",
       releaseLinkLabel: "Ver notas da versão no GitHub",
-      shaLabel: "SHA-256",
-      copyLabel: "Copiar",
-      copiedLabel: "Copiado",
-      copyFailedLabel: "Não foi possível copiar o SHA-256.",
     },
   },
   faq: {
@@ -223,7 +277,8 @@ export const ptBR = {
           "Não. O Puriki é uma experiência que se conecta a esses provedores; sua lista continua sendo administrada por eles.",
       },
       {
-        question: "O Puriki sincroniza minha lista entre AniList e MyAnimeList?",
+        question:
+          "O Puriki sincroniza minha lista entre AniList e MyAnimeList?",
         answer:
           "Ainda não. Na versão 1.0 não há sincronização automática entre provedores; esse recurso está planejado para versões futuras.",
       },
@@ -235,12 +290,12 @@ export const ptBR = {
       {
         question: "Como verifico se o APK é oficial?",
         answer:
-          "Baixe sempre a partir deste site ou do repositório oficial do Puriki no GitHub, nunca de fontes de terceiros.",
+          "Baixe sempre através deste site ou da release oficial do Puriki no GitHub, nunca de fontes de terceiros. Detalhes técnicos de integridade dos arquivos ficam disponíveis diretamente na release do GitHub.",
       },
       {
         question: "Como atualizo o Puriki?",
         answer:
-          "Baixe a versão mais recente disponível nas releases oficiais e instale sobre a versão atual.",
+          "Baixe a versão estável mais recente pela landing ou pelo GitHub Releases e instale o APK correspondente sobre a instalação atual.",
       },
       {
         question: "Existe versão para iOS?",
@@ -255,12 +310,16 @@ export const ptBR = {
     disclaimer:
       "Puriki é um projeto independente e não oficial. Não possui afiliação com AniList ou MyAnimeList.",
     copyright: "© 2026 Puriki",
+    licenseLabel: "Licenciado sob MIT",
     columns: [
       {
         title: "Produto",
         links: [
           { label: "Recursos", target: { kind: "anchor", anchor: "benefits" } },
-          { label: "Como funciona", target: { kind: "anchor", anchor: "providers" } },
+          {
+            label: "Como funciona",
+            target: { kind: "anchor", anchor: "providers" },
+          },
           { label: "Roadmap", target: { kind: "anchor", anchor: "roadmap" } },
           { label: "Baixar", target: { kind: "anchor", anchor: "download" } },
         ],
@@ -383,7 +442,7 @@ export const ptBR = {
       },
       {
         heading: "Disponibilidade do software",
-        body: "O aplicativo é fornecido no estado em que se encontra (\"as is\"), sem garantias formais de disponibilidade contínua ou de ausência de erros.",
+        body: 'O aplicativo é fornecido no estado em que se encontra ("as is"), sem garantias formais de disponibilidade contínua ou de ausência de erros.',
       },
       {
         heading: "Mudanças futuras",

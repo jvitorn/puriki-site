@@ -71,7 +71,9 @@ async function fetchLatestRelease(): Promise<unknown> {
   try {
     return await response.json();
   } catch (error) {
-    throw new Error("GitHub API response was not valid JSON.", { cause: error });
+    throw new Error("GitHub API response was not valid JSON.", {
+      cause: error,
+    });
   }
 }
 
@@ -82,8 +84,11 @@ async function main() {
   await writeFile(outputPath, `${JSON.stringify(metadata, null, 2)}\n`, "utf8");
 
   if (metadata.available) {
+    const variantList = metadata.artifacts
+      .map((artifact) => artifact.variant)
+      .join(", ");
     console.log(
-      `release:fetch — wrote v${metadata.version} (${metadata.fileName}, ${metadata.sizeBytes} bytes).`,
+      `release:fetch — wrote v${metadata.version} with ${metadata.artifacts.length} Android artifact(s): ${variantList}.`,
     );
   } else {
     console.log(

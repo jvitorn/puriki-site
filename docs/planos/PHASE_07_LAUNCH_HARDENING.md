@@ -1,5 +1,12 @@
 # Phase 07 — Public Launch Hardening
 
+> **Note (added by Phase 04R):** section 3 below is updated to reflect the
+> multi-ABI release model shipped with `v1.0.0` (ARM64 primary, Universal
+> secondary, optional legacy/emulator variants, no SHA/checksum UI on the
+> landing) instead of the original single-APK/single-hash assumption.
+> Nothing in this phase has been performed yet — updating the plan text is
+> not a claim that any Phase 07 item is complete.
+
 ## Goal
 
 Validate the landing as a real public download surface.
@@ -44,19 +51,31 @@ If a feature is not verified, remove or soften the claim.
 
 ### With stable release
 
-On a real Android device:
+On a real Android device, for both the primary and secondary CTA:
 
 - [ ] open site;
 - [ ] Hero CTA scrolls to Download;
 - [ ] displayed version matches GitHub;
-- [ ] size matches asset metadata;
+- [ ] ARM64 card shows as the recommended primary CTA;
+- [ ] ARM64 CTA downloads the `arm64-v8a` APK, size matches asset
+      metadata, filename is expected, Android opens the installation
+      flow;
+- [ ] Universal CTA downloads the `universal` APK, size matches asset
+      metadata, filename is expected, Android opens the installation
+      flow;
+- [ ] "Other versions" only lists artifacts actually present on the
+      release (no broken link for an optional variant a future release
+      might drop);
+- [ ] "Which version should I download?" renders and is understandable
+      without ABI/technical jargon;
 - [ ] date is correct;
-- [ ] hash matches GitHub digest;
-- [ ] final CTA downloads the intended APK;
-- [ ] filename is expected;
-- [ ] Android opens installation flow;
 - [ ] install guidance matches actual Android behavior reasonably;
 - [ ] release/changelog link opens correct release.
+
+Checksums are intentionally not part of the landing UX (see
+`docs/planos/PHASE_04R_MULTI_ABI_RELEASES.md`) — a technical reviewer
+verifies `SHA256SUMS.txt`/asset digests directly on the GitHub Release,
+not through this site.
 
 Do not modify signing or packaging from the site.
 

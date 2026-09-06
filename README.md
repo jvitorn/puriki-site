@@ -32,10 +32,30 @@ The build uses React Router Framework Mode with `ssr: false` and static prerende
 The Download section renders the latest stable `jvitorn/puriki` GitHub
 Release from a build-time generated file, `app/generated/release.json` —
 the browser never calls the GitHub API. The committed baseline is
-`{ "available": false }`, which is the app repository's real current state
-(no public release yet) and lets `pnpm build` run fully offline.
+`{ "available": false }`, which lets `pnpm build` run fully offline; the
+production workflow always runs `pnpm release:fetch` before building, so
+a real deploy renders the actual latest stable release.
 
-To refresh it from the live GitHub API:
+A release is modeled as **multiple Android APK artifacts**, one per ABI,
+not a single universal APK:
+
+- `arm64-v8a` and `universal` are **required** — a stable release missing
+  either one fails `pnpm release:fetch` loudly instead of silently
+  shipping an incomplete landing;
+- `armeabi-v7a`, `x86_64`, and `x86` are **optional** — a release may drop
+  any of them without failing the build; the Download section simply
+  omits that option.
+
+The Download UI always treats `arm64-v8a` as the recommended primary
+download and `universal` as the highlighted fallback for anyone unsure
+which one to pick; the remaining, present optional variants sit behind an
+"Other versions" disclosure. The browser is never asked to detect the
+visitor's CPU architecture — the landing always presents the same
+explicit choices. SHA-256/checksum verification is intentionally not
+part of the landing UX; it remains a GitHub Release concern
+(`SHA256SUMS.txt`, asset digests).
+
+To refresh the generated file from the live GitHub API:
 
 ```bash
 pnpm release:fetch
@@ -44,8 +64,8 @@ pnpm release:fetch
 This queries `GET /repos/jvitorn/puriki/releases/latest`, which already
 excludes drafts and prereleases and 404s when there is no stable release
 (mapped to `{ "available": false }` — a valid state, not an error). Any
-other failure (timeout, unexpected status, invalid JSON, a release whose
-APK asset is missing/ambiguous) makes the script exit non-zero instead of
+other failure (timeout, unexpected status, invalid JSON, a release
+missing a required artifact) makes the script exit non-zero instead of
 silently writing "no release". `jvitorn/puriki` is public, so the CI
 workflow calls this unauthenticated — one request per deploy is well
 under GitHub's unauthenticated rate limit. An optional local-only
@@ -53,8 +73,9 @@ under GitHub's unauthenticated rate limit. An optional local-only
 local development; never use a `VITE_*`-prefixed name for it, since Vite
 inlines those into the client bundle.
 
-See `docs/planos/PHASE_04_DOWNLOAD_RELEASES.md` for the full contract,
-parser rules, and test coverage.
+See `docs/planos/PHASE_04_DOWNLOAD_RELEASES.md` for the original
+single-APK design and `docs/planos/PHASE_04R_MULTI_ABI_RELEASES.md` for
+the current multi-ABI contract, parser rules, and test coverage.
 
 ## SEO files and brand assets
 
@@ -91,7 +112,7 @@ Before the first deployment, select `Settings → Pages → Build and deployment
 
 ## Repository boundaries
 
-APK files are not hosted in this repository. Official Android binaries belong to the `jvitorn/puriki` GitHub Releases page and use the `puriki-v<version>.apk` naming convention.
+APK files are not hosted in this repository. Official Android binaries belong to the `jvitorn/puriki` GitHub Releases page and use the `puriki-v<version>-<variant>.apk` naming convention (one APK per Android ABI: `arm64-v8a`, `universal`, `armeabi-v7a`, `x86_64`, `x86`).
 
 - App repository: https://github.com/jvitorn/puriki
 - Planning documents: `docs/planos/`

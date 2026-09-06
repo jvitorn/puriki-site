@@ -1,6 +1,7 @@
 import { PurikiLogo } from "../brand/puriki-logo";
 import { getContent } from "../../content";
 import type { FooterLinkTarget } from "../../content/types";
+import { PURIKUKI_LICENSE_URL } from "../../lib/external-links";
 import { homeAnchorHref, pageHref } from "../../lib/i18n/links";
 import type { Locale } from "../../lib/i18n/locales";
 import { Container } from "./container";
@@ -40,7 +41,9 @@ export function SiteFooter({ locale }: SiteFooterProps) {
 
         {footer.columns.map((column) => (
           <div key={column.title}>
-            <h2 className="text-sm font-bold tracking-normal">{column.title}</h2>
+            <h2 className="text-sm font-bold tracking-normal">
+              {column.title}
+            </h2>
             <ul className="mt-4 space-y-3 text-sm text-foreground-muted">
               {column.links.map((link) => {
                 const isExternal = link.target.kind === "external";
@@ -63,7 +66,9 @@ export function SiteFooter({ locale }: SiteFooterProps) {
         ))}
 
         <div>
-          <h2 className="text-sm font-bold tracking-normal">{footer.legal.title}</h2>
+          <h2 className="text-sm font-bold tracking-normal">
+            {footer.legal.title}
+          </h2>
           <ul className="mt-4 space-y-3 text-sm text-foreground-muted">
             <li>
               <a
@@ -87,6 +92,14 @@ export function SiteFooter({ locale }: SiteFooterProps) {
       <div className="border-t border-border">
         <Container className="flex flex-col gap-2 py-5 text-xs text-foreground-subtle sm:flex-row sm:items-center sm:justify-between">
           <p>{footer.copyright}</p>
+          <a
+            className="rounded-sm no-underline transition-colors hover:text-foreground"
+            href={PURIKUKI_LICENSE_URL}
+            rel="noreferrer"
+            target="_blank"
+          >
+            {footer.licenseLabel}
+          </a>
         </Container>
       </div>
     </footer>

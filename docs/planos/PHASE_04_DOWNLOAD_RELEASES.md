@@ -1,5 +1,25 @@
 # Phase 04 — GitHub Release Metadata and Android Download Experience
 
+> **Superseded by Phase 04R (single-APK -> multi-ABI), after the
+> `v1.0.0` public release:**
+>
+> This phase correctly modeled the release/download integration for the
+> distribution strategy known at the time it was implemented: one
+> universal APK per release (`puriki-v{version}.apk`), with SHA-256 shown
+> and copyable directly in the landing. Nothing below was a mistake given
+> that context.
+>
+> Once Puriki `v1.0.0` was actually published, the real distribution
+> strategy turned out to use **one Android APK per ABI**
+> (`arm64-v8a`/`universal`/`armeabi-v7a`/`x86_64`/`x86`, named
+> `puriki-v{version}-{variant}.apk`) rather than a single APK, and the
+> maintainer decided SHA-256/checksum details should live only on the
+> GitHub Release, not in the landing UX. `docs/planos/PHASE_04R_MULTI_ABI_RELEASES.md`
+> is the refinement that updated `ReleaseMetadata`, the parser, the
+> Download UX, JSON-LD, and this phase's own test suite for that reality.
+> Read this document for historical context on the original single-APK
+> design; read Phase 04R for the current, implemented contract.
+>
 > **Hardening addendum (done during Phase 05):**
 > - [x] Removed `GITHUB_TOKEN` from the `release:fetch` workflow step —
 >       `jvitorn/puriki` is public and one unauthenticated request per

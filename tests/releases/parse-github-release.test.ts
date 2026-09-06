@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
-  normalizeSha256,
+  buildArtifactFileName,
   normalizeVersion,
   parseGitHubRelease,
   ReleaseParseError,
@@ -8,14 +8,22 @@ import {
 import {
   draftRelease,
   prereleaseRelease,
-  releaseMissingApk,
-  releaseWithDuplicateExactMatches,
+  releaseMissingAllApks,
+  releaseWithDuplicateArm64,
+  releaseWithIncorrectArtifactName,
+  releaseWithInvalidArm64Size,
   releaseWithInvalidPublishedAt,
-  releaseWithTwoApkCandidates,
-  releaseWithWrongApkName,
+  releaseWithMissingDownloadUrl,
+  releaseWithUnrelatedApk,
+  stableReleaseAllArtifacts,
+  stableReleaseMissingArm32,
+  stableReleaseMissingArm64,
+  stableReleaseMissingUniversal,
+  stableReleaseMissingX86,
+  stableReleaseMissingX8664,
+  stableReleaseRequiredOnly,
+  stableReleaseTagUppercaseV,
   stableReleaseTagWithoutV,
-  stableReleaseWithDigest,
-  stableReleaseWithoutDigest,
 } from "./fixtures";
 
 describe("parseGitHubRelease", () => {
@@ -23,35 +31,118 @@ describe("parseGitHubRelease", () => {
     expect(parseGitHubRelease(null)).toEqual({ available: false });
   });
 
-  it("parses a stable release with a digest", () => {
-    const result = parseGitHubRelease(stableReleaseWithDigest);
+  it("parses a stable release with all five recognized artifacts (SHA256SUMS.txt ignored)", () => {
+    const result = parseGitHubRelease(stableReleaseAllArtifacts);
 
     expect(result).toEqual({
       available: true,
       version: "1.0.0",
       publishedAt: "2026-08-15T10:00:00Z",
-      fileName: "puriki-v1.0.0.apk",
-      sizeBytes: 24_300_000,
-      downloadUrl:
-        "https://github.com/jvitorn/puriki/releases/download/v1.0.0/puriki-v1.0.0.apk",
       releaseUrl: "https://github.com/jvitorn/puriki/releases/tag/v1.0.0",
-      sha256:
-        "1f3870be274f6c49b3e31a0c6728957f795ad0ffe3ffed4a1b2c9d9a2c3f5e0e",
+      artifacts: [
+        {
+          variant: "arm64-v8a",
+          fileName: "puriki-v1.0.0-arm64-v8a.apk",
+          sizeBytes: 24_300_000,
+          downloadUrl:
+            "https://github.com/jvitorn/puriki/releases/download/v1.0.0/puriki-v1.0.0-arm64-v8a.apk",
+        },
+        {
+          variant: "universal",
+          fileName: "puriki-v1.0.0-universal.apk",
+          sizeBytes: 41_800_000,
+          downloadUrl:
+            "https://github.com/jvitorn/puriki/releases/download/v1.0.0/puriki-v1.0.0-universal.apk",
+        },
+        {
+          variant: "armeabi-v7a",
+          fileName: "puriki-v1.0.0-armeabi-v7a.apk",
+          sizeBytes: 22_900_000,
+          downloadUrl:
+            "https://github.com/jvitorn/puriki/releases/download/v1.0.0/puriki-v1.0.0-armeabi-v7a.apk",
+        },
+        {
+          variant: "x86_64",
+          fileName: "puriki-v1.0.0-x86_64.apk",
+          sizeBytes: 25_600_000,
+          downloadUrl:
+            "https://github.com/jvitorn/puriki/releases/download/v1.0.0/puriki-v1.0.0-x86_64.apk",
+        },
+        {
+          variant: "x86",
+          fileName: "puriki-v1.0.0-x86.apk",
+          sizeBytes: 24_100_000,
+          downloadUrl:
+            "https://github.com/jvitorn/puriki/releases/download/v1.0.0/puriki-v1.0.0-x86.apk",
+        },
+      ],
     });
   });
 
-  it("parses a stable release without a digest as sha256: null", () => {
-    const result = parseGitHubRelease(stableReleaseWithoutDigest);
-    expect(result).toMatchObject({ available: true, sha256: null });
+  it("parses a stable release with only the two required artifacts", () => {
+    const result = parseGitHubRelease(stableReleaseRequiredOnly);
+
+    expect(result).toMatchObject({ available: true });
+    if (result.available) {
+      expect(result.artifacts.map((a) => a.variant)).toEqual([
+        "arm64-v8a",
+        "universal",
+      ]);
+    }
+  });
+
+  it("throws when the required arm64-v8a artifact is missing", () => {
+    expect(() => parseGitHubRelease(stableReleaseMissingArm64)).toThrow(
+      /arm64-v8a/,
+    );
+  });
+
+  it("throws when the required universal artifact is missing", () => {
+    expect(() => parseGitHubRelease(stableReleaseMissingUniversal)).toThrow(
+      /universal/,
+    );
+  });
+
+  it("does not fail when the optional armeabi-v7a artifact is missing", () => {
+    const result = parseGitHubRelease(stableReleaseMissingArm32);
+    expect(result).toMatchObject({ available: true });
+    if (result.available) {
+      expect(result.artifacts.some((a) => a.variant === "armeabi-v7a")).toBe(
+        false,
+      );
+    }
+  });
+
+  it("does not fail when the optional x86 artifact is missing", () => {
+    const result = parseGitHubRelease(stableReleaseMissingX86);
+    expect(result).toMatchObject({ available: true });
+    if (result.available) {
+      expect(result.artifacts.some((a) => a.variant === "x86")).toBe(false);
+    }
+  });
+
+  it("does not fail when the optional x86_64 artifact is missing", () => {
+    const result = parseGitHubRelease(stableReleaseMissingX8664);
+    expect(result).toMatchObject({ available: true });
+    if (result.available) {
+      expect(result.artifacts.some((a) => a.variant === "x86_64")).toBe(false);
+    }
   });
 
   it("normalizes a tag without a leading v", () => {
     const result = parseGitHubRelease(stableReleaseTagWithoutV);
-    expect(result).toMatchObject({
-      available: true,
-      version: "1.2.3",
-      fileName: "puriki-v1.2.3.apk",
-    });
+    expect(result).toMatchObject({ available: true, version: "1.0.0" });
+    if (result.available) {
+      expect(result.artifacts.map((a) => a.fileName)).toEqual([
+        "puriki-v1.0.0-arm64-v8a.apk",
+        "puriki-v1.0.0-universal.apk",
+      ]);
+    }
+  });
+
+  it("normalizes a tag with an uppercase leading V", () => {
+    const result = parseGitHubRelease(stableReleaseTagUppercaseV);
+    expect(result).toMatchObject({ available: true, version: "1.0.0" });
   });
 
   it("throws when published_at is not a valid date", () => {
@@ -70,27 +161,44 @@ describe("parseGitHubRelease", () => {
     );
   });
 
-  it("throws when no APK asset is present", () => {
-    expect(() => parseGitHubRelease(releaseMissingApk)).toThrow(
-      /No \.apk asset found/,
-    );
-  });
-
-  it("throws when the only APK asset has the wrong filename", () => {
-    expect(() => parseGitHubRelease(releaseWithWrongApkName)).toThrow(
-      /none named/,
-    );
-  });
-
-  it("throws when there are two ambiguous, non-matching APK candidates", () => {
-    expect(() => parseGitHubRelease(releaseWithTwoApkCandidates)).toThrow(
+  it("throws when no APK asset is present at all", () => {
+    expect(() => parseGitHubRelease(releaseMissingAllApks)).toThrow(
       ReleaseParseError,
     );
   });
 
-  it("throws when two assets both exactly match the expected filename", () => {
-    expect(() => parseGitHubRelease(releaseWithDuplicateExactMatches)).toThrow(
-      /expected exactly one/,
+  it("ignores an unrelated .apk asset that doesn't match any recognized variant", () => {
+    const result = parseGitHubRelease(releaseWithUnrelatedApk);
+    expect(result).toMatchObject({ available: true });
+    if (result.available) {
+      expect(result.artifacts.map((a) => a.variant)).toEqual([
+        "arm64-v8a",
+        "universal",
+      ]);
+    }
+  });
+
+  it("does not confuse an incorrectly named asset with a valid arm64-v8a artifact", () => {
+    expect(() => parseGitHubRelease(releaseWithIncorrectArtifactName)).toThrow(
+      /arm64-v8a/,
+    );
+  });
+
+  it("throws when two assets both exactly match the expected arm64-v8a filename", () => {
+    expect(() => parseGitHubRelease(releaseWithDuplicateArm64)).toThrow(
+      /expected at most one/,
+    );
+  });
+
+  it("throws when an artifact has an invalid size", () => {
+    expect(() => parseGitHubRelease(releaseWithInvalidArm64Size)).toThrow(
+      /invalid or missing size/,
+    );
+  });
+
+  it("throws when an artifact is missing a browser_download_url", () => {
+    expect(() => parseGitHubRelease(releaseWithMissingDownloadUrl)).toThrow(
+      /browser_download_url/,
     );
   });
 
@@ -99,9 +207,9 @@ describe("parseGitHubRelease", () => {
       ReleaseParseError,
     );
     expect(() => parseGitHubRelease({})).toThrow(ReleaseParseError);
-    expect(() => parseGitHubRelease({ draft: false, prerelease: false })).toThrow(
-      ReleaseParseError,
-    );
+    expect(() =>
+      parseGitHubRelease({ draft: false, prerelease: false }),
+    ).toThrow(ReleaseParseError);
   });
 });
 
@@ -116,19 +224,13 @@ describe("normalizeVersion", () => {
   });
 });
 
-describe("normalizeSha256", () => {
-  it("extracts and lowercases the hex digest from a sha256: prefix", () => {
-    expect(
-      normalizeSha256(
-        "sha256:1F3870BE274F6C49B3E31A0C6728957F795AD0FFE3FFED4A1B2C9D9A2C3F5E0E",
-      ),
-    ).toBe("1f3870be274f6c49b3e31a0c6728957f795ad0ffe3ffed4a1b2c9d9a2c3f5e0e");
-  });
-
-  it("returns null for a missing or non-sha256 digest", () => {
-    expect(normalizeSha256(undefined)).toBeNull();
-    expect(normalizeSha256(null)).toBeNull();
-    expect(normalizeSha256("sha1:abc123")).toBeNull();
-    expect(normalizeSha256("not-a-digest")).toBeNull();
+describe("buildArtifactFileName", () => {
+  it("builds the puriki-v{version}-{variant}.apk convention", () => {
+    expect(buildArtifactFileName("1.0.0", "arm64-v8a")).toBe(
+      "puriki-v1.0.0-arm64-v8a.apk",
+    );
+    expect(buildArtifactFileName("1.0.0", "universal")).toBe(
+      "puriki-v1.0.0-universal.apk",
+    );
   });
 });

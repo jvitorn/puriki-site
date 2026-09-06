@@ -119,17 +119,25 @@ feitas na Fase 03. Detalhes completos em `PHASE_03_LANDING_SECTIONS.md`.
 
 ## Fase 04 — Releases e APK
 
+> Modelo single-APK original, superseded pela Fase 04R após a publicação
+> pública da `v1.0.0` multi-ABI. Ver `PHASE_04_DOWNLOAD_RELEASES.md` e
+> `PHASE_04R_MULTI_ABI_RELEASES.md`.
+
 - [x] Script build-time de GitHub Release criado.
 - [x] Última release estável usada.
 - [x] Draft ignorado.
 - [x] Prerelease ignorada para CTA principal.
-- [x] Asset `puriki-{version}-android.apk` localizado.
+- [-] ~~Asset `puriki-{version}-android.apk` localizado.~~
+  - Superseded pela Fase 04R: o contrato agora localiza múltiplos
+    artifacts (`puriki-v{version}-{variant}.apk`) em vez de um único APK.
 - [x] Versão capturada.
 - [x] Data capturada.
 - [x] Tamanho capturado.
 - [x] URL de download capturada.
 - [x] URL da release capturada.
-- [x] SHA-256 capturado quando disponível.
+- [-] ~~SHA-256 capturado quando disponível.~~
+  - Superseded pela Fase 04R: SHA-256 removido do contrato e da UX da
+    landing; checksums permanecem apenas na GitHub Release.
 - [x] Arquivo de metadados gerado.
 - [x] Sem release gera `available: false`.
 - [x] Falha técnica de API não é mascarada como “sem release”.
@@ -137,13 +145,14 @@ feitas na Fase 03. Detalhes completos em `PHASE_03_LANDING_SECTIONS.md`.
 - [x] Download aponta diretamente para GitHub Release.
 - [x] Tamanho formatado.
 - [x] Data localizada.
-- [x] SHA expansível.
-- [x] Botão copiar SHA acessível.
+- [-] ~~SHA expansível.~~ / ~~Botão copiar SHA acessível.~~
+  - Superseded pela Fase 04R: `ShaDisclosure` removido; sem UI de SHA na
+    landing.
 - [x] Instruções de APK adicionadas.
-- [x] Testes do parser de release.
+- [x] Testes do parser de release (reescritos na Fase 04R para multi-ABI).
 - [x] Teste stable vs prerelease.
 - [x] Teste sem release.
-- [x] Teste asset ausente/ambíguo.
+- [x] Teste asset ausente/ambíguo (agora required vs optional por variante).
 - [x] `workflow_dispatch` disponível.
 - [ ] Dispatch automático entre repositórios implementado quando o workflow do app estiver pronto.
   - Pendência externa deliberada: `puriki-site` já declara
@@ -151,6 +160,27 @@ feitas na Fase 03. Detalhes completos em `PHASE_03_LANDING_SECTIONS.md`.
     sempre refaz seu próprio `release:fetch` (não confia em payload
     externo). Falta apenas o `purikuki` ganhar seu workflow de release
     estável para enviar o dispatch — está fora do escopo deste repositório.
+
+## Fase 04R — Multi-ABI Releases
+
+- [x] Modelo multi-artifact (`ReleaseAvailable.artifacts[]`).
+- [x] ARM64 (`arm64-v8a`) obrigatório.
+- [x] Universal obrigatório.
+- [x] ARM32 (`armeabi-v7a`) opcional.
+- [x] x86_64 opcional.
+- [x] x86 opcional.
+- [x] Parser multi-ABI (`parseGitHubRelease` reescrito).
+- [x] Download ARM64 principal (CTA + card recomendado).
+- [x] Universal destacado (segundo card, CTA próprio).
+- [x] Outras versões (Collapsible, só renderiza variantes presentes).
+- [x] "Qual versão devo baixar?" (Collapsible não técnico).
+- [x] Sem ABI detection (confirmado — nenhum userAgent/UA-CH/heurística).
+- [x] SHA removido da UX (`ShaDisclosure` deletado).
+- [x] GitHub Release mantém detalhes técnicos (link "Ver notas da versão").
+- [x] JSON-LD usa ARM64 (`getReleaseArtifact(release, "arm64-v8a")`).
+- [x] Testes multi-ABI (parser, Download section, JSON-LD, roadmap, axe).
+- [x] Release real v1.0.0 validada (`pnpm release:fetch` ao vivo — 5
+      artifacts encontrados e classificados corretamente).
 
 ## Fase 05 — Acessibilidade, SEO e Legal
 

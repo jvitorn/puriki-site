@@ -257,20 +257,31 @@ Title:
 Support copy:
 `Gratuito, open source e sem anúncios.`
 
+> Updated by Phase 04R after the `v1.0.0` public release: the app ships
+> one Android APK per ABI, not a single universal APK, and SHA-256 is no
+> longer part of the landing UX (checksums remain on the GitHub Release
+> only). See `PHASE_04R_MULTI_ABI_RELEASES.md` for the full rationale and
+> the exact copy that replaced the bullets below.
+
 When a stable release exists, show:
 
 - version;
 - Android;
 - APK;
-- file size;
 - publication date;
-- primary download button;
+- a primary ARM64 card (recommended, file size, primary download button);
+- a Universal card (highlighted alternative for anyone unsure which to
+  pick, file size, its own download button);
+- an "Other versions" disclosure for whichever optional artifacts
+  (`armeabi-v7a`/`x86_64`/`x86`) exist on the release;
+- a non-technical "Which version should I download?" disclosure;
 - GitHub Releases origin statement;
-- release/changelog link;
-- SHA-256 disclosure;
+- release/changelog link (also where SHA-256/checksum details live);
 - installation help disclosure.
 
-Primary download CTA:
+No SHA-256 disclosure is shown on the landing.
+
+Primary download CTA (ARM64):
 `Baixar para Android`
 
 Origin line:
