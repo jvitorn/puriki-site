@@ -132,14 +132,19 @@ Rules:
 - Drafts and prereleases do not replace the stable CTA.
 - The site must support a clean “first public release is still in preparation” state.
 
-Expected APK naming convention:
+Expected APK naming convention (updated by Phase 04R after the `v1.0.0`
+public release replaced the single-APK assumption with multi-ABI
+distribution — see `PHASE_04R_MULTI_ABI_RELEASES.md`):
 
-`puriki-v{version}.apk`
+`puriki-v{version}-{variant}.apk`, where `{variant}` is one of
+`arm64-v8a`, `universal`, `armeabi-v7a`, `x86_64`, `x86`. `arm64-v8a` and
+`universal` are required on every stable release; the other three are
+optional.
 
 Examples:
 
-- `puriki-v1.0.0.apk`
-- `puriki-v1.1.0.apk`
+- `puriki-v1.0.0-arm64-v8a.apk`
+- `puriki-v1.0.0-universal.apk`
 
 ## Stack
 

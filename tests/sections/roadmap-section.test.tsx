@@ -9,11 +9,21 @@ const AVAILABLE: ReleaseMetadata = {
   available: true,
   version: "1.0.0",
   publishedAt: "2026-08-15T10:00:00Z",
-  fileName: "puriki-v1.0.0.apk",
-  sizeBytes: 24_300_000,
-  downloadUrl: "https://example.invalid/puriki-v1.0.0.apk",
   releaseUrl: "https://example.invalid/releases/tag/v1.0.0",
-  sha256: null,
+  artifacts: [
+    {
+      variant: "arm64-v8a",
+      fileName: "puriki-v1.0.0-arm64-v8a.apk",
+      sizeBytes: 24_300_000,
+      downloadUrl: "https://example.invalid/puriki-v1.0.0-arm64-v8a.apk",
+    },
+    {
+      variant: "universal",
+      fileName: "puriki-v1.0.0-universal.apk",
+      sizeBytes: 41_800_000,
+      downloadUrl: "https://example.invalid/puriki-v1.0.0-universal.apk",
+    },
+  ],
 };
 
 describe("RoadmapSection — 1.0 status derived from release state", () => {
@@ -21,7 +31,9 @@ describe("RoadmapSection — 1.0 status derived from release state", () => {
     const content = getContent("pt-BR");
     render(<RoadmapSection content={content.roadmap} release={UNAVAILABLE} />);
 
-    expect(screen.getByText(new RegExp(content.roadmap.items[0].status))).toBeInTheDocument();
+    expect(
+      screen.getByText(new RegExp(content.roadmap.items[0].status)),
+    ).toBeInTheDocument();
     expect(
       screen.queryByText(new RegExp(content.roadmap.foundationAvailableStatus)),
     ).not.toBeInTheDocument();
@@ -40,8 +52,12 @@ describe("RoadmapSection — 1.0 status derived from release state", () => {
     const content = getContent("es");
     render(<RoadmapSection content={content.roadmap} release={AVAILABLE} />);
 
-    expect(screen.getByText(new RegExp(content.roadmap.items[1].status))).toBeInTheDocument();
-    expect(screen.getByText(new RegExp(content.roadmap.items[2].status))).toBeInTheDocument();
+    expect(
+      screen.getByText(new RegExp(content.roadmap.items[1].status)),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText(new RegExp(content.roadmap.items[2].status)),
+    ).toBeInTheDocument();
   });
 
   it("keeps exactly three roadmap list items", () => {

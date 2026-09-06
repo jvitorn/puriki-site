@@ -3,134 +3,151 @@
 // simulate what the live API actually returns (including malformed cases),
 // which the parser must handle defensively.
 
-const stableApkAsset = {
-  name: "puriki-v1.0.0.apk",
-  size: 24_300_000,
+const VERSION = "1.0.0";
+
+function apkAsset(variant: string, size = 24_300_000) {
+  return {
+    name: `puriki-v${VERSION}-${variant}.apk`,
+    size,
+    browser_download_url: `https://github.com/jvitorn/puriki/releases/download/v${VERSION}/puriki-v${VERSION}-${variant}.apk`,
+  };
+}
+
+const arm64Asset = apkAsset("arm64-v8a", 24_300_000);
+const universalAsset = apkAsset("universal", 41_800_000);
+const arm32Asset = apkAsset("armeabi-v7a", 22_900_000);
+const x8664Asset = apkAsset("x86_64", 25_600_000);
+const x86Asset = apkAsset("x86", 24_100_000);
+
+const sha256SumsAsset = {
+  name: "SHA256SUMS.txt",
+  size: 512,
   browser_download_url:
-    "https://github.com/jvitorn/puriki/releases/download/v1.0.0/puriki-v1.0.0.apk",
-  digest:
-    "sha256:1f3870be274f6c49b3e31a0c6728957f795ad0ffe3ffed4a1b2c9d9a2c3f5e0e",
+    "https://github.com/jvitorn/puriki/releases/download/v1.0.0/SHA256SUMS.txt",
 };
 
-export const stableReleaseWithDigest = {
-  tag_name: "v1.0.0",
-  name: "1.0.0",
-  draft: false,
-  prerelease: false,
-  published_at: "2026-08-15T10:00:00Z",
-  html_url: "https://github.com/jvitorn/puriki/releases/tag/v1.0.0",
-  assets: [stableApkAsset],
-};
+function baseRelease(overrides: Record<string, unknown> = {}) {
+  return {
+    tag_name: `v${VERSION}`,
+    draft: false,
+    prerelease: false,
+    published_at: "2026-08-15T10:00:00Z",
+    html_url: `https://github.com/jvitorn/puriki/releases/tag/v${VERSION}`,
+    assets: [arm64Asset, universalAsset, arm32Asset, x8664Asset, x86Asset],
+    ...overrides,
+  };
+}
 
-export const stableReleaseWithoutDigest = {
-  tag_name: "v1.0.0",
-  draft: false,
-  prerelease: false,
-  published_at: "2026-08-15T10:00:00Z",
-  html_url: "https://github.com/jvitorn/puriki/releases/tag/v1.0.0",
-  assets: [{ ...stableApkAsset, digest: undefined }],
-};
-
-export const stableReleaseTagWithoutV = {
-  tag_name: "1.2.3",
-  draft: false,
-  prerelease: false,
-  published_at: "2026-09-01T08:30:00Z",
-  html_url: "https://github.com/jvitorn/puriki/releases/tag/1.2.3",
+// All five recognized artifacts, plus the (ignored) SHA256SUMS.txt file.
+export const stableReleaseAllArtifacts = baseRelease({
   assets: [
-    {
-      name: "puriki-v1.2.3.apk",
-      size: 25_100_000,
-      browser_download_url:
-        "https://github.com/jvitorn/puriki/releases/download/1.2.3/puriki-v1.2.3.apk",
-      digest: null,
-    },
+    arm64Asset,
+    universalAsset,
+    arm32Asset,
+    x8664Asset,
+    x86Asset,
+    sha256SumsAsset,
   ],
-};
+});
 
-export const releaseWithInvalidPublishedAt = {
-  ...stableReleaseWithDigest,
+// Only the two required artifacts — every optional variant absent.
+export const stableReleaseRequiredOnly = baseRelease({
+  assets: [arm64Asset, universalAsset],
+});
+
+export const stableReleaseMissingArm64 = baseRelease({
+  assets: [universalAsset, arm32Asset, x8664Asset, x86Asset],
+});
+
+export const stableReleaseMissingUniversal = baseRelease({
+  assets: [arm64Asset, arm32Asset, x8664Asset, x86Asset],
+});
+
+export const stableReleaseMissingArm32 = baseRelease({
+  assets: [arm64Asset, universalAsset, x8664Asset, x86Asset],
+});
+
+export const stableReleaseMissingX86 = baseRelease({
+  assets: [arm64Asset, universalAsset, arm32Asset, x8664Asset],
+});
+
+export const stableReleaseMissingX8664 = baseRelease({
+  assets: [arm64Asset, universalAsset, arm32Asset, x86Asset],
+});
+
+export const stableReleaseTagWithoutV = baseRelease({
+  tag_name: VERSION,
+  html_url: `https://github.com/jvitorn/puriki/releases/tag/${VERSION}`,
+  assets: [
+    apkAsset("arm64-v8a", 24_300_000),
+    apkAsset("universal", 41_800_000),
+  ],
+});
+
+export const stableReleaseTagUppercaseV = baseRelease({
+  tag_name: `V${VERSION}`,
+});
+
+export const releaseWithInvalidPublishedAt = baseRelease({
   published_at: "not-a-real-date",
-};
+});
 
-export const draftRelease = {
-  ...stableReleaseWithDigest,
-  draft: true,
-};
+export const draftRelease = baseRelease({ draft: true });
 
-export const prereleaseRelease = {
-  ...stableReleaseWithDigest,
-  prerelease: true,
-};
+export const prereleaseRelease = baseRelease({ prerelease: true });
 
-export const releaseMissingApk = {
-  tag_name: "v1.0.0",
-  draft: false,
-  prerelease: false,
-  published_at: "2026-08-15T10:00:00Z",
-  html_url: "https://github.com/jvitorn/puriki/releases/tag/v1.0.0",
+// An unrelated .apk asset alongside the two required ones must not break
+// parsing — it simply isn't recognized as any known variant.
+export const releaseWithUnrelatedApk = baseRelease({
   assets: [
-    { name: "source.zip", size: 1000, browser_download_url: "https://example.invalid/source.zip" },
+    arm64Asset,
+    universalAsset,
+    {
+      name: "some-other-tool.apk",
+      size: 1000,
+      browser_download_url: "https://example.invalid/tool.apk",
+    },
   ],
-};
+});
 
-export const releaseWithWrongApkName = {
-  tag_name: "v1.0.0",
-  draft: false,
-  prerelease: false,
-  published_at: "2026-08-15T10:00:00Z",
-  html_url: "https://github.com/jvitorn/puriki/releases/tag/v1.0.0",
+// A filename close to, but not exactly matching, the arm64-v8a convention
+// must not be confused with a valid arm64-v8a artifact.
+export const releaseWithIncorrectArtifactName = baseRelease({
   assets: [
     {
-      name: "puriki-android.apk",
+      name: `puriki-v${VERSION}-arm64.apk`,
       size: 24_300_000,
-      browser_download_url: "https://example.invalid/puriki-android.apk",
+      browser_download_url: "https://example.invalid/wrong.apk",
     },
+    universalAsset,
   ],
-};
+});
 
-// Two .apk assets present, but neither exactly matches the expected
-// naming convention — ambiguous, the parser must not guess which is
-// official.
-export const releaseWithTwoApkCandidates = {
-  tag_name: "v1.0.0",
-  draft: false,
-  prerelease: false,
-  published_at: "2026-08-15T10:00:00Z",
-  html_url: "https://github.com/jvitorn/puriki/releases/tag/v1.0.0",
+export const releaseMissingAllApks = baseRelease({
   assets: [
     {
-      name: "puriki-android-1.0.0.apk",
-      size: 24_300_000,
-      browser_download_url: "https://example.invalid/a.apk",
-    },
-    {
-      name: "puriki-1.0.0-android-arm64.apk",
-      size: 24_100_000,
-      browser_download_url: "https://example.invalid/b.apk",
+      name: "source.zip",
+      size: 1000,
+      browser_download_url: "https://example.invalid/source.zip",
     },
   ],
-};
+});
 
-// Defensive/synthetic case: two assets both exactly matching the expected
-// filename. GitHub itself enforces unique asset names per release, but the
-// parser must still refuse to guess if this ever happened.
-export const releaseWithDuplicateExactMatches = {
-  tag_name: "v1.0.0",
-  draft: false,
-  prerelease: false,
-  published_at: "2026-08-15T10:00:00Z",
-  html_url: "https://github.com/jvitorn/puriki/releases/tag/v1.0.0",
+export const releaseWithDuplicateArm64 = baseRelease({
   assets: [
+    arm64Asset,
     {
-      name: "puriki-v1.0.0.apk",
-      size: 24_300_000,
-      browser_download_url: "https://example.invalid/a.apk",
+      ...arm64Asset,
+      browser_download_url: "https://example.invalid/duplicate.apk",
     },
-    {
-      name: "puriki-v1.0.0.apk",
-      size: 24_100_000,
-      browser_download_url: "https://example.invalid/b.apk",
-    },
+    universalAsset,
   ],
-};
+});
+
+export const releaseWithInvalidArm64Size = baseRelease({
+  assets: [{ ...arm64Asset, size: 0 }, universalAsset],
+});
+
+export const releaseWithMissingDownloadUrl = baseRelease({
+  assets: [{ name: arm64Asset.name, size: arm64Asset.size }, universalAsset],
+});

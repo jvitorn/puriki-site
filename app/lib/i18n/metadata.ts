@@ -1,7 +1,7 @@
 import type { LinksFunction, MetaDescriptor } from "react-router";
 import { getContent } from "../../content";
 import { absoluteSiteUrl } from "../config";
-import { getReleaseMetadata } from "../releases";
+import { getReleaseArtifact, getReleaseMetadata } from "../releases";
 import { LOCALES, localeConfig, type Locale } from "./locales";
 import { getPagePath, PAGES, type PageKey } from "./pages";
 
@@ -52,11 +52,17 @@ export function getPageMetadataModel(
  * already narrows it correctly. Only truthful fields — no rating, review,
  * download count, Play Store URL, or organization facts we haven't
  * defined. `softwareVersion`/`downloadUrl` are included only once a
- * stable release actually exists.
+ * stable release actually exists, and `downloadUrl` always points at the
+ * `arm64-v8a` artifact — the landing's recommended download — never at
+ * `universal` or any other variant, even though the release itself now
+ * carries several Android artifacts.
  */
 function buildSoftwareApplicationJsonLd(locale: Locale) {
   const release = getReleaseMetadata();
   const home = getPageMetadataModel(locale, "home");
+  const arm64 = release.available
+    ? getReleaseArtifact(release, "arm64-v8a")
+    : undefined;
 
   return {
     "@context": "https://schema.org",
@@ -70,8 +76,8 @@ function buildSoftwareApplicationJsonLd(locale: Locale) {
       price: "0",
       priceCurrency: "USD",
     },
-    ...(release.available
-      ? { softwareVersion: release.version, downloadUrl: release.downloadUrl }
+    ...(release.available && arm64
+      ? { softwareVersion: release.version, downloadUrl: arm64.downloadUrl }
       : {}),
   };
 }
@@ -139,11 +145,7 @@ export function buildPageLinks(
     href: absoluteSiteUrl(getPagePath("pt-BR", page)),
   };
 
-  return [
-    { rel: "canonical", href: canonicalUrl },
-    ...alternates,
-    xDefault,
-  ];
+  return [{ rel: "canonical", href: canonicalUrl }, ...alternates, xDefault];
 }
 
 /** Every canonical URL for the nine public pages — used by the sitemap. */
@@ -154,7 +156,10 @@ export function getAllPublicCanonicalUrls(): string[] {
 }
 
 /** noindex meta for non-public routes (Foundation sandbox, 404). */
-export function buildNoIndexMeta(title: string, description: string): MetaDescriptor[] {
+export function buildNoIndexMeta(
+  title: string,
+  description: string,
+): MetaDescriptor[] {
   return [
     { title },
     { name: "description", content: description },

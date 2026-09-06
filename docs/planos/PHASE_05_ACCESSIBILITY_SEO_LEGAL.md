@@ -1,5 +1,27 @@
 # Phase 05 — Accessibility, SEO, Privacy and Terms
 
+> **Note (added by Phase 04R, after the `v1.0.0` public release):** this
+> phase was completed while `jvitorn/puriki` still had no stable release
+> (`available: false`, pre-release/draft state assumed throughout) and
+> while the Download section still showed a SHA-256 disclosure with a
+> copy action. Both of those became historically outdated once `v1.0.0`
+> was published as a multi-ABI release: `docs/planos/PHASE_04R_MULTI_ABI_RELEASES.md`
+> updated the release-state assumptions (the site now renders a real
+> `available: true` release with several Android artifacts) and removed
+> the SHA-256 disclosure from the public UI (checksums now live only on
+> the GitHub Release). The `SoftwareApplication` JSON-LD builder described
+> below is unaffected in shape — it still emits `softwareVersion`/
+> `downloadUrl` only once a stable release exists — except that
+> `downloadUrl` now resolves through the `arm64-v8a` artifact rather than
+> a single release-level `downloadUrl` field. The Roadmap's release-state
+> derivation (1.0 status flips to "Disponível"/"Available"/"Disponible")
+> now operates in the real `released` state instead of the "in
+> preparation" state this phase was written against. Everything else in
+> this report (accessibility, SEO structure, Privacy/Terms content)
+> remains accurate as a historical record of what Phase 05 verified.
+>
+> The rest of this document is preserved as written at the time.
+
 ## Goal
 
 Make the site fit for public use, sharing, indexing, and transparent disclosure.

@@ -1,5 +1,10 @@
 # Phase 06 — Automated Quality, CI and GitHub Pages Deployment
 
+> **Note (added by Phase 04R):** this plan is updated below only where it
+> still assumed the Phase 04 single-APK/single-download/single-SHA
+> contract. Nothing in this phase has been implemented yet — updating the
+> plan text is not a claim that any Phase 06 item is complete.
+
 ## Goal
 
 Make quality checks reproducible and deployment boring.
@@ -14,7 +19,8 @@ Required targets:
 
 - [ ] locale helpers;
 - [ ] route mapping;
-- [ ] release parser;
+- [ ] release parser (multi-ABI: required `arm64-v8a`/`universal`,
+      optional `armeabi-v7a`/`x86_64`/`x86`, unrecognized assets ignored);
 - [ ] file-size formatter;
 - [ ] release date formatter;
 - [ ] canonical/hreflang generation;
@@ -27,9 +33,12 @@ High-value targets:
 - [ ] locale switcher;
 - [ ] Header/mobile navigation;
 - [ ] FAQ;
-- [ ] Download available state;
+- [ ] Download available state (ARM64 primary, Universal highlighted,
+      optional artifacts only rendered when present);
 - [ ] Download unavailable state;
-- [ ] SHA copy status;
+- [ ] "Other versions" and "Which version should I download?"
+      disclosures (no SHA/checksum UI exists to test — see
+      `docs/planos/PHASE_04R_MULTI_ABI_RELEASES.md`);
 - [ ] reduced-motion-sensitive behavior where practical.
 
 Do not chase 100% coverage.
